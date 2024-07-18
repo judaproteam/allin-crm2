@@ -1,5 +1,6 @@
 "use server"
 
+import { revalidatePath } from "next/cache"
 import { db } from "../db"
 
 export async function insertSale(sale) {
@@ -53,6 +54,8 @@ export async function insertSale(sale) {
   }
 
   console.log(res)
+
+  revalidatePath("/sales")
   return res
 }
 
