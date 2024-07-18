@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE "Sale" ADD COLUMN     "agnt2Id" INTEGER,
+ADD COLUMN     "agnt2Share" INTEGER,
+ADD COLUMN     "agntShare" INTEGER NOT NULL DEFAULT 100;
+
+-- AddForeignKey
+ALTER TABLE "Sale" ADD CONSTRAINT "Sale_agnt2Id_fkey" FOREIGN KEY ("agnt2Id") REFERENCES "Agnt"("id") ON DELETE SET NULL ON UPDATE CASCADE;

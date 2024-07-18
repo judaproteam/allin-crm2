@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Sale" ALTER COLUMN "action" SET DEFAULT 'מכירה',
+ALTER COLUMN "saleDt" DROP NOT NULL;

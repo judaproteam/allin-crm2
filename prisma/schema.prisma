@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id        Int    @id @default(autoincrement())
+  firstName String
+  lastName  String
+  idNum     Int    @unique
+
+  Sale Sale[]
+}
+
+model Agnt {
+  id        Int     @id @default(autoincrement())
+  firstName String
+  lastName  String?
+  email     String? @unique
+  phone     String? @unique
+
+  agntSales  Sale[] @relation("agnt")
+  agnt2Sales Sale[] @relation("agnt2")
+}
+
+model Sale {
+  id Int @id @default(autoincrement())
+
+  agntId     Int
+  agntShare  Int      @default(100)
+  agnt2Id    Int?
+  agnt2Share Int?
+  offrDt     DateTime
+  clientId   Int
+
+  company   String
+  branch    String
+  prdct     String
+  prdctType String
+  pay       Float
+  status    String
+
+  saleDt DateTime?
+  action String?   @default("מכירה")
+
+  client    Client   @relation(fields: [clientId], references: [id])
+  agnt2     Agnt?    @relation(fields: [agnt2Id], references: [id], name: "agnt2")
+  agnt      Agnt     @relation(fields: [agntId], references: [id], name: "agnt")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// תאריך שליחת הצעה
+// שם משפחה
+// שם פרטי
+// ת.ז
+// סטטוס
+// פעולה
+// חברה
+// ענף
+// מוצר
+// תאריך הפקה
+// סוכן
+// פרמיה חודשית
+// פרמיה חד פעמית
+// הפקדה חודשית
+// הפקדה חדשה
+// סכום צבירה לניוד
