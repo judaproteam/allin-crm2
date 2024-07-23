@@ -1,6 +1,6 @@
-import { Table } from "@tanstack/react-table"
+import { Table } from '@tanstack/react-table'
 
-import Icon from "@/components/Icon"
+import Icon from '@/components/Icon'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
@@ -48,6 +48,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
           </button>
         </div>
       </div>
+
       <div className="flex gap-3">
         <p className="text-sm font-medium">שורות בדף</p>
         <select

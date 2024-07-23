@@ -9,6 +9,7 @@ import Collab from '../Collab'
 import { agntObj, saleObj } from '@/utils/types'
 import { insertSale } from '@/utils/db_actions/insertSales'
 import { showToast } from '@/components/Toast'
+import Link from 'next/link'
 
 export default function SaleFormComp({ agnts }) {
   const [prdcts, setPrdcts] = useState([{}])
@@ -45,10 +46,6 @@ export default function SaleFormComp({ agnts }) {
       console.log('sale: ', sale)
     }
 
-    console.log('i got here')
-
-    return
-
     const res = await insertSale(sale)
     console.log('res: ', res)
   }
@@ -61,6 +58,10 @@ export default function SaleFormComp({ agnts }) {
             <Icon name="money-check-dollar-pen" type="lit" className="size-7 rtl:scale-x-100" />
             <span className="text-xl font-semibold">יצירת מכירה חדשה</span>
           </h2>
+          <Link href="/sales" className="btn-soft-small">
+            <Icon name="rotate-left" type="reg" />
+            <p>חזור לטבלה</p>
+          </Link>
         </div>
 
         <section className="my-6 flex gap-8 items-end">
@@ -113,7 +114,10 @@ export default function SaleFormComp({ agnts }) {
           return <PrdctComp i={i} key={i} />
         })}
         <div className="flex justify-between items-start">
-          <button className="btn-soft" type="button" onClick={() => setPrdcts([...prdcts, {}])}>
+          <button
+            className="btn-soft-small"
+            type="button"
+            onClick={() => setPrdcts([...prdcts, {}])}>
             <Icon name="plus" type="reg" />
             <p>הוספת מוצר</p>
           </button>

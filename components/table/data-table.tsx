@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import {
   ColumnDef,
@@ -11,9 +11,9 @@ import {
   ColumnFiltersState,
   getFilteredRowModel,
   VisibilityState,
-} from "@tanstack/react-table"
+} from '@tanstack/react-table'
 
-import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover"
+import { Popover, PopoverContent, PopoverTrigger } from '@radix-ui/react-popover'
 
 import {
   Table,
@@ -22,12 +22,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/table/table"
-import { useState } from "react"
-import { DataTablePagination } from "@/components/table/DataTablePagination"
-import { EyeCheckbox } from "@/components/eyeCheckbox"
+} from '@/components/table/table'
+import { useState } from 'react'
+import { DataTablePagination } from '@/components/table/DataTablePagination'
+import { EyeCheckbox } from '@/components/eyeCheckbox'
 
-import Icon from "@/components/Icon"
+import Icon from '@/components/Icon'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -37,9 +37,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [globalFilter, setGlobalFilter] = useState("")
+  const [globalFilter, setGlobalFilter] = useState('')
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-
   const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
@@ -135,7 +134,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
