@@ -48,6 +48,11 @@ export default function SaleFormComp({ agnts }) {
 
     const res = await insertSale(sale)
     console.log('res: ', res)
+    showToast({
+      msg: 'המכירה נשמרה בהצלחה',
+      className: 'border-green-500',
+      icon: 'thumbs-up',
+    })
   }
 
   return (
