@@ -5,6 +5,7 @@ import Icon from "@/components/Icon"
 import { SortableHeader } from "@/components/table/SortableHeader"
 import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover"
 import type { Sale } from "@prisma/client"
+import { useRouter } from "next/navigation"
 
 export const columns: ColumnDef<Sale>[] = [
   {
@@ -64,7 +65,8 @@ export const columns: ColumnDef<Sale>[] = [
     meta: { type: "date", title: "תאריך הפקה" },
     cell: ({ row }) => {
       const dt = row.getValue("saleDt") as Date
-      const formatted = new Intl.DateTimeFormat("he-IL").format(dt)
+      let formatted = "לא קיים"
+      if (dt) formatted = new Intl.DateTimeFormat("he-IL").format(dt)
 
       return <div className="text-start">{formatted}</div>
     },
@@ -100,6 +102,7 @@ export const columns: ColumnDef<Sale>[] = [
     id: "actions",
     cell: ({ row }) => {
       const sale = row.original
+      const router = useRouter()
 
       return (
         <Popover>
@@ -113,8 +116,8 @@ export const columns: ColumnDef<Sale>[] = [
               />
             </button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto" align="end">
-            <div className="grid gap-2 px-3 text-sm">
+          <PopoverContent className="bg-white rounded-md shadow-lg z-50 w-auto py-4" align="end">
+            <div className="grid text-sm">
               <button
                 className="white-btn"
                 onClick={() => navigator.clipboard.writeText(sale["client"]["firstName"])}>
@@ -122,7 +125,11 @@ export const columns: ColumnDef<Sale>[] = [
                 <p>Copy sale ID</p>
               </button>
               <button className="white-btn">View customer</button>
-              <button className="white-btn">View sale details</button>
+              <button
+                className="white-btn"
+                onClick={() => router.push(`/agnt_sales/${sale.agntId}`)}>
+                צפה במכירות הסוכן
+              </button>
             </div>
           </PopoverContent>
         </Popover>

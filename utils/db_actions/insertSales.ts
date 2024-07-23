@@ -13,44 +13,62 @@ export async function insertSale(sale) {
     agntShare = parseInt(sale.details.agntShare)
   }
 
-  for (let i = 0; i < sale.prdcts.length; i++) {
-    const prdct = sale.prdcts[i]
+  const clientData = {
+    firstName: sale.details.clientFirstName,
+    lastName: sale.details.clientLastName,
+    idNum: parseInt(sale.details.idNum),
+  }
 
-    res = await db.sale.create({
-      data: {
-        offrDt: sale.details.offrDt ? new Date(sale.details.offrDt) : new Date(Date.now()),
+  const prdctTypeList = ["ניוד", "הפקדה חודשית", "הפקדה חד פעמית"]
 
-        client: {
-          connectOrCreate: {
-            where: {
-              idNum: parseInt(sale.details.idNum),
-            },
-            create: {
-              firstName: sale.details.clientFirstName,
-              lastName: sale.details.clientLastName,
-              idNum: parseInt(sale.details.idNum),
+  for (const mainPrdct of sale.prdcts) {
+    const prdctsArr = []
+
+    if (!mainPrdct.pay) {
+      for (const prdctType of prdctTypeList) {
+        if (mainPrdct[prdctType]) {
+          prdctsArr.push({ ...mainPrdct, pay: mainPrdct[prdctType], prdctType: prdctType })
+        }
+      }
+    } else {
+      prdctsArr.push(mainPrdct)
+    }
+
+    for (const prdct of prdctsArr) {
+      res = await db.sale.create({
+        data: {
+          offrDt: sale.details.offrDt ? new Date(sale.details.offrDt) : new Date(Date.now()),
+
+          client: {
+            connectOrCreate: {
+              where: {
+                idNum: clientData.idNum,
+              },
+              create: clientData,
             },
           },
-        },
 
-        agnt: {
-          connect: {
-            id: parseInt(sale.details.agntId),
+          agnt: {
+            connect: {
+              id: parseInt(sale.details.agntId),
+            },
           },
+
+          agntShare,
+          agnt2,
+          agnt2Share,
+
+          company: prdct.company,
+          branch: prdct.branch,
+          prdct: prdct.prdct,
+          status: prdct.status,
+
+          prdctType: prdct.prdctType,
+          pay: parseFloat(prdct.pay),
         },
-
-        agntShare,
-        agnt2,
-        agnt2Share,
-
-        company: prdct.company,
-        branch: prdct.branch,
-        prdct: prdct.prdct,
-        prdctType: prdct.prdctType,
-        pay: parseFloat(prdct.pay),
-        status: prdct.status,
-      },
-    })
+      })
+    }
+    // end of transaction
   }
 
   console.log(res)

@@ -2,7 +2,7 @@ import * as React from "react"
 
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
   ({ className, ...props }, ref) => (
-    <div className="relative w-full overflow-auto">
+    <div className="relative w-full overflow-auto ">
       <table ref={ref} className={`w-full caption-bottom text-sm ${className}`} {...props} />
     </div>
   )
@@ -65,7 +65,7 @@ const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
-  <td ref={ref} className={`p-4 align-middle ${className}`} {...props} />
+  <td ref={ref} className={`py-2 px-4 align-middle ${className}`} {...props} />
 ))
 TableCell.displayName = "TableCell"
 

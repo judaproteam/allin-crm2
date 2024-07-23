@@ -22,14 +22,14 @@ body {
 @layer base {
   select {
     appearance: none;
-    background-image: url("https://res.cloudinary.com/dfletli2x/image/upload/icons/reg/chevron-down.svg");
+    background-image: url('https://res.cloudinary.com/dfletli2x/image/upload/icons/reg/chevron-down.svg');
     background-repeat: no-repeat;
     background-position: 8% 50%;
     background-size: 12px;
     cursor: pointer;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     cursor: pointer;
   }
 
@@ -39,7 +39,7 @@ body {
     }
   }
 
-  [popover="auto"] {
+  [popover='auto'] {
     @apply shadow-lg;
     &::backdrop {
       background-color: rgba(0, 0, 0, 0.05);
@@ -93,7 +93,7 @@ body {
   }
 
   .btn {
-    @apply baseBtn bg-blue-700 text-white;
+    @apply baseBtn bg-purple-800 text-white;
   }
 
   .btn-s {
@@ -134,7 +134,7 @@ body {
   }
 
   .white-btn {
-    @apply flex gap-2 text-start hover:bg-slate-100 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50;
+    @apply flex gap-2 px-6 py-2 text-start  hover:bg-purple-100 active:bg-slate-200 disabled:pointer-events-none disabled:opacity-50;
     > div {
       @apply bg-slate-600;
     }
@@ -218,7 +218,10 @@ body {
   }
 
   .tbl {
-    @apply grid items-center auto-cols-fr grid-flow-col;
+    @apply rounded-md bg-white/95 shadow;
+    tr {
+      @apply border-slate-200 even:bg-slate-50/50;
+    }
   }
 
   .iconMask {
@@ -240,6 +243,11 @@ body {
 
   .underline {
     @apply underline-offset-4;
+  }
+
+  .toast {
+    @apply fixed bottom-12 right-8 z-50 flex px-10 py-6 border-r-4 rounded-md bg-white shadow-md pointer-events-none;
+    animation: toast-show 6s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
   }
 }
 
@@ -272,6 +280,29 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
+}
+
+@keyframes toast-show {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+    transform-origin: right;
+  }
+  5% {
+    opacity: 1;
+    transform: translateX(0%);
+    transform-origin: right;
+  }
+  95% {
+    opacity: 1;
+    transform: translateX(0%);
+    transform-origin: right;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(100%);
+    transform-origin: right;
+  }
 }

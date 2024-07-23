@@ -24,7 +24,7 @@ import {
   TableRow,
 } from "@/components/table/table"
 import { useState } from "react"
-import { DataTablePagination } from "@/components/table/DataTablePagination "
+import { DataTablePagination } from "@/components/table/DataTablePagination"
 import { EyeCheckbox } from "@/components/eyeCheckbox"
 
 import Icon from "@/components/Icon"
@@ -115,7 +115,7 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
           </PopoverContent>
         </Popover>
       </div>
-      <div className="rounded-md border">
+      <div className="tbl">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
