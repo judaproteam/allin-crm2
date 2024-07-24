@@ -10,9 +10,15 @@ export const clone = (obj) => {
   return JSON.parse(JSON.stringify(obj))
 }
 
-function debounce(time = 2000) {
-  let run
-  clearTimeout(run)
+export const toCurrency = (num: number) => {
+  return new Intl.NumberFormat('he-IL', {
+    style: 'currency',
+    currency: 'ILS',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(num)
+}
 
-  run = setTimeout(() => {}, time)
+export const toDate = (date: Date) => {
+  return new Intl.DateTimeFormat('he-IL', { dateStyle: 'short' }).format(date)
 }
