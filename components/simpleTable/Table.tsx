@@ -40,7 +40,14 @@ export default function Table(props: TableProps) {
 
   return (
     <div>
-      <input type="text" placeholder="Search..." onChange={(e) => onTermChange(e.target.value)} />
+      <label className="input-icon">
+        <p>חיפוש</p>
+        <input
+          type="text"
+          placeholder="חיפוש חופשי בכל השדות..."
+          onChange={(e) => onTermChange(e.target.value)}
+        />
+      </label>
       <div className="tbl">
         <table>
           <thead>

@@ -1,6 +1,6 @@
-import { columns } from "@/components/table/columns"
-import { DataTable } from "@/components/table/data-table"
-import { db } from "@/utils/db"
+import { columns } from '@/components/table/columns'
+import { DataTable } from '@/components/table/data-table'
+import { db } from '@/db/db'
 
 export async function generateStaticParams() {
   const agnts = await db.agnt.findMany({
@@ -27,7 +27,7 @@ export default async function AgntSalesPage({ params }: { params: { id: string }
 
   return (
     <div className="container mx-auto py-10">
-      <h1 className="text-3xl font-bold">{agnt.firstName + " " + agnt.lastName}</h1>
+      <h1 className="text-3xl font-bold">{agnt.firstName + ' ' + agnt.lastName}</h1>
       <DataTable columns={columns} data={data} />
     </div>
   )

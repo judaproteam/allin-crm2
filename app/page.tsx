@@ -1,5 +1,5 @@
-import SaleForm from "@/components/form/forms/SaleForm"
-import { getAllAgnts } from "@/utils/actions"
+import SaleForm from '@/components/form/forms/SaleForm'
+import { getAllAgnts } from '@/db/agnt'
 
 export default async function Home() {
   const agnts = await getAllAgnts()

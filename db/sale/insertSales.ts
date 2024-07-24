@@ -1,7 +1,7 @@
-"use server"
+'use server'
 
-import { revalidatePath } from "next/cache"
-import { db } from "../db"
+import { revalidatePath } from 'next/cache'
+import { db } from '../db'
 
 export async function insertSale(sale) {
   let res
@@ -19,7 +19,7 @@ export async function insertSale(sale) {
     idNum: parseInt(sale.details.idNum),
   }
 
-  const prdctTypeList = ["ניוד", "הפקדה חודשית", "הפקדה חד פעמית"]
+  const prdctTypeList = ['ניוד', 'הפקדה חודשית', 'הפקדה חד פעמית']
 
   for (const mainPrdct of sale.prdcts) {
     const prdctsArr = []
@@ -73,31 +73,6 @@ export async function insertSale(sale) {
 
   console.log(res)
 
-  revalidatePath("/sales")
+  revalidatePath('/sales')
   return res
 }
-
-// agntShare: "50",
-// agnt2Id: "21",
-// agnt2Share: "50",
-
-//   const sale = {
-//     details: {
-//       agntId: "21",
-//       offrDt: "2024-07-02",
-//       clientFirstName: "dss",
-//       clientLastName: "dsdfdsfds",
-//       idNum: "121324424",
-//     },
-
-//     prdcts: [
-//       {
-//         company: "כלל",
-//         branch: "פנסיוני",
-//         prdct: "קרן פנסיה מקיפה",
-//         prdctType: "ניוד",
-//         pay: "33",
-//         status: "נגנז",
-//       },
-//     ],
-//   }

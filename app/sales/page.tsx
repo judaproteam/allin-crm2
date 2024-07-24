@@ -1,6 +1,6 @@
-import { db } from "@/utils/db"
-import { columns } from "@/components/table/columns"
-import { DataTable } from "@/components/table/data-table"
+import { db } from '@/db/db'
+import { columns } from '@/components/table/columns'
+import { DataTable } from '@/components/table/data-table'
 
 export default async function AgentSalesPage() {
   const data = await db.sale.findMany({
