@@ -32,12 +32,22 @@ export async function getSales() {
           lastName: true,
         },
       },
+      agnt2: {
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+        },
+      },
     },
   })
 
   const formated = res.map((item) => {
     const clientData = `${item.client.firstName} ${item.client.lastName} (${item.client.idNum})`
-    const agntName = `${item.agnt.firstName} ${item.agnt.lastName}`
+    let agntName = `${item.agnt.firstName} ${item.agnt.lastName}`
+    if (item.agnt2) {
+      agntName = `${item.agnt.firstName} ${item.agnt.lastName} & ${item.agnt2.firstName} ${item.agnt2.lastName}`
+    }
 
     return { ...item, clientData, agntName }
   })

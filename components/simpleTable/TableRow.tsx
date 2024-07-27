@@ -17,12 +17,12 @@ export default function TableRow(props: TableRowProps) {
 
   return (
     <tr>
+      <td>
+        <input type="checkbox" name="" id="" />
+      </td>
       {headers.map((header) => (
-        <td className="tblRow" key={header.key} onClick={() => console.log(item)}>
-          {
-            getCell(header.key)
-            //header.key === 'pay' ? toCurrency(item.pay) : item[header.key]
-          }
+        <td key={header.key} onClick={() => console.log(item)}>
+          {getCell(header.key)}
         </td>
       ))}
     </tr>

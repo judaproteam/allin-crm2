@@ -6,7 +6,8 @@ import TableRow from './TableRow'
 
 interface TableProps {
   headers: Array<{ key: string; label: string }>
-  data: Array<Record<string, any>>
+  tblData: Array<Record<string, any>>
+  setTblData: React.Dispatch<React.SetStateAction<Array<Record<string, any>>>>
 }
 
 interface SortConfig {
@@ -15,17 +16,9 @@ interface SortConfig {
 }
 
 export default function Table(props: TableProps) {
-  const { headers, data } = props
-  const [tblData, setTblData] = useState(data)
+  const { headers, tblData, setTblData } = props
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: null, direction: 'asc' })
   const [columnOrder, setColumnOrder] = useState(headers)
-
-  function onTermChange(term: string) {
-    const filtered = data.filter((item) =>
-      headers.some((header) => item[header.key]?.toString().includes(term))
-    )
-    setTblData(filtered)
-  }
 
   function onSort(key: string) {
     const direction = sortConfig.direction === 'asc' ? 'desc' : 'asc'
@@ -39,32 +32,22 @@ export default function Table(props: TableProps) {
   }
 
   return (
-    <div>
-      <label className="input-icon">
-        <p>חיפוש</p>
-        <input
-          type="text"
-          placeholder="חיפוש חופשי בכל השדות..."
-          onChange={(e) => onTermChange(e.target.value)}
-        />
-      </label>
-      <div className="tbl">
-        <table>
-          <thead>
-            <TableHeader
-              headers={columnOrder}
-              setColumnOrder={setColumnOrder}
-              onSort={onSort}
-              sortConfig={sortConfig}
-            />
-          </thead>
-          <tbody>
-            {tblData.map((item, index) => (
-              <TableRow key={index} item={item} headers={columnOrder} />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="tbl">
+      <table>
+        <thead>
+          <TableHeader
+            headers={columnOrder}
+            setColumnOrder={setColumnOrder}
+            onSort={onSort}
+            sortConfig={sortConfig}
+          />
+        </thead>
+        <tbody>
+          {tblData.map((item, index) => (
+            <TableRow key={index} item={item} headers={columnOrder} />
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }

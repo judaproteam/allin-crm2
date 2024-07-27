@@ -1,16 +1,12 @@
 import React from 'react'
-import Table from '@/components/simpleTable/Table'
 import { headers } from '@/components/simpleTable/saleHeaders'
-import { getSales } from '@/db/sale/getAales'
+import { getSales } from '@/db/sale/getSales'
+import TablePage from '@/ui/TablePage'
+import { getAllAgnts } from '@/db/agnt'
 
 export default async function SimpleTablePage() {
   const data = await getSales()
+  const agnts = await getAllAgnts()
 
-  console.log('data: ', data)
-
-  return (
-    <div>
-      <Table headers={headers} data={data} />
-    </div>
-  )
+  return <TablePage headers={headers} data={data} agnts={agnts} />
 }

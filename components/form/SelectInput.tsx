@@ -1,7 +1,7 @@
 export default function SelectInput({
-  lbl = "",
-  info = "",
-  field = "",
+  lbl = '',
+  info = '',
+  field = '',
   list = [],
   onSelect = (e) => {},
 }) {
@@ -21,3 +21,5 @@ export default function SelectInput({
     </label>
   )
 }
+
+// disabled={list.length < 2}

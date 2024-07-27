@@ -24,6 +24,9 @@ export default function TableHeader(props: TableHeaderProps) {
 
   return (
     <tr className="tblHead">
+      <th>
+        <input type="checkbox" name="" id="" />
+      </th>
       {headers.map((header, i) => (
         <th
           key={header.key}
