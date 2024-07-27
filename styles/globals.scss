@@ -253,6 +253,16 @@ body {
     }
   }
 
+  .dateBtn {
+    @apply block max-w-60;
+    button {
+      @apply h-10 w-full min-w-60 rounded-md border border-slate-200 bg-white px-4 focus:outline-blue-200;
+    }
+    input[type='date'] {
+      @apply appearance-none opacity-0 pointer-events-none size-0;
+    }
+  }
+
   .tbl {
     @apply bg-white shadow p-4 my-6;
     table {

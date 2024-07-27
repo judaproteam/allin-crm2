@@ -22,3 +22,12 @@ export const toCurrency = (num: number) => {
 export const toDate = (date: Date) => {
   return new Intl.DateTimeFormat('he-IL', { dateStyle: 'short' }).format(date)
 }
+
+export function formatDate(date: string) {
+  const dateObj = new Date(date)
+  const year = dateObj.getFullYear()
+  const month = dateObj.getMonth() + 1
+  const day = dateObj.getDate()
+
+  return year + ' / ' + month + ' / ' + day
+}

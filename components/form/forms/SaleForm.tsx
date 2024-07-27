@@ -9,6 +9,7 @@ import Collab from '../Collab'
 import { agntObj, saleObj } from '@/utils/types'
 import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
+import DatePicker from '../DatePicker'
 
 export default function SaleFormComp({ agnts }) {
   const [prdcts, setPrdcts] = useState([{}])
@@ -98,7 +99,10 @@ export default function SaleFormComp({ agnts }) {
             <section className="flex gap-8">
               <SelectInput lbl="פעולה" field="action" list={['מכירה', 'מינוי סוכן']} />
               <TextInput type="date" lbl="תאריך שליחת הצעה" field="offrDt" />
+
+              <DatePicker lbl="תאריך התחלה" field="startDt" />
             </section>
+
             <section className="flex gap-8">
               <TextInput lbl="שם פרטי" field="clientFirstName" />
               <TextInput lbl="שם משפחה" field="clientLastName" />
