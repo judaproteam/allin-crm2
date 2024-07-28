@@ -18,7 +18,6 @@ export function Numbox({ title, num, info = false, className = '' }) {
 export function Numboxs({ sales }) {
   return (
     <>
-      <Numbox title="אלמנטרי" num={sales['אלמנטרי']} />
       <Numbox title="סיכונים" num={sales['סיכונים']} />
       <Numbox title="פיננסי - שוטף משונת" num={sales['פיננסי']['הפקדה חודשית']} />
       <Numbox title="פיננסי - ניודים" num={sales['פיננסי']['ניוד']} />
@@ -27,6 +26,7 @@ export function Numboxs({ sales }) {
       <Numbox title="פנסיוני - שוטף משונת" num={sales['פנסיוני']['הפקדה חודשית']} />
       <Numbox title="פנסיוני - ניודים" num={sales['פנסיוני']['ניוד']} />
 
+      <Numbox title="אלמנטרי" num={sales['אלמנטרי']} />
       <Numbox title="כתב שירות חיצוני" num={sales['כתב שירות חיצוני']} />
       <Numbox title="נסיעות לחול" num={sales['נסיעות לחול']} />
       <Numbox title="קצבה מיידית" num={sales['קצבה מיידית']} />

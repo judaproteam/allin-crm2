@@ -19,17 +19,37 @@ export const toCurrency = (num: number) => {
   }).format(num)
 }
 
-export const toDate = (date: Date) => {
-  return new Intl.DateTimeFormat('he-IL', { dateStyle: 'short' }).format(date)
+export const toDate = (date: Date | string) => {
+  if (!(date instanceof Date)) date = new Date(date.toString())
+
+  return new Intl.DateTimeFormat('he-IL', {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date)
 }
 
-export function formatDate(date: string) {
+export const toFormatDate = (date: Date | string) => {
+  if (!(date instanceof Date)) date = new Date(date.toString())
+
+  return new Intl.DateTimeFormat('en-US', {
+    dayPeriod: 'long',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date)
+}
+
+export function formatDateToInput(date: string) {
   const dateObj = new Date(date)
   const year = dateObj.getFullYear()
   const month = dateObj.getMonth() + 1
   const day = dateObj.getDate()
 
-  return year + ' / ' + month + ' / ' + day
+  // "yyyy-MM-dd"
+  // "2024/1/7"
+
+  return `${year}-0${day}-0${month}`
 }
 
 export const getFormData = (e) => {
@@ -66,4 +86,10 @@ export function formatSumSales(arr: any[]) {
     }
   }
   return obj
+}
+
+export function startOfMonth() {
+  const dt = new Date()
+  return new Date(dt.getFullYear(), dt.getMonth(), 2).toISOString().split('T')[0]
+  // return toDate(new Date(dt.getFullYear(), dt.getMonth(), 1))
 }

@@ -4,42 +4,33 @@ import { db } from '../db'
 
 const sales = db.sale
 
-export async function getSales() {
+export async function getSales({ filter }) {
+  const orderBy = { [filter.orderBy]: filter.direction }
+  delete filter.orderBy
+  delete filter.direction
+
+  // offrDt: {
+  //   gte: startDate,
+  //   lte: endDate,
+  // },
+
+  if (filter.gte && filter.lte) {
+    filter.offrDt = {
+      gte: new Date(filter.gte).toISOString(),
+      lte: new Date(filter.lte).toISOString(),
+    }
+  }
+  delete filter.gte
+  delete filter.lte
+
   const res = await sales.findMany({
-    select: {
-      id: true,
-      offrDt: true,
-      status: true,
-      action: true,
-      company: true,
-      branch: true,
-      prdct: true,
-      saleDt: true,
-      prdctType: true,
-      pay: true,
-      client: {
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-          idNum: true,
-        },
-      },
-      agnt: {
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-        },
-      },
-      agnt2: {
-        select: {
-          id: true,
-          firstName: true,
-          lastName: true,
-        },
-      },
+    where: filter,
+    include: {
+      client: true,
+      agnt: true,
+      agnt2: true,
     },
+    orderBy,
   })
 
   const formated = res.map((item) => {
@@ -55,54 +46,37 @@ export async function getSales() {
   return formated
 }
 
-// export const salesByClient = async (clientId: number) => {
-//   return await sales.findMany({
-//     where: {
-//       clientId: clientId,
+// select: {
+//   id: true,
+//   offrDt: true,
+//   status: true,
+//   action: true,
+//   company: true,
+//   branch: true,
+//   prdct: true,
+//   saleDt: true,
+//   prdctType: true,
+//   pay: true,
+//   client: {
+//     select: {
+//       id: true,
+//       firstName: true,
+//       lastName: true,
+//       idNum: true,
 //     },
-//     include: {
-//       client: true,
-//       agnt: true,
+//   },
+//   agnt: {
+//     select: {
+//       id: true,
+//       firstName: true,
+//       lastName: true,
 //     },
-//   })
-// }
-
-// export const salesByAgnt = async (agntId: number) => {
-//   return await sales.findMany({
-//     where: {
-//       agntId: agntId,
+//   },
+//   agnt2: {
+//     select: {
+//       id: true,
+//       firstName: true,
+//       lastName: true,
 //     },
-//     include: {
-//       client: true,
-//       agnt: true,
-//     },
-//   })
-// }
-
-// export const salesByClientAndAgnt = async (clientId: number, agntId: number) => {
-//   return await sales.findMany({
-//     where: { clientId, agntId },
-//     include: {
-//       client: true,
-//       agnt: true,
-//     },
-//   })
-// }
-
-// export const salesByClientAndAgntAndBranch = async (
-//   clientId: number,
-//   agntId: number,
-//   branch: string
-// ) => {
-//   return await sales.findMany({
-//     where: {
-//       clientId: clientId,
-//       agntId: agntId,
-//       branch: branch,
-//     },
-//     include: {
-//       client: true,
-//       agnt: true,
-//     },
-//   })
-// }
+//   },
+// },

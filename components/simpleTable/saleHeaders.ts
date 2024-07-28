@@ -1,4 +1,4 @@
-export const headers = [
+export let headers = [
   { key: 'offrDt', label: 'תאריך שליחת הצעה' },
   { key: 'clientData', label: 'לקוח' },
   { key: 'status', label: 'סטטוס' },

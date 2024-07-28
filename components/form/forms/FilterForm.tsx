@@ -3,20 +3,33 @@ import { useState } from 'react'
 import SelectFilter from '../SelectFilter'
 import Icon from '@/components/Icon'
 import { getFormData } from '@/utils/func'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function FilterForm() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
   function onFilter(e) {
     const data = getFormData(e)
-    console.log('data: ', data)
+
+    let qParams = Object.fromEntries(new URLSearchParams(searchParams))
+    qParams = { ...qParams, ...data }
+
+    const url = new URLSearchParams(qParams).toString()
+    router.replace('?' + url, { scroll: false })
   }
 
   const [prdct, setPrdct] = useState({
-    prdctList: pensionyList,
-    prdctTypeList: ['ניוד', 'הפקדה חודשית'],
+    prdctList: [],
+    prdctTypeList: [],
   })
 
   return (
-    <form id="filterForm" className="flex items-end justify-between" onSubmit={onFilter}>
+    <form
+      id="filterForm"
+      name="filterForm"
+      className="flex items-end justify-between"
+      onSubmit={onFilter}>
       <SelectFilter lbl="חברה" field="company" list={companyList} />
       <SelectFilter
         lbl="ענף"

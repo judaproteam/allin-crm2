@@ -1,28 +1,27 @@
 'use client'
 
+import DateRange from '@/components/form/forms/DateRange'
 import FilterForm from '@/components/form/forms/FilterForm'
 import SaleFormPop from '@/components/form/forms/SaleForm'
 import Icon from '@/components/Icon'
 import { Numbox, Numboxs } from '@/components/Numbox'
 import Table from '@/components/simpleTable/Table'
-import { useState } from 'react'
 
-export default function TablePage({ headers, data, agnts, salesSum }) {
-  const [tblData, setTblData] = useState(data)
-
-  function onTermChange(term: string) {
-    const filtered = data.filter((item) =>
-      headers.some((header) => item[header.key]?.toString().includes(term))
-    )
-    setTblData(filtered)
-  }
+export default function TablePage({ data, agnts, salesSum }) {
+  // function onTermChange(term: string) {
+  //   const filtered = data.filter((item) =>
+  //     headers.some((header) => item[header.key]?.toString().includes(term))
+  //   )
+  //   setTblData(filtered)
+  // }
 
   return (
     <>
       <main>
         <section className="bg-white">
-          <div className="container py-8">
-            <h1 className="title mb-6">סיכום מכירות סוכנים</h1>
+          <div className="container py-8 space-y-6">
+            <h1 className="title">סיכום מכירות סוכנים</h1>
+            <DateRange />
             <FilterForm />
           </div>
         </section>
@@ -42,7 +41,7 @@ export default function TablePage({ headers, data, agnts, salesSum }) {
               <input
                 type="text"
                 placeholder="חיפוש חופשי..."
-                onChange={(e) => onTermChange(e.target.value)}
+                //onChange={(e) => onTermChange(e.target.value)}
               />
             </label>
             <button className="btn-s" popoverTarget="popSaleForm">
@@ -52,7 +51,7 @@ export default function TablePage({ headers, data, agnts, salesSum }) {
           </div>
         </div>
 
-        <Table headers={headers} tblData={tblData} setTblData={setTblData} />
+        <Table tblData={data} />
       </main>
       <SaleFormPop agnts={agnts} />
     </>

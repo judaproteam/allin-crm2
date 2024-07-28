@@ -1,19 +1,18 @@
-import { formatDate } from '@/utils/func'
+import { toDate } from '@/utils/func'
 import { useState } from 'react'
 import Icon from '../Icon'
 
-export default function DatePicker({ lbl = '', info = '', field = '' }) {
+export default function DatePicker({ lbl = '', field = '' }) {
   function onDateChange(e) {
-    const date = e.target.value
-
-    setDate(formatDate(date))
+    const dt = e.target.value
+    setDate(toDate(dt))
   }
 
   function dateClick() {
-    return (document.getElementById('date') as HTMLInputElement).showPicker()
+    return (document.querySelector(`[name=${field}]`) as HTMLInputElement).showPicker()
   }
 
-  const [date, setDate] = useState(formatDate(new Date().toISOString()))
+  const [date, setDate] = useState(toDate(new Date()))
 
   return (
     <label className="dateBtn">
@@ -23,7 +22,7 @@ export default function DatePicker({ lbl = '', info = '', field = '' }) {
           <Icon name="calendar" type="lit" />
           <p>{date}</p>
         </button>
-        <input type="date" id="date" name={field} onChange={onDateChange} />
+        <input type="date" name={field} onChange={onDateChange} />
       </div>
     </label>
   )
