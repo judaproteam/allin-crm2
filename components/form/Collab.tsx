@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react"
-import Icon from "../Icon"
-import { rng } from "@/utils/func"
+import { useEffect, useState } from 'react'
+import Icon from '../Icon'
+import { rng } from '@/utils/func'
 
-const id = "1"
+const id = '1'
 export default function Collab({ agnts }) {
   console.log(agnts)
 
@@ -12,14 +12,14 @@ export default function Collab({ agnts }) {
   return (
     <main className="flex gap-12">
       <section>
-        <label htmlFor="agntId" className="block mb-2">
-          שם סוכן 1
+        <label htmlFor="agntId" className="block mb-1 ms-1">
+          <p>שם סוכן 1</p>
         </label>
         <div className="inline-flex items-center gap-1 rounded-md border p-1 border-slate-200 w-auto">
           <select name="agntId" id="agntId" className="h-8 w-40 px-4 outline-none">
             {agnts.map((agnt) => (
               <option value={agnt.id} key={agnt.id}>
-                {agnt.firstName + " " + agnt.lastName}
+                {agnt.firstName + ' ' + agnt.lastName}
               </option>
             ))}
           </select>
@@ -52,14 +52,14 @@ export default function Collab({ agnts }) {
       <Icon name="handshake" className="size-7 bg-slate-300 self-end mb-2" />
 
       <section>
-        <label htmlFor="agnt2Id" className="block mb-2">
-          שם סוכן 2
+        <label htmlFor="agnt2Id" className="block mb-1 ms-1">
+          <p>שם סוכן 2</p>
         </label>
         <div className="inline-flex items-center gap-1 rounded-md border p-1 border-slate-200 w-auto">
           <select name="agnt2Id" id="agnt2Id" className="h-8 w-40 px-4 outline-none">
             {agnts.map((agnt) => (
               <option value={agnt.id} key={agnt.id}>
-                {agnt.firstName + " " + agnt.lastName}
+                {agnt.firstName + ' ' + agnt.lastName}
               </option>
             ))}
           </select>

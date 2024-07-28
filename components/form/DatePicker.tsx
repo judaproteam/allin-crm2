@@ -1,5 +1,6 @@
 import { formatDate } from '@/utils/func'
 import { useState } from 'react'
+import Icon from '../Icon'
 
 export default function DatePicker({ lbl = '', info = '', field = '' }) {
   function onDateChange(e) {
@@ -19,9 +20,10 @@ export default function DatePicker({ lbl = '', info = '', field = '' }) {
       <p>{lbl}</p>
       <div className="">
         <button type="button" onClick={dateClick}>
-          {date}
+          <Icon name="calendar" type="lit" />
+          <p>{date}</p>
         </button>
-        <input type="date" id="date" onChange={onDateChange} />
+        <input type="date" id="date" name={field} onChange={onDateChange} />
       </div>
     </label>
   )

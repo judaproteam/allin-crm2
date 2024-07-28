@@ -1,4 +1,3 @@
-import React from 'react'
 import { headers } from '@/components/simpleTable/saleHeaders'
 import { getSales } from '@/db/sale/getSales'
 import TablePage from '@/ui/TablePage'

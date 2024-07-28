@@ -1,15 +1,10 @@
-export default function SelectInput({
-  lbl = '',
-  field = '',
-  list = [],
-  onSelect = (e) => {},
-  className = '',
-}) {
+export default function SelectFilter({ lbl = '', field = '', list = [], onSelect = (e) => {} }) {
   return (
-    <label className={`slct ${className}`}>
+    <label className="slctFilter">
       <p>{lbl}</p>
 
       <select name={field} onChange={onSelect}>
+        <option value=""></option>
         {list.map((item, i) => (
           <option value={item} key={i}>
             {item}
@@ -19,5 +14,3 @@ export default function SelectInput({
     </label>
   )
 }
-
-// disabled={list.length < 2}

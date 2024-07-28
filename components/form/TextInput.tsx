@@ -10,10 +10,8 @@ export default function TextInput({
 }) {
   return (
     <label className={`input ${className}`}>
-      <div>
-        <p>{lbl}</p>
-        {info && <i>{info}</i>}
-      </div>
+      <p>{lbl}</p>
+
       <input
         onChange={(e) => {
           e.target.setCustomValidity('')

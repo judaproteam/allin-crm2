@@ -11,7 +11,7 @@ import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import DatePicker from '../DatePicker'
 
-export default function SaleFormComp({ agnts }) {
+export default function SaleForm({ agnts }) {
   const [prdcts, setPrdcts] = useState([{}])
   const [share, setShare] = useState(false)
 
@@ -68,7 +68,7 @@ export default function SaleFormComp({ agnts }) {
             {!share && (
               <>
                 <label className="slct">
-                  שם הסוכן
+                  <p>שם הסוכן</p>
                   <select name="agntId">
                     {agnts.map((agnt: agntObj) => (
                       <option value={agnt.id} key={agnt.id}>
@@ -78,7 +78,7 @@ export default function SaleFormComp({ agnts }) {
                   </select>
                 </label>
 
-                <button className="btn-soft-small" type="button" onClick={() => setShare(true)}>
+                <button className="btn-soft-s" type="button" onClick={() => setShare(true)}>
                   <Icon name="plus" type="reg" />
                   <p>שת"פ</p>
                 </button>
@@ -87,7 +87,7 @@ export default function SaleFormComp({ agnts }) {
             {share && (
               <>
                 <Collab agnts={agnts} />
-                <button className="btn-soft-small" type="button" onClick={() => setShare(false)}>
+                <button className="btn-soft-s" type="button" onClick={() => setShare(false)}>
                   <Icon name="trash" type="reg" />
                   <p>בטל שת"פ</p>
                 </button>
@@ -96,11 +96,11 @@ export default function SaleFormComp({ agnts }) {
           </section>
 
           <section className="grid gap-6">
-            <section className="flex gap-8">
+            <section className="flex gap-8 items-end">
               <SelectInput lbl="פעולה" field="action" list={['מכירה', 'מינוי סוכן']} />
-              <TextInput type="date" lbl="תאריך שליחת הצעה" field="offrDt" />
+              {/* <TextInput type="date" lbl="תאריך שליחת הצעה" field="offrDt" /> */}
 
-              <DatePicker lbl="תאריך התחלה" field="startDt" />
+              <DatePicker lbl="תאריך שליחת הצעה" field="offrDt" />
             </section>
 
             <section className="flex gap-8">
@@ -117,10 +117,7 @@ export default function SaleFormComp({ agnts }) {
             return <PrdctComp i={i} key={i} />
           })}
           <div className="flex justify-between items-start">
-            <button
-              className="btn-soft-small"
-              type="button"
-              onClick={() => setPrdcts([...prdcts, {}])}>
+            <button className="btn-soft-s" type="button" onClick={() => setPrdcts([...prdcts, {}])}>
               <Icon name="plus" type="reg" />
               <p>הוספת מוצר</p>
             </button>
