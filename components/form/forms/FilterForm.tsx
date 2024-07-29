@@ -29,11 +29,7 @@ export default function FilterForm() {
   })
 
   return (
-    <form
-      id="filterForm"
-      name="filterForm"
-      className="flex items-end justify-between"
-      onSubmit={onFilter}>
+    <form id="filterForm" name="filterForm" className="flex gap-7 items-end" onSubmit={onFilter}>
       <SelectFilter lbl="חברה" field="company" list={companyList} />
       <SelectFilter
         lbl="ענף"

@@ -9,11 +9,6 @@ export async function getSales({ filter }) {
   delete filter.orderBy
   delete filter.direction
 
-  // offrDt: {
-  //   gte: startDate,
-  //   lte: endDate,
-  // },
-
   if (filter.gte && filter.lte) {
     filter.offrDt = {
       gte: new Date(filter.gte).toISOString(),

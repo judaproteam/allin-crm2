@@ -28,8 +28,21 @@ export async function companyByBranch() {
   return res
 }
 
-export async function salesByBranch() {
+export async function salesByBranch({ filter }) {
+  delete filter.orderBy
+  delete filter.direction
+
+  if (filter.gte && filter.lte) {
+    filter.offrDt = {
+      gte: new Date(filter.gte).toISOString(),
+      lte: new Date(filter.lte).toISOString(),
+    }
+  }
+  delete filter.gte
+  delete filter.lte
+
   const res = await db.sale.groupBy({
+    where: filter,
     by: ['branch', 'prdctType'],
     _sum: {
       pay: true,
@@ -54,33 +67,33 @@ export async function salesByBranch() {
   return { sales, sumAll }
 }
 
-const logSalesByBranch = [
-  {
-    _sum: { pay: 8910 },
-    branch: 'אלמנטרי',
-    prdctType: 'פרמיה חד פעמית',
-  },
-  { _sum: { pay: 904 }, branch: 'קצבה מיידית', prdctType: 'ניוד' },
-  { _sum: { pay: 3989 }, branch: 'פנסיוני', prdctType: 'הפקדה חודשית' },
-  { _sum: { pay: 80406 }, branch: 'אכ"ע', prdctType: 'פרמיה חודשית' },
-  {
-    _sum: { pay: 547 },
-    branch: 'כתב שירות חיצוני',
-    prdctType: 'פרמיה חודשית',
-  },
-  {
-    _sum: { pay: 283 },
-    branch: 'נסיעות לחול',
-    prdctType: 'פרמיה חד פעמית',
-  },
-  { _sum: { pay: 29209 }, branch: 'פנסיוני', prdctType: 'ניוד' },
-  { _sum: { pay: 444 }, branch: 'פיננסי', prdctType: 'הפקדה חודשית' },
-  {
-    _sum: { pay: 89362 },
-    branch: 'סיכונים',
-    prdctType: 'פרמיה חודשית',
-  },
-]
+// const logSalesByBranch = [
+//   {
+//     _sum: { pay: 8910 },
+//     branch: 'אלמנטרי',
+//     prdctType: 'פרמיה חד פעמית',
+//   },
+//   { _sum: { pay: 904 }, branch: 'קצבה מיידית', prdctType: 'ניוד' },
+//   { _sum: { pay: 3989 }, branch: 'פנסיוני', prdctType: 'הפקדה חודשית' },
+//   { _sum: { pay: 80406 }, branch: 'אכ"ע', prdctType: 'פרמיה חודשית' },
+//   {
+//     _sum: { pay: 547 },
+//     branch: 'כתב שירות חיצוני',
+//     prdctType: 'פרמיה חודשית',
+//   },
+//   {
+//     _sum: { pay: 283 },
+//     branch: 'נסיעות לחול',
+//     prdctType: 'פרמיה חד פעמית',
+//   },
+//   { _sum: { pay: 29209 }, branch: 'פנסיוני', prdctType: 'ניוד' },
+//   { _sum: { pay: 444 }, branch: 'פיננסי', prdctType: 'הפקדה חודשית' },
+//   {
+//     _sum: { pay: 89362 },
+//     branch: 'סיכונים',
+//     prdctType: 'פרמיה חודשית',
+//   },
+// ]
 
 // const sales = clone(res) as {
 //   _sum: {
