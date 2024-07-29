@@ -1,30 +1,23 @@
-import { formatDateToInput, toDate, toFormatDate } from '@/utils/func'
-import { useState } from 'react'
+import { toDate } from '@/utils/func'
+import { useRef, useState } from 'react'
 
-export default function SmallDatePicker({
-  field = '',
-  defaultValue = new Date().toISOString().split('T')[0],
-}) {
-  const [date, setDate] = useState(defaultValue)
-
-  function onDateChange(e) {
-    const dt = e.target.value
-
-    setDate(dt)
-    // setDate(toDate(dt))
-  }
-
-  function dateClick() {
-    return (document.querySelector(`[name=${field}]`) as HTMLInputElement).showPicker()
-  }
+export default function SmallDatePicker({ field = '', val }) {
+  const [date, setDate] = useState(val)
+  const ref = useRef<HTMLInputElement>(null)
 
   return (
     <label className="smallDateBtn">
-      <button type="button" onClick={dateClick}>
-        <p className="tracking-wide">{toDate(date)}</p>
+      <button type="button" onClick={() => ref.current?.showPicker()}>
+        <p className="tracking-wide">{toDate(date) || toDate(val)}</p>
       </button>
 
-      <input type="date" name={field} onChange={onDateChange} value={date} />
+      <input
+        type="date"
+        ref={ref}
+        name={field}
+        onChange={(e) => setDate(e.target.value)}
+        value={date || val}
+      />
     </label>
   )
 }

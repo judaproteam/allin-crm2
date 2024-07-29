@@ -15,8 +15,8 @@ export default function SelectFilter({
       <p>{lbl}</p>
 
       <select name={field} onChange={onSelect} defaultValue={selected}>
-        <option value="" className="text-slate-400 opacity-15">
-          הכל
+        <option value="" className="text-slate-400">
+          הכל...
         </option>
         {list.map((item, i) => (
           <option value={item} key={i}>

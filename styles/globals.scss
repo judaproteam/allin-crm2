@@ -24,9 +24,10 @@ body {
     appearance: none;
     background-image: url('https://res.cloudinary.com/dfletli2x/image/upload/icons/reg/chevron-down.svg');
     background-repeat: no-repeat;
-    background-position: 8% 50%;
+    background-position: 5% 50%;
     background-size: 12px;
     cursor: pointer;
+    outline: none;
 
     &:disabled {
       background-image: none;

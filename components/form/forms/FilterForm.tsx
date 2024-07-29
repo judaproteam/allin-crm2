@@ -2,7 +2,7 @@ import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } f
 import { useState } from 'react'
 import SelectFilter from '../SelectFilter'
 import Icon from '@/components/Icon'
-import { getFormData } from '@/utils/func'
+import { getFormData, onlyValObj } from '@/utils/func'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function FilterForm() {
@@ -10,10 +10,14 @@ export default function FilterForm() {
   const searchParams = useSearchParams()
 
   function onFilter(e) {
-    const data = getFormData(e)
+    //const data = getFormData(e)
+    e.preventDefault()
+    const form = e.target as HTMLFormElement
+    const data = Object.fromEntries(new FormData(form))
 
-    let qParams = Object.fromEntries(new URLSearchParams(searchParams))
+    let qParams = Object.fromEntries(new URLSearchParams(searchParams)) as any
     qParams = { ...qParams, ...data }
+    qParams = onlyValObj(qParams)
 
     const url = new URLSearchParams(qParams).toString()
     router.replace('?' + url, { scroll: false })
@@ -44,7 +48,7 @@ export default function FilterForm() {
       <SelectFilter lbl="סטטוס" field="status" list={statusList} />
       <SelectFilter lbl="פעולה" field="action" list={['מכירה', 'מינוי סוכן']} />
 
-      <button className="btn-soft">
+      <button className="btn-soft-s">
         <Icon name="filter" type="sol" />
         <p>פלטר</p>
       </button>

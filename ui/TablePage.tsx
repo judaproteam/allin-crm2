@@ -19,7 +19,7 @@ export default function TablePage({ data, agnts, salesSum }) {
     <>
       <main>
         <section className="bg-white">
-          <div className="container py-8 space-y-6">
+          <div className="container py-8 space-y-8">
             <h1 className="title">סיכום מכירות סוכנים</h1>
             <DateRange />
             <FilterForm />
@@ -27,7 +27,7 @@ export default function TablePage({ data, agnts, salesSum }) {
         </section>
 
         <section className="container my-12">
-          <Numbox title="משוכלל" num={salesSum.sumAll} className="w-52 mb-4" />
+          <Numbox title="משוקלל" num={salesSum.sumAll} className="w-52 mb-4" />
           <div className="flex gap-4 ">
             <Numboxs sales={salesSum.sales} />
           </div>

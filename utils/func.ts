@@ -20,7 +20,7 @@ export const toCurrency = (num: number) => {
 }
 
 export const toDate = (date: Date | string) => {
-  if (!(date instanceof Date)) date = new Date(date.toString())
+  if (!(date instanceof Date)) date = new Date(date?.toString())
 
   return new Intl.DateTimeFormat('he-IL', {
     year: '2-digit',
@@ -55,12 +55,15 @@ export function formatDateToInput(date: string) {
 export const getFormData = (e) => {
   e.preventDefault()
   const form = e.target as HTMLFormElement
+  const data = Object.fromEntries(new FormData(form))
 
-  const obj = new FormData(form)
-  const data = Object.fromEntries(obj)
+  return onlyValObj(data)
+}
+
+export function onlyValObj(obj: any) {
   const filter = {}
-  for (const key in data) {
-    if (data[key]) filter[key] = data[key]
+  for (const key in obj) {
+    if (obj[key]) filter[key] = obj[key]
   }
   return filter
 }
@@ -92,4 +95,42 @@ export function startOfMonth() {
   const dt = new Date()
   return new Date(dt.getFullYear(), dt.getMonth(), 2).toISOString().split('T')[0]
   // return toDate(new Date(dt.getFullYear(), dt.getMonth(), 1))
+}
+
+export function getDatePeriods(period: string) {
+  const dt = new Date()
+  switch (period) {
+    case 'thisMonth':
+      return {
+        gte: new Date(dt.getFullYear(), dt.getMonth(), 1).toISOString().split('T')[0],
+        lte: new Date(dt.getFullYear(), dt.getMonth() + 1, 1).toISOString().split('T')[0],
+      }
+
+    case 'lastMonth':
+      return {
+        gte: new Date(dt.getFullYear(), dt.getMonth() - 1, 1).toISOString().split('T')[0],
+        lte: new Date(dt.getFullYear(), dt.getMonth(), 1).toISOString().split('T')[0],
+      }
+
+    case 'week':
+      return {
+        gte: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() - 7)
+          .toISOString()
+          .split('T')[0],
+        lte: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate() + 7)
+          .toISOString()
+          .split('T')[0],
+      }
+
+    case 'year':
+      return {
+        gte: new Date(dt.getFullYear(), 0, 1).toISOString().split('T')[0],
+        lte: new Date(dt.getFullYear() + 1, 0, 1).toISOString().split('T')[0],
+      }
+    default:
+      return {
+        gte: new Date(dt.getFullYear(), dt.getMonth(), 1).toISOString().split('T')[0],
+        lte: new Date(dt.getFullYear(), dt.getMonth() + 1, 1).toISOString().split('T')[0],
+      }
+  }
 }
