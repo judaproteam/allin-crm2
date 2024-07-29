@@ -21,6 +21,7 @@ export default function FilterForm() {
 
     const url = new URLSearchParams(qParams).toString()
     router.replace('?' + url, { scroll: false })
+    router.refresh()
   }
 
   const [prdct, setPrdct] = useState({

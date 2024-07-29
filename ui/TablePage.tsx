@@ -5,15 +5,19 @@ import FilterForm from '@/components/form/forms/FilterForm'
 import SaleFormPop from '@/components/form/forms/SaleForm'
 import Icon from '@/components/Icon'
 import { Numbox, Numboxs } from '@/components/Numbox'
+import { headers } from '@/components/simpleTable/saleHeaders'
 import Table from '@/components/simpleTable/Table'
+import { useState } from 'react'
 
 export default function TablePage({ data, agnts, salesSum }) {
-  // function onTermChange(term: string) {
-  //   const filtered = data.filter((item) =>
-  //     headers.some((header) => item[header.key]?.toString().includes(term))
-  //   )
-  //   setTblData(filtered)
-  // }
+  const [tblData, setTblData] = useState(data)
+
+  function onTermChange(term: string) {
+    const filtered = data.filter((item) =>
+      headers.some((header) => item[header.key]?.toString().includes(term))
+    )
+    setTblData(filtered)
+  }
 
   return (
     <>
@@ -41,7 +45,7 @@ export default function TablePage({ data, agnts, salesSum }) {
               <input
                 type="text"
                 placeholder="חיפוש חופשי..."
-                //onChange={(e) => onTermChange(e.target.value)}
+                onChange={(e) => onTermChange(e.target.value)}
               />
             </label>
             <button className="btn-s" popoverTarget="popSaleForm">
@@ -51,7 +55,7 @@ export default function TablePage({ data, agnts, salesSum }) {
           </div>
         </div>
 
-        <Table tblData={data} />
+        <Table tblData={tblData} setTableData={setTblData} />
       </main>
       <SaleFormPop agnts={agnts} />
     </>

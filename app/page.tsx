@@ -9,7 +9,5 @@ export default async function SimpleTablePage({ searchParams }) {
 
   const salesSum = await salesByBranch({ filter: searchParams })
 
-  return <TablePage data={data} agnts={agnts} salesSum={salesSum} />
+  return <TablePage data={data} agnts={agnts} salesSum={salesSum} key={Math.random()} />
 }
-
-// searchParams:  { company: 'מוני', branch: 'פנסיוני', prdctType: 'הפקדה חודשית' }
