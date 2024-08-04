@@ -6,57 +6,55 @@ import TextInput from '../TextInput'
 import SelectInput from '../SelectInput'
 import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
 import Collab from '../Collab'
-import { agntObj, saleObj } from '@/utils/types'
+import { agntType, saleObj } from '@/utils/types'
 import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import DatePicker from '../DatePicker'
+import { checkPayExist } from '@/utils/func'
+import { useUser } from '@/context/UserProvider'
 
-export default function SaleForm({ agnts }) {
+export default function SaleForm({ agnts }: { agnts: agntType[] }) {
   const [prdcts, setPrdcts] = useState([{}])
   const [share, setShare] = useState(false)
+  const user = useUser()
 
   async function onSave(e: React.SyntheticEvent) {
     e.preventDefault()
 
+    const detailsForm = document.getElementById('detailsForm') as HTMLFormElement
+    const prdctForms = document.querySelectorAll(
+      "[name='prdctForm']"
+    ) as NodeListOf<HTMLFormElement>
+
     const sale = { details: {}, prdcts: [] } as unknown as saleObj
-    for (let i = 0; i < document.forms.length; i++) {
-      const form = document.forms[i]
+
+    if (!detailsForm.checkValidity()) return detailsForm.reportValidity()
+    sale.details = Object.fromEntries(new FormData(detailsForm)) as saleObj['details']
+
+    for (let i = 0; i < prdctForms.length; i++) {
+      const form = prdctForms[i]
       if (!form.checkValidity()) return form.reportValidity()
-      document.getElementById('loadingMsg').showPopover()
+      const data = Object.fromEntries(new FormData(form))
 
-      const obj = new FormData(form)
-      const data = Object.fromEntries(obj)
-
-      if (i === 0) {
-        sale.details = data as saleObj['details']
-      } else {
-        sale.prdcts.push(data as saleObj['prdcts'][0])
-        const prdctTypeList = ['ניוד', 'הפקדה חודשית', 'הפקדה חד פעמית']
-        if (!data.pay) {
-          let err = true
-          for (const key of prdctTypeList) {
-            if (data[key]) err = false
-          }
-          if (err) return document.getElementById('errMsg').showPopover()
-        }
-      }
-      console.log('fromEntries : ', i + ' ', data)
-      console.log('sale: ', sale)
+      if (checkPayExist(data)) return document.getElementById('errMsg').showPopover()
+      sale.prdcts.push(data as saleObj['prdcts'][0])
     }
 
+    document.getElementById('loadingMsg').showPopover()
     const res = await insertSale(sale)
     if (res.err) {
-      document.getElementById('dbErr').showPopover()
-      return
+      console.log('res.err: ', res.err)
+      return document.getElementById('dbErr').showPopover()
     }
     document.getElementById('checkMsg').showPopover()
+
     console.log('res: ', res)
   }
 
   return (
     <div popover="auto" id="popSaleForm" className="pop overflow-y-auto h-5/6 p-8 rounded-md">
       <main className="max-w-4xl mx-auto">
-        <form id="saleForm">
+        <form id="detailsForm">
           <div className="flex items-end justify-between border-b pb-3">
             <h2 className="flex gap-4">
               <Icon name="money-check-dollar-pen" type="lit" className="size-7 rtl:scale-x-100" />
@@ -69,10 +67,10 @@ export default function SaleForm({ agnts }) {
               <>
                 <label className="slct">
                   <p>שם הסוכן</p>
-                  <select name="agntId">
-                    {agnts.map((agnt: agntObj) => (
+                  <select name="agntId" defaultValue={user?.id}>
+                    {agnts.map((agnt) => (
                       <option value={agnt.id} key={agnt.id}>
-                        {agnt.firstName + ' ' + agnt.lastName}
+                        {agnt.name}
                       </option>
                     ))}
                   </select>
@@ -121,7 +119,7 @@ export default function SaleForm({ agnts }) {
               <Icon name="plus" type="reg" />
               <p>הוספת מוצר</p>
             </button>
-            <button className="btn mt-8" onClick={onSave}>
+            <button className="btn mt-8" onClick={onSave} type="button">
               <Icon name="floppy-disk" type="sol" className="bg-white" />
               <p>שמור מכירה</p>
             </button>
@@ -143,7 +141,7 @@ function PrdctComp({ i }) {
   })
 
   return (
-    <form className="my-8">
+    <form name="prdctForm" className="my-8">
       <h2 className="text-lg border-b pb-2 mb-4">מוצר {i + 1}</h2>
       <section className="flex gap-8 grid-cols-3 ">
         <SelectInput lbl="חברה" field="company" list={companyList} />

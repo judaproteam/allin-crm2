@@ -6,7 +6,6 @@ export async function getPrdctByBranch(branch: string) {
   const sales = await db.sale.findMany({
     where: { branch },
   })
-  // const sales = mockSalesData; // Replace with actual DB call when ready
 
   let result: { [key: string]: number | boolean } = {}
 

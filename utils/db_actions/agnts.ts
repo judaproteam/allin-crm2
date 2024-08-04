@@ -3,10 +3,7 @@
 import { db } from '@/db/db'
 
 export async function insertAgnts() {
-  console.log(agnts.length)
-  return
-
-  for (let i = 65; i < agnts.length; i++) {
+  for (let i = 0; i < agnts.length; i++) {
     const agnt = agnts[i]
     const res = await db.agnt.create({
       data: {
@@ -355,7 +352,7 @@ const agnts = [
     firstName: 'מאור',
     lastName: 'עסיס',
     phone: '050-6904460',
-    email: 'maor@myexperts.co.il',
+    email: 'maor@pro-bit.co.il',
   },
   {
     firstName: 'מאיה',
@@ -399,7 +396,18 @@ const agnts = [
     phone: '054-6321990',
     email: 'Service9@myexperts.co.il',
   },
-
+  {
+    firstName: 'לוזי',
+    lastName: 'אברהם',
+    phone: '052-2912702',
+    email: 'yishay@2eitan.co.il',
+  },
+  {
+    firstName: 'ישי',
+    lastName: 'אברהם',
+    phone: '052-8222189',
+    email: 'ins@2eitan.co.il',
+  },
   {
     firstName: 'לירון',
     lastName: 'אובדנקו',
@@ -410,7 +418,7 @@ const agnts = [
     firstName: 'ערן',
     lastName: 'הירשפלד',
     phone: '054-6929966',
-    email: 'hirschfeldbit@gmail.com',
+    email: '‎hirschfeldbit@gmail.com',
   },
   {
     firstName: 'קורל',

@@ -1,0 +1,11 @@
+-- AlterTable
+ALTER TABLE "Client" ADD COLUMN     "createdById" INTEGER NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "Sale" ADD COLUMN     "createdById" INTEGER NOT NULL DEFAULT 0;
+
+-- AddForeignKey
+ALTER TABLE "Client" ADD CONSTRAINT "Client_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "Agnt"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Sale" ADD CONSTRAINT "Sale_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "Agnt"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

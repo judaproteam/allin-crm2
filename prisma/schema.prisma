@@ -13,29 +13,57 @@ model Client {
   lastName  String
   idNum     Int    @unique
 
-  Sale Sale[]
+  Sale        Sale[]
+  createdBy   Agnt   @relation(fields: [createdById], references: [id])
+  createdById Int
+
+  name    String? @default(dbgenerated())
+  details String? @default(dbgenerated())
+}
+
+enum Role {
+  AGNT
+  OFFICE
+  MNGR
+  ADMIN
 }
 
 model Agnt {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   firstName String
   lastName  String?
-  email     String? @unique
-  phone     String? @unique
+  email     String   @unique
+  phone     String?  @unique
+  role      Role     @default(AGNT)
+  verified  Boolean? @default(false)
+
+  gglSub  String?
+  gglName String?
+  picture String?
 
   agntSales  Sale[] @relation("agnt")
   agnt2Sales Sale[] @relation("agnt2")
+
+  createdClients Client[]
+  createdSales   Sale[]
+
+  name String? @default(dbgenerated())
+
+  @@index([email])
 }
 
 model Sale {
   id Int @id @default(autoincrement())
 
   agntId     Int
-  agntShare  Int      @default(100)
   agnt2Id    Int?
-  agnt2Share Int?
-  offrDt     DateTime
-  clientId   Int
+  agntShare  Int    @default(100)
+  agnt2Share Int?   @default(0)
+  agntPay    Float
+  agnt2Pay   Float? @default(0)
+
+  offrDt   DateTime
+  clientId Int
 
   company   String
   branch    String
@@ -52,6 +80,13 @@ model Sale {
   agnt      Agnt     @relation(fields: [agntId], references: [id], name: "agnt")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  total      Float? @default(0)
+  agntTotal  Float? @default(0)
+  agnt2Total Float? @default(0)
+
+  createdBy   Agnt @relation(fields: [createdById], references: [id])
+  createdById Int
 }
 
 // תאריך שליחת הצעה

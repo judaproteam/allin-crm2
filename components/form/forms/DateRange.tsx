@@ -1,3 +1,5 @@
+'use client'
+
 import { getDatePeriods, getFormData, startOfMonth } from '@/utils/func'
 import SmallDatePicker from '../SmallDatePicker'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -21,7 +23,6 @@ export default function DateRange() {
   function onPeriodChange(e) {
     const val = e.target.value
     const period = getDatePeriods(val)
-    console.log('period', period)
 
     let qParams = Object.fromEntries(new URLSearchParams(searchParams))
     qParams = { ...qParams, ...period }

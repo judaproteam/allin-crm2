@@ -17,6 +17,12 @@ dependencies:
   '@tanstack/react-table':
     specifier: ^8.19.3
     version: 8.19.3(react-dom@18.3.1)(react@18.3.1)
+  jose:
+    specifier: ^5.6.3
+    version: 5.6.3
+  jwt-decode:
+    specifier: ^4.0.0
+    version: 4.0.0
   next:
     specifier: 14.2.5
     version: 14.2.5(react-dom@18.3.1)(react@18.3.1)(sass@1.77.8)
@@ -1020,8 +1026,17 @@ packages:
     hasBin: true
     dev: true
 
+  /jose@5.6.3:
+    resolution: {integrity: sha512-1Jh//hEEwMhNYPDDLwXHa2ePWgWiFNNUadVmguAAw2IJ6sj9mNxV5tGXJNqlMkJAybF6Lgw1mISDxTePP/187g==}
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+    dev: false
+
+  /jwt-decode@4.0.0:
+    resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
+    engines: {node: '>=18'}
     dev: false
 
   /lilconfig@2.1.0:

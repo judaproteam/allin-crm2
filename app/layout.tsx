@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Assistant } from 'next/font/google'
 import '@/styles/globals.scss'
+import UserProvider from '@/context/UserProvider'
+import { getCrntUser } from '@/auth/authFuncs'
 
 const font = Assistant({ subsets: ['latin'] })
 
@@ -16,14 +18,14 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const user = await getCrntUser()
+
   return (
     <html lang="he" dir="rtl">
-      <body className={font.className}>{children}</body>
+      <body className={font.className}>
+        <UserProvider crntUser={user}>{children}</UserProvider>
+      </body>
     </html>
   )
 }

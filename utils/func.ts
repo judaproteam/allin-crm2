@@ -15,7 +15,7 @@ export const toCurrency = (num: number) => {
     style: 'currency',
     currency: 'ILS',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
+    maximumFractionDigits: 2,
   }).format(num)
 }
 
@@ -94,7 +94,6 @@ export function formatSumSales(arr: any[]) {
 export function startOfMonth() {
   const dt = new Date()
   return new Date(dt.getFullYear(), dt.getMonth(), 2).toISOString().split('T')[0]
-  // return toDate(new Date(dt.getFullYear(), dt.getMonth(), 1))
 }
 
 export function getDatePeriods(period: string) {
@@ -134,3 +133,62 @@ export function getDatePeriods(period: string) {
       }
   }
 }
+
+export function groupByAgntSales(originalObjects: any[]) {
+  const agentMap = {}
+
+  originalObjects.forEach((obj) => {
+    const {
+      agntId,
+      branch,
+      prdctType,
+      _sum: { pay },
+    } = obj
+
+    let key
+    branch === 'פנסיוני' || branch === 'פיננסי' ? (key = `${branch}-${prdctType}`) : (key = branch)
+
+    if (!agentMap[agntId]) {
+      agentMap[agntId] = { agentId: agntId }
+    }
+
+    if (!agentMap[agntId][key]) {
+      agentMap[agntId][key] = 0
+    }
+
+    agentMap[agntId][key] += pay
+  })
+
+  return Object.values(agentMap)
+}
+
+const prdctTypeList = ['ניוד', 'הפקדה חודשית', 'הפקדה חד פעמית']
+export function checkPayExist(data) {
+  if (!data.pay) {
+    let err = true
+    for (const key of prdctTypeList) {
+      if (data[key]) err = false
+    }
+    return err
+  }
+  return false
+}
+
+// agtnsSum [
+//   { agentId: 16, 'כתב שירות חיצוני': 547, 'נסיעות לחול': 43 },
+//   {
+//     agentId: 21,
+//     'פנסיוני - ניוד': 19211,
+//     'אלמנטרי': 8910,
+//     'פנסיוני - הפקדה חודשית': 1077,
+//     'אכ"ע': 2205
+//   },
+//   { agentId: 29, 'פנסיוני - הפקדה חודשית': 912 },
+//   { agentId: 30, 'פיננסי - הפקדה חודשית': 444, 'פנסיוני - ניוד': 9322 },
+//   { agentId: 39, 'קצבה מיידית': 904, 'נסיעות לחול': 240 },
+//   { agentId: 62, 'סיכונים': 323 },
+//   { agentId: 69, 'פנסיוני - הפקדה חודשית': 2000 },
+//   { agentId: 70, 'אכ"ע': 77777, 'סיכונים': 88888 },
+//   { agentId: 72, 'אכ"ע': 424, 'סיכונים': 151 },
+//   { agentId: 74, 'פנסיוני - ניוד': 676 }
+// ]

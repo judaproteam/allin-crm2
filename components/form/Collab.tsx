@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Icon from '../Icon'
 import { rng } from '@/utils/func'
+import { agntType } from '@/utils/types'
+import { useUser } from '@/context/UserProvider'
 
-const id = '1'
-export default function Collab({ agnts }) {
-  console.log(agnts)
-
+export default function Collab({ agnts }: { agnts: agntType[] }) {
+  const { user } = useUser()
   const [share1, setShare1] = useState(50)
   const [share2, setShare2] = useState(50)
 
@@ -16,10 +16,10 @@ export default function Collab({ agnts }) {
           <p>שם סוכן 1</p>
         </label>
         <div className="inline-flex items-center gap-1 rounded-md border p-1 border-slate-200 w-auto">
-          <select name="agntId" id="agntId" className="h-8 w-40 px-4 outline-none">
+          <select name="agntId" defaultValue={user?.id} className="h-8 w-40 px-4 outline-none">
             {agnts.map((agnt) => (
               <option value={agnt.id} key={agnt.id}>
-                {agnt.firstName + ' ' + agnt.lastName}
+                {agnt.name}
               </option>
             ))}
           </select>
@@ -59,7 +59,7 @@ export default function Collab({ agnts }) {
           <select name="agnt2Id" id="agnt2Id" className="h-8 w-40 px-4 outline-none">
             {agnts.map((agnt) => (
               <option value={agnt.id} key={agnt.id}>
-                {agnt.firstName + ' ' + agnt.lastName}
+                {agnt.name}
               </option>
             ))}
           </select>

@@ -1,3 +1,5 @@
+'use client'
+
 import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
 import { useState } from 'react'
 import SelectFilter from '../SelectFilter'
@@ -21,7 +23,7 @@ export default function FilterForm() {
 
     const url = new URLSearchParams(qParams).toString()
     router.replace('?' + url, { scroll: false })
-    router.refresh()
+    // router.refresh()
   }
 
   const [prdct, setPrdct] = useState({

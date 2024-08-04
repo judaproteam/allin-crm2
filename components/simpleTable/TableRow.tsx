@@ -1,13 +1,6 @@
 import { toCurrency, toDate } from '@/utils/func'
 
-interface TableRowProps {
-  item: Record<string, any>
-  headers: Array<{ key: string; label: string }>
-}
-
-export default function TableRow(props: TableRowProps) {
-  const { item, headers } = props
-
+export default function TableRow({ item, headers }: TableRowProps) {
   function getCell(key: string) {
     if (key === 'pay') return toCurrency(item.pay)
     if (key === 'offrDt') return toDate(item.offrDt)
@@ -27,4 +20,9 @@ export default function TableRow(props: TableRowProps) {
       ))}
     </tr>
   )
+}
+
+interface TableRowProps {
+  item: Record<string, any>
+  headers: Array<{ key: string; label: string }>
 }

@@ -3,17 +3,6 @@
 import { formatSumSales } from '@/utils/func'
 import { db } from '../db'
 
-export async function getPersonalRisk() {
-  const res = await db.sale.aggregate({
-    where: { prdct: 'תאונות אישיות' },
-    _sum: {
-      pay: true,
-    },
-  })
-
-  return res
-}
-
 export async function companyByBranch() {
   const res = await db.sale.groupBy({
     by: ['branch', 'prdctType'],
@@ -28,10 +17,18 @@ export async function companyByBranch() {
   return res
 }
 
-export async function salesByBranch({ filter }) {
-  delete filter.orderBy
-  delete filter.direction
+export async function getPersonalRisk() {
+  const res = await db.sale.aggregate({
+    where: { prdct: 'תאונות אישיות' },
+    _sum: {
+      pay: true,
+    },
+  })
 
+  return res
+}
+
+export async function salesByBranch({ filter }) {
   if (filter.gte && filter.lte) {
     filter.offrDt = {
       gte: new Date(filter.gte).toISOString(),
@@ -40,6 +37,8 @@ export async function salesByBranch({ filter }) {
   }
   delete filter.gte
   delete filter.lte
+
+  if (filter.agntId) filter.agntId = Number(filter.agntId)
 
   const res = await db.sale.groupBy({
     where: filter,

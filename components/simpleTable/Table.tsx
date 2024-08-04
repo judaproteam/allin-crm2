@@ -12,30 +12,15 @@ export default function Table({ tblData, setTableData }: TableProps) {
   }, [])
 
   const [columnOrder, setColumnOrder] = useState(headers)
-  // const [sortedData, setSortedData] = useState(tblData)
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: null, direction: 'asc' })
 
-  function getNestedValue(obj: Record<string, any>, path: string): any {
-    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
-  }
   function onSort(key: string) {
     const direction = sortConfig.direction === 'asc' ? 'desc' : 'asc'
 
-    const sortedArray = [...tblData].sort((a, b) => {
-      const aValue = getNestedValue(a, key)
-      const bValue = getNestedValue(b, key)
-
-      if (aValue < bValue) {
-        return direction === 'asc' ? -1 : 1
-      }
-      if (aValue > bValue) {
-        return direction === 'asc' ? 1 : -1
-      }
-      return 0
-    })
+    const { sortedArray, sortConfigData } = sortData({ direction, key, data: tblData })
 
     setTableData(sortedArray)
-    setSortConfig({ key, direction })
+    setSortConfig(sortConfigData)
   }
 
   return (
@@ -57,6 +42,27 @@ export default function Table({ tblData, setTableData }: TableProps) {
       </table>
     </div>
   )
+}
+
+function sortData({ direction, key, data }) {
+  function getNestedValue(obj: Record<string, any>, path: string): any {
+    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
+  }
+
+  const sortedArray = [...data].sort((a, b) => {
+    const aValue = getNestedValue(a, key)
+    const bValue = getNestedValue(b, key)
+
+    if (aValue < bValue) {
+      return direction === 'asc' ? -1 : 1
+    }
+    if (aValue > bValue) {
+      return direction === 'asc' ? 1 : -1
+    }
+    return 0
+  })
+
+  return { sortedArray, sortConfigData: { key, direction } }
 }
 
 interface TableProps {

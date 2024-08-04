@@ -5,10 +5,6 @@ import { db } from '../db'
 const sales = db.sale
 
 export async function getSales({ filter }) {
-  const orderBy = { [filter.orderBy]: filter.direction }
-  delete filter.orderBy
-  delete filter.direction
-
   if (filter.gte && filter.lte) {
     filter.offrDt = {
       gte: new Date(filter.gte).toISOString(),
@@ -18,6 +14,8 @@ export async function getSales({ filter }) {
   delete filter.gte
   delete filter.lte
 
+  if (filter.agntId) filter.agntId = Number(filter.agntId)
+
   const res = await sales.findMany({
     where: filter,
     include: {
@@ -25,7 +23,6 @@ export async function getSales({ filter }) {
       agnt: true,
       agnt2: true,
     },
-    orderBy,
   })
 
   const formated = res.map((item) => {
