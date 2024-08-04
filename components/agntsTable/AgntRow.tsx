@@ -2,7 +2,7 @@ import { toCurrency } from '@/utils/func'
 
 export default function AgntRow({ item, headers }: TableRowProps) {
   function getCell(key: string) {
-    if (key === 'agntId') return item[key]
+    if (key === 'name') return item[key]
     return toCurrency(item[key] | 0)
   }
 

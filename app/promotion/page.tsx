@@ -11,8 +11,6 @@ export default async function PromotionPage({ searchParams }) {
   const agntsTotal = await getAgntsTotal()
   const agnts = await getAllAgnts()
 
-  console.log('agntsTotal', agntsTotal)
-
   const total = await getTotal({ filter: searchParams })
   const payBranch = await getPayBranch({ filter: searchParams })
   const salesSum = { total: total._sum.total, sales: payBranch }

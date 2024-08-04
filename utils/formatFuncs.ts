@@ -1,7 +1,23 @@
-export function formatAgntsTotal(originalObjects: any[]) {
-  const agentMap = { agntTotal: 0 }
+import { getMapAgnts } from '@/db/agnt'
 
-  originalObjects.forEach((obj) => {
+export function mapAgnts(agnts) {
+  const agntMap = {}
+
+  agnts.forEach((agnt) => {
+    agntMap[agnt.id] = agnt
+  })
+
+  return agntMap
+}
+
+export async function formatAgntsTotal(agntsTotal: any[]) {
+  const mapAgnts = await getMapAgnts()
+
+  const agntSales = {}
+
+  console.log('agntsTotal.length: ', agntsTotal.length)
+
+  agntsTotal.forEach((obj) => {
     const {
       agntId,
       branch,
@@ -9,26 +25,27 @@ export function formatAgntsTotal(originalObjects: any[]) {
       _sum: { agntPay, agnt2Pay, agntTotal },
     } = obj
 
-    let key
-    branch === 'פנסיוני' || branch === 'פיננסי' ? (key = `${branch}-${prdctType}`) : (key = branch)
+    let keyBranch
 
-    if (!agentMap[agntId]) {
-      agentMap[agntId] = { agntId }
-    }
+    branch === 'פנסיוני' || branch === 'פיננסי'
+      ? (keyBranch = `${branch}-${prdctType}`)
+      : (keyBranch = branch)
 
-    if (!agentMap[agntId][key]) {
-      agentMap[agntId][key] = 0
-    }
+    if (!agntSales[agntId]) agntSales[agntId] = { agntId }
+    if (!agntSales[agntId][keyBranch]) agntSales[agntId][keyBranch] = 0
+
+    agntSales[agntId].name = mapAgnts[agntId].name
+
     prdctType === 'הפקדה חודשית'
-      ? (agentMap[agntId][key] += (agntPay + agnt2Pay) * 12)
-      : (agentMap[agntId][key] += agntPay + agnt2Pay)
+      ? (agntSales[agntId][keyBranch] += (agntPay + agnt2Pay) * 12)
+      : (agntSales[agntId][keyBranch] += agntPay + agnt2Pay)
 
-    agentMap[agntId].agntTotal
-      ? (agentMap[agntId].agntTotal += agntTotal)
-      : (agentMap[agntId].agntTotal = agntTotal)
+    agntSales[agntId].agntTotal
+      ? (agntSales[agntId].agntTotal += agntTotal)
+      : (agntSales[agntId].agntTotal = agntTotal)
   })
 
-  console.log('formatAgntsTotal', agentMap)
+  console.log('Object.values(agntSales)', Object.values(agntSales))
 
-  return Object.values(agentMap)
+  return Object.values(agntSales)
 }

@@ -1,4 +1,4 @@
-import { formatAgntsTotal } from '@/utils/formatFuncs'
+import { formatAgntsTotal, mapAgnts } from '@/utils/formatFuncs'
 import { db } from './db'
 
 export async function getAllAgnts() {
@@ -7,7 +7,14 @@ export async function getAllAgnts() {
     orderBy: { name: 'asc' },
   })
 
+  mapAgnts(res)
   return res
+}
+
+export async function getMapAgnts() {
+  const res = await getAllAgnts()
+
+  return mapAgnts(res)
 }
 
 export async function getAgntsTotal() {

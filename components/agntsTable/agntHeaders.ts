@@ -1,5 +1,5 @@
 export let agntHeaders = [
-  { key: 'agntId', label: 'סוכן' },
+  { key: 'name', label: 'סוכן' },
   { key: 'agntTotal', label: 'משוקלל' },
 
   { key: 'פיננסי-הפקדה חודשית', label: 'פיננסי-שוטף משונת' },
