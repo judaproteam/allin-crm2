@@ -6,7 +6,9 @@ import { agntHeaders } from './agntHeaders'
 import AgntHeader from './AgntHeader'
 import AgntRow from './AgntRow'
 
-export default function AgntTable({ tblData, setTableData }: TableProps) {
+export default function AgntTable({ agntsTotal }) {
+  const [tblData, setTblData] = useState(agntsTotal)
+
   useEffect(() => {
     const tblOrderCulomns = JSON.parse(localStorage.getItem('agntsColumnOrder'))
     if (tblOrderCulomns) setColumnOrder(tblOrderCulomns)
@@ -34,7 +36,7 @@ export default function AgntTable({ tblData, setTableData }: TableProps) {
       return 0
     })
 
-    setTableData(sortedArray)
+    setTblData(sortedArray)
     setSortConfig({ key, direction })
   }
 
@@ -59,12 +61,7 @@ export default function AgntTable({ tblData, setTableData }: TableProps) {
   )
 }
 
-interface TableProps {
-  tblData: Array<Record<string, any>>
-  setTableData: React.Dispatch<React.SetStateAction<Array<Record<string, any>>>>
-}
-
-interface SortConfig {
+type SortConfig = {
   key: string | null
   direction: 'asc' | 'desc'
 }

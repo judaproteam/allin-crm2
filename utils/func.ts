@@ -68,29 +68,6 @@ export function onlyValObj(obj: any) {
   return filter
 }
 
-export function formatSumSales(arr: any[]) {
-  const obj = {
-    פנסיוני: {
-      'הפקדה חודשית': 0,
-      ניוד: 0,
-    },
-    פיננסי: {
-      'הפקדה חודשית': 0,
-      'הפקדה חד פעמית': 0,
-      ניוד: 0,
-    },
-  }
-  for (const item of arr) {
-    if (item.branch === 'פנסיוני' || item.branch === 'פיננסי') {
-      obj[item.branch][item.prdctType] =
-        item.prdctType === 'הפקדה חודשית' ? item._sum.pay * 12 : item._sum.pay
-    } else {
-      obj[item.branch] = item._sum.pay
-    }
-  }
-  return obj
-}
-
 export function startOfMonth() {
   const dt = new Date()
   return new Date(dt.getFullYear(), dt.getMonth(), 2).toISOString().split('T')[0]
@@ -132,34 +109,6 @@ export function getDatePeriods(period: string) {
         lte: new Date(dt.getFullYear(), dt.getMonth() + 1, 1).toISOString().split('T')[0],
       }
   }
-}
-
-export function groupByAgntSales(originalObjects: any[]) {
-  const agentMap = {}
-
-  originalObjects.forEach((obj) => {
-    const {
-      agntId,
-      branch,
-      prdctType,
-      _sum: { pay },
-    } = obj
-
-    let key
-    branch === 'פנסיוני' || branch === 'פיננסי' ? (key = `${branch}-${prdctType}`) : (key = branch)
-
-    if (!agentMap[agntId]) {
-      agentMap[agntId] = { agentId: agntId }
-    }
-
-    if (!agentMap[agntId][key]) {
-      agentMap[agntId][key] = 0
-    }
-
-    agentMap[agntId][key] += pay
-  })
-
-  return Object.values(agentMap)
 }
 
 const prdctTypeList = ['ניוד', 'הפקדה חודשית', 'הפקדה חד פעמית']

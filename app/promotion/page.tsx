@@ -1,11 +1,10 @@
+import AgntTable from '@/components/agntsTable/AgntTable'
 import DateRange from '@/components/form/forms/DateRange'
 import FilterForm from '@/components/form/forms/FilterForm'
 import Search from '@/components/form/SearchAgnt_old'
 import { Numbox, Numboxs } from '@/components/Numbox'
-import { getAgntsTotal, getAllAgnts } from '@/db/agnt'
+import { getAgntsTotal, getAllAgnts } from '@/db/agnt/getTotal'
 import { getPayBranch, getTotal } from '@/db/sale/getTotal'
-import Promotion from '@/ui/Promotion'
-// import fs from 'fs'
 
 export default async function PromotionPage({ searchParams }) {
   const agntsTotal = await getAgntsTotal()
@@ -14,8 +13,6 @@ export default async function PromotionPage({ searchParams }) {
   const total = await getTotal({ filter: searchParams })
   const payBranch = await getPayBranch({ filter: searchParams })
   const salesSum = { total: total._sum.total, sales: payBranch }
-
-  // fs.writeFileSync('./db/agntsTotal.json', JSON.stringify(agntsTotal, null, 2))
 
   return (
     <div>
@@ -35,7 +32,7 @@ export default async function PromotionPage({ searchParams }) {
         </div>
       </section>
 
-      <Promotion agtnsSum={agntsTotal} />
+      <AgntTable agntsTotal={agntsTotal} />
     </div>
   )
 }

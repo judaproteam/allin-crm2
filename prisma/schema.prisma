@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Promo {
+  id     Int    @id @default(autoincrement())
+  title  String
+  desc   String
+  target Int
+  branch String
+}
+
 model Client {
   id        Int    @id @default(autoincrement())
   firstName String
@@ -49,6 +57,7 @@ model Agnt {
 
   name String? @default(dbgenerated())
 
+  @@unique([firstName, lastName])
   @@index([email])
 }
 

@@ -1,6 +1,6 @@
-import { formatSumSales } from '@/utils/func'
 import { db } from '../db'
 import { getCrntUser } from '@/auth/authFuncs'
+import { formatTotalSales } from './format'
 
 export async function getTotal({ filter }) {
   filter = await formatFilter(filter)
@@ -30,7 +30,7 @@ export async function getPayBranch({ filter }) {
     },
   })
 
-  return formatSumSales(res)
+  return formatTotalSales(res)
 }
 
 export async function getTableData({ filter }) {

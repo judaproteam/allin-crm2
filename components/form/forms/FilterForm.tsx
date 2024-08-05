@@ -1,10 +1,10 @@
 'use client'
 
-import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
+import { branchList, companyList, getPrdctByBranch, statusList } from '@/db/lists'
 import { useState } from 'react'
 import SelectFilter from '../SelectFilter'
 import Icon from '@/components/Icon'
-import { getFormData, onlyValObj } from '@/utils/func'
+import { onlyValObj } from '@/utils/func'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function FilterForm() {
@@ -12,7 +12,6 @@ export default function FilterForm() {
   const searchParams = useSearchParams()
 
   function onFilter(e) {
-    //const data = getFormData(e)
     e.preventDefault()
     const form = e.target as HTMLFormElement
     const data = Object.fromEntries(new FormData(form))
@@ -23,7 +22,6 @@ export default function FilterForm() {
 
     const url = new URLSearchParams(qParams).toString()
     router.replace('?' + url, { scroll: false })
-    // router.refresh()
   }
 
   const [prdct, setPrdct] = useState({

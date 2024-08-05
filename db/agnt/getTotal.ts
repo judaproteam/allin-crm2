@@ -1,5 +1,5 @@
-import { formatAgntsTotal, mapAgnts } from '@/utils/formatFuncs'
-import { db } from './db'
+import { db } from '../db'
+import { formatTotalAgnts } from '../sale/format'
 
 export async function getAllAgnts() {
   const res = await db.agnt.findMany({
@@ -7,14 +7,7 @@ export async function getAllAgnts() {
     orderBy: { name: 'asc' },
   })
 
-  mapAgnts(res)
   return res
-}
-
-export async function getMapAgnts() {
-  const res = await getAllAgnts()
-
-  return mapAgnts(res)
 }
 
 export async function getAgntsTotal() {
@@ -27,6 +20,13 @@ export async function getAgntsTotal() {
     },
   })
 
-  // return res
-  return formatAgntsTotal(res)
+  return formatTotalAgnts(res)
+}
+
+export async function getMapAgnts() {
+  const agnts = await getAllAgnts()
+  const agntMap = {}
+  agnts.forEach((agnt) => (agntMap[agnt.id] = agnt))
+
+  return agntMap
 }
