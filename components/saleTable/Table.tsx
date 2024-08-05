@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import TableHeader from './TableHeader'
 import TableRow from './TableRow'
 import { headers } from './saleHeaders'
-import Icon from '../Icon'
+import Icon from '../../ui/Icon'
 
 export default function Table({ data }) {
   const [tblData, setTblData] = useState(data)

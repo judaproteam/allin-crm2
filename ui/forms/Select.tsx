@@ -1,4 +1,4 @@
-export default function SelectInput({
+export default function Select({
   lbl = '',
   field = '',
   list = [],
@@ -19,5 +19,3 @@ export default function SelectInput({
     </label>
   )
 }
-
-// disabled={list.length < 2}

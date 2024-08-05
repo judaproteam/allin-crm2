@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import Icon from '../Icon'
+import Icon from '../../ui/Icon'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 export default function Search({ agnts }) {

@@ -238,6 +238,10 @@ body {
     }
   }
 
+  .btn-grp {
+    @apply py-1 px-3 transition-shadow hover:shadow-2 active:shadow-none rounded-full cursor-pointer;
+  }
+
   .inputAnchor {
     anchor-name: --anchor-el;
   }
@@ -245,9 +249,7 @@ body {
     margin: 0;
     inset: 0;
     position: absolute;
-    /*  anchor reference  */
     position-anchor: --anchor-el;
-    /*  Position bottom of anchored elem at top of anchor  */
     margin-top: 2.4rem;
     top: anchor(top);
     right: anchor(right);

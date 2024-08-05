@@ -12,7 +12,7 @@ export default function AgntRow({ item, headers }: TableRowProps) {
         <input type="checkbox" name="" id="" />
       </td>
       {headers.map((header) => (
-        <td key={header.key} onClick={() => console.log(item)}>
+        <td key={header.key} className="text-nowrap">
           {getCell(header.key)}
         </td>
       ))}

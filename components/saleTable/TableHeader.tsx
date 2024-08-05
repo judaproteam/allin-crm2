@@ -1,6 +1,6 @@
 import { clone } from '@/utils/func'
 import { Dispatch, SetStateAction } from 'react'
-import Icon from '../Icon'
+import Icon from '../../ui/Icon'
 
 let dragIndex: number, enterIndex: number
 

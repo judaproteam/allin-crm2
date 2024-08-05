@@ -3,7 +3,7 @@
 import { getDatePeriods, getFormData, startOfMonth } from '@/utils/func'
 import SmallDatePicker from '../SmallDatePicker'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Icon from '@/components/Icon'
+import Icon from '@/ui/Icon'
 
 export default function DateRange() {
   const router = useRouter()

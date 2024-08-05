@@ -1,11 +1,10 @@
-export default function TextInput({
+export default function Input({
   field = '',
   lbl = '',
   type = 'text',
   required = true,
   className = '',
   placeholder = '',
-  info = '',
   errMsg = '',
 }) {
   return (

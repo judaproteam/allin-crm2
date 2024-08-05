@@ -3,7 +3,7 @@
 import { branchList, companyList, getPrdctByBranch, statusList } from '@/db/lists'
 import { useState } from 'react'
 import SelectFilter from '../SelectFilter'
-import Icon from '@/components/Icon'
+import Icon from '@/ui/Icon'
 import { onlyValObj } from '@/utils/func'
 import { useRouter, useSearchParams } from 'next/navigation'
 

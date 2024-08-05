@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-import Icon from "@/components/Icon"
+import * as React from 'react'
+import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import Icon from '@/ui/Icon'
 
 const EyeCheckbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,

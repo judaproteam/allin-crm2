@@ -1,9 +1,9 @@
 'use client'
 
-import Icon from '@/components/Icon'
+import Icon from '@/ui/Icon'
 import { useState } from 'react'
-import TextInput from '../TextInput'
-import SelectInput from '../SelectInput'
+import Input from '@/ui/forms/Input'
+import Select from '@/ui/forms/Select'
 import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
 import Collab from '../Collab'
 import { agntType, saleObj } from '@/utils/types'
@@ -95,16 +95,14 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
 
           <section className="grid gap-6">
             <section className="flex gap-8 items-end">
-              <SelectInput lbl="פעולה" field="action" list={['מכירה', 'מינוי סוכן']} />
-              {/* <TextInput type="date" lbl="תאריך שליחת הצעה" field="offrDt" /> */}
-
+              <Select lbl="פעולה" field="action" list={['מכירה', 'מינוי סוכן']} />
               <DatePicker lbl="תאריך שליחת הצעה" field="offrDt" />
             </section>
 
             <section className="flex gap-8">
-              <TextInput lbl="שם פרטי" field="clientFirstName" />
-              <TextInput lbl="שם משפחה" field="clientLastName" />
-              <TextInput lbl="תעודת זהות" field="idNum" type="number" errMsg="ת.ז. אינה תקין" />
+              <Input lbl="שם פרטי" field="clientFirstName" />
+              <Input lbl="שם משפחה" field="clientLastName" />
+              <Input lbl="תעודת זהות" field="idNum" type="number" errMsg="ת.ז. אינה תקין" />
             </section>
           </section>
         </form>
@@ -144,9 +142,9 @@ function PrdctComp({ i }) {
     <form name="prdctForm" className="my-8">
       <h2 className="text-lg border-b pb-2 mb-4">מוצר {i + 1}</h2>
       <section className="flex gap-8 grid-cols-3 ">
-        <SelectInput lbl="חברה" field="company" list={companyList} />
+        <Select lbl="חברה" field="company" list={companyList} />
 
-        <SelectInput
+        <Select
           lbl="ענף"
           field="branch"
           list={branchList}
@@ -154,13 +152,13 @@ function PrdctComp({ i }) {
             setPrdct(getPrdctByBranch(e.target.value))
           }}
         />
-        <SelectInput lbl="מוצר" field="prdct" list={prdct.prdctList} />
+        <Select lbl="מוצר" field="prdct" list={prdct.prdctList} />
         {prdct.prdctTypeList.length < 2 && (
-          <SelectInput lbl="סוג המוצר" field="prdctType" list={prdct.prdctTypeList} />
+          <Select lbl="סוג המוצר" field="prdctType" list={prdct.prdctTypeList} />
         )}
         {prdct.prdctTypeList.length > 1 &&
           prdct.prdctTypeList.map((prdctType, i) => (
-            <TextInput
+            <Input
               key={i}
               lbl={'סכום ' + prdctType}
               field={prdctType}
@@ -170,9 +168,9 @@ function PrdctComp({ i }) {
             />
           ))}
         {prdct.prdctTypeList.length < 2 && (
-          <TextInput lbl="סכום" field="pay" type="number" errMsg="סכום אינו תקין" />
+          <Input lbl="סכום" field="pay" type="number" errMsg="סכום אינו תקין" />
         )}
-        <SelectInput lbl="סטטוס" field="status" list={statusList} />
+        <Select lbl="סטטוס" field="status" list={statusList} />
       </section>
     </form>
   )

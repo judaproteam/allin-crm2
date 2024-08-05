@@ -38,19 +38,24 @@ export async function getTableData({ filter }) {
 
   const res = await db.sale.findMany({
     where: filter,
-    include: {
-      client: true,
-      agnt: true,
-      agnt2: true,
+    select: {
+      id: true,
+      action: true,
+      offrDt: true,
+      prdct: true,
+      prdctType: true,
+      pay: true,
+      status: true,
+      branch: true,
+      client: { select: { id: true, details: true } },
+      agnt: { select: { id: true, name: true } },
+      agnt2: { select: { id: true, name: true } },
     },
   })
 
   const formated = res.map((item) => {
-    const clientData = `${item.client.firstName} ${item.client.lastName} (${item.client.idNum})`
-    let agntName = `${item.agnt.firstName} ${item.agnt.lastName}`
-    if (item.agnt2) {
-      agntName = `${item.agnt.firstName} ${item.agnt.lastName} & ${item.agnt2.firstName} ${item.agnt2.lastName}`
-    }
+    const clientData = item.client.details
+    const agntName = item.agnt2 ? `${item.agnt.name} & ${item.agnt2.name}` : item.agnt.name
 
     return { ...item, clientData, agntName }
   })

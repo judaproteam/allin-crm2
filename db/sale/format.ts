@@ -13,30 +13,14 @@ export async function formatTotalAgnts(sales) {
       _sum: { agntPay, agnt2Pay, agntTotal },
     } = obj
 
-    let keyBranch
+    const keyBranch = branch === 'פנסיוני' || branch === 'פיננסי' ? `${branch}-${prdctType}` : branch
 
-    branch === 'פנסיוני' || branch === 'פיננסי'
-      ? (keyBranch = `${branch}-${prdctType}`)
-      : (keyBranch = branch)
+    if (!mapSales[agntId]) mapSales[agntId] = { agntId, [keyBranch]: 0, agntTotal: 0, name: agntsName[agntId].name }
 
-    console.log('keyBranch', keyBranch)
+    mapSales[agntId][keyBranch] += prdctType === 'הפקדה חודשית' ? (agntPay + agnt2Pay) * 12 : agntPay + agnt2Pay
 
-    if (!mapSales[agntId]) mapSales[agntId] = { agntId }
-
-    if (!mapSales[agntId][keyBranch]) mapSales[agntId][keyBranch] = 0
-
-    prdctType === 'הפקדה חודשית'
-      ? (mapSales[agntId][keyBranch] += (agntPay + agnt2Pay) * 12)
-      : (mapSales[agntId][keyBranch] += agntPay + agnt2Pay)
-
-    mapSales[agntId].agntTotal
-      ? (mapSales[agntId].agntTotal += agntTotal)
-      : (mapSales[agntId].agntTotal = agntTotal)
-
-    mapSales[agntId].name = agntsName[agntId].name
+    mapSales[agntId].agntTotal += agntTotal
   })
-
-  console.log('mapSales', Object.values(mapSales))
 
   return Object.values(mapSales)
 }
@@ -55,8 +39,7 @@ export function formatTotalSales(arr) {
   }
   for (const item of arr) {
     if (item.branch === 'פנסיוני' || item.branch === 'פיננסי') {
-      obj[item.branch][item.prdctType] =
-        item.prdctType === 'הפקדה חודשית' ? item._sum.pay * 12 : item._sum.pay
+      obj[item.branch][item.prdctType] = item.prdctType === 'הפקדה חודשית' ? item._sum.pay * 12 : item._sum.pay
     } else {
       obj[item.branch] = item._sum.pay
     }
