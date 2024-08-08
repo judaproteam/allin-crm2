@@ -6,12 +6,13 @@ export default function Select({
   list = [],
   onSelect = (e) => {},
   className = '',
+  defaultValue = '',
 }) {
   return (
     <label className={`slct ${className}`}>
       <p>{lbl}</p>
 
-      <select name={field} onChange={onSelect}>
+      <select name={field} onChange={onSelect} defaultValue={defaultValue || ''}>
         {list.map((item, i) => (
           <option value={item} key={i}>
             {item}

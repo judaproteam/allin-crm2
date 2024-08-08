@@ -23,6 +23,23 @@ export async function getAgntsTotal() {
   return formatTotalAgnts(res)
 }
 
+export async function getAgntsTotalByDate() {
+  const res = await db.sale.groupBy({
+    // where: {
+    //   offrDt: { lte: new Date() },
+
+    // },
+    by: ['branch', 'prdctType', 'agntId'],
+    _sum: {
+      agntPay: true,
+      agnt2Pay: true,
+      agntTotal: true,
+    },
+  })
+
+  return formatTotalAgnts(res)
+}
+
 export async function getMapAgnts() {
   const agnts = await getAllAgnts()
   const agntMap = {}

@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { agntHeaders } from './agntHeaders'
 import AgntHeader from './AgntHeader'
 import AgntRow from './AgntRow'
+import { sortTable } from '@/utils/func'
 
 export default function AgntTable({ agntsTotal }) {
   const [tblData, setTblData] = useState(agntsTotal)
@@ -17,26 +18,9 @@ export default function AgntTable({ agntsTotal }) {
   const [columnOrder, setColumnOrder] = useState(agntHeaders)
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: null, direction: 'asc' })
 
-  function getNestedValue(obj: Record<string, any>, path: string): any {
-    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
-  }
-  function onSort(key: string) {
+  function onSort(key) {
     const direction = sortConfig.direction === 'asc' ? 'desc' : 'asc'
-
-    const sortedArray = [...tblData].sort((a, b) => {
-      const aValue = getNestedValue(a, key)
-      const bValue = getNestedValue(b, key)
-
-      if (aValue < bValue) {
-        return direction === 'asc' ? -1 : 1
-      }
-      if (aValue > bValue) {
-        return direction === 'asc' ? 1 : -1
-      }
-      return 0
-    })
-
-    setTblData(sortedArray)
+    setTblData(sortTable(key, direction, tblData))
     setSortConfig({ key, direction })
   }
 

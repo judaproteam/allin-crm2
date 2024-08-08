@@ -22,34 +22,32 @@ export async function checkUser(user) {
     select: { id: true, email: true, name: true, role: true },
   })
 
-  if (userExist) {
-    // שמור נתונים מחשבון הגוגל
-    await db.agnt.update({
-      where: { email: user.email },
-      data: {
-        gglName: user.name,
-        picture: user.picture,
-        gglSub: user.sub,
-      },
-    })
+  if (!userExist) return redirect('/auth')
 
-    // צור קוקי
-    const saveToCookie = {
-      id: userExist.id,
-      email: user.email,
-      name: userExist.name,
+  // שמור נתונים מחשבון הגוגל
+  await db.agnt.update({
+    where: { email: user.email },
+    data: {
+      gglName: user.name,
       picture: user.picture,
-      role: userExist.role,
-    }
+      gglSub: user.sub,
+    },
+  })
 
-    const expires = daysFromNow(365)
-    const userToken = await encrypt({ ...saveToCookie, expires })
-    cookies().set('user', userToken, { expires, httpOnly: true })
-
-    return redirect('/')
+  // צור קוקי
+  const saveToCookie = {
+    id: userExist.id,
+    email: user.email,
+    name: userExist.name,
+    picture: user.picture,
+    role: userExist.role,
   }
 
-  redirect('/login')
+  const expires = daysFromNow(365)
+  const userToken = await encrypt({ ...saveToCookie, expires })
+  cookies().set('user', userToken, { expires, httpOnly: true })
+
+  return redirect('/')
 }
 
 export async function encrypt(payload: any) {
@@ -68,9 +66,8 @@ export async function decrypt(input: string): Promise<any> {
 }
 
 export async function logout() {
-  // Destroy the session
-  cookies().set('user', '', { expires: new Date(0) })
   cookies().delete('user')
+  redirect('/auth')
 }
 
 export async function updateSession(request: NextRequest) {

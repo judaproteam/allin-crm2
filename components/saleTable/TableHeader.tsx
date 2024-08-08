@@ -49,6 +49,7 @@ export default function TableHeader({
           </th>
         )
       })}
+      <th>עריכה / מחיקה</th>
     </tr>
   )
 }

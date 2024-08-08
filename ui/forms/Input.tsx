@@ -8,6 +8,8 @@ export default function Input({
   className = '',
   placeholder = '',
   errMsg = '',
+  defaultValue = '',
+  id = '',
 }) {
   return (
     <label className={`input ${className}`}>
@@ -17,11 +19,12 @@ export default function Input({
         onChange={(e) => {
           e.target.setCustomValidity('')
         }}
+        id={id}
         type={type}
         name={field}
         required={required}
         min={1}
-        defaultValue={type === 'date' ? new Date().toISOString().split('T')[0] : ''}
+        defaultValue={defaultValue}
         placeholder={placeholder}
         onInvalid={(e) => (e as any).target.setCustomValidity(errMsg || 'שדה חובה')}
       />

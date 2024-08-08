@@ -18,13 +18,14 @@ export default async function SimpleTablePage({ searchParams }) {
   const salesSum = { total: total._sum.total, sales: payBranch }
 
   return (
-    <Fragment key={Math.random()}>
+    <main key={Math.random()} className="overflow-x-hidden">
       <section className="bg-white">
         <div className="container py-8 space-y-8">
           <h1 className="title">נתוני מכירות</h1>
-
-          <SearchAnchor agnts={agnts} />
-          <DateRange />
+          <div className="flex items-end justify-between">
+            <DateRange />
+            <SearchAnchor agnts={agnts} />
+          </div>
           <FilterForm />
         </div>
       </section>
@@ -39,6 +40,6 @@ export default async function SimpleTablePage({ searchParams }) {
       <Table data={data} />
 
       <SaleFormPop agnts={agnts} />
-    </Fragment>
+    </main>
   )
 }

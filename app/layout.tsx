@@ -3,6 +3,8 @@ import { Assistant } from 'next/font/google'
 import '@/styles/globals.scss'
 import UserProvider from '@/context/UserProvider'
 import { getCrntUser } from '@/auth/authFuncs'
+import Nav from '@/ui/Nav'
+import GlobalPopMsg from '@/ui/GlobalPopMsg'
 
 const font = Assistant({ subsets: ['latin'] })
 
@@ -24,7 +26,18 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="he" dir="rtl">
       <body className={font.className}>
-        <UserProvider crntUser={user}>{children}</UserProvider>
+        <UserProvider crntUser={user}>
+          <main className="app-container">
+            <GlobalPopMsg />
+            {user && (
+              <>
+                <Nav user={user} />
+                <div />
+              </>
+            )}
+            {children}
+          </main>
+        </UserProvider>
       </body>
     </html>
   )

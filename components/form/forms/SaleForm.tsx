@@ -12,6 +12,7 @@ import PopMsg from '@/components/PopMsg'
 import DatePicker from '../DatePicker'
 import { checkPayExist } from '@/utils/func'
 import { useUser } from '@/context/UserProvider'
+import { showPop } from '@/ui/GlobalPopMsg'
 
 export default function SaleForm({ agnts }: { agnts: agntType[] }) {
   const [prdcts, setPrdcts] = useState([{}])
@@ -36,17 +37,20 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
       if (!form.checkValidity()) return form.reportValidity()
       const data = Object.fromEntries(new FormData(form))
 
-      if (checkPayExist(data)) return document.getElementById('errMsg').showPopover()
+      if (checkPayExist(data)) return showPop({ msg: 'שגיאה, סכום לפחות למוצר אחד', icon: 'error' })
+      // document.getElementById('errMsg').showPopover()
       sale.prdcts.push(data as saleObj['prdcts'][0])
     }
 
-    document.getElementById('loadingMsg').showPopover()
+    // document.getElementById('loadingMsg').showPopover()
+    showPop({ msg: 'שומר מכירה...', icon: 'loading' })
     const res = await insertSale(sale)
     if (res.err) {
-      console.log('res.err: ', res.err)
-      return document.getElementById('dbErr').showPopover()
+      return showPop({ msg: 'שגיאה, מכירה לא נשמרה', icon: 'error' })
+      // document.getElementById('dbErr').showPopover()
     }
-    document.getElementById('checkMsg').showPopover()
+    //document.getElementById('checkMsg').showPopover()
+    showPop({ msg: 'המכירה נוצרה בהצלחה', icon: 'success' })
 
     console.log('res: ', res)
   }

@@ -65,7 +65,59 @@ export type saleObj = {
   }[]
 }
 
+export type singleSaleObj = {
+  details: {
+    agntId: string
+    agntShare?: string
+    agnt2Id?: string
+    agnt2Share?: string
+    offrDt: string
+    clientFirstName: string
+    clientLastName: string
+    idNum: string
+  }
+  prdcts: {
+    company: string
+    branch: string
+    prdct: string
+    prdctType: string
+    pay: string
+    status: string
+  }
+}
+
 export type agntType = {
   id: number
   name: string
+}
+
+export type DeletedSale = {
+  id: number
+  agntId: number
+  agnt2Id: number
+  agntShare: number
+  agnt2Share: number
+  offrDt: Date
+  clientId: number
+  company: string
+  branch: string
+  prdct: string
+  prdctType: string
+  pay: number
+  status: string
+  saleDt: Date
+  action: string
+  createdAt: Date
+  client: {
+    id: number
+    details: string
+  }
+  agnt: {
+    id: number
+    name: string
+  }
+  agnt2: {
+    id: number
+    name: string
+  }
 }

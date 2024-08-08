@@ -3,12 +3,16 @@ import AgntTable from '@/components/agntsTable/AgntTable'
 import DateRange from '@/components/form/forms/DateRange'
 import FilterForm from '@/components/form/forms/FilterForm'
 import Search from '@/components/form/SearchAgnt_old'
+import SearchAnchor from '@/components/form/SearchAnchor'
 import { Numbox, Numboxs } from '@/components/Numbox'
+
 import { getAgntsTotal, getAllAgnts } from '@/db/agnt/getTotal'
 import { getPayBranch, getTotal } from '@/db/sale/getTotal'
+import { Role } from '@prisma/client'
 
 export default async function PromotionPage({ searchParams }) {
   const user = await getCrntUser()
+  if (user.role != Role.MNGR) return null
 
   const total = await getTotal({ filter: searchParams })
   const payBranch = await getPayBranch({ filter: searchParams })
@@ -18,12 +22,14 @@ export default async function PromotionPage({ searchParams }) {
   const agntsTotal = await getAgntsTotal()
 
   return (
-    <div>
+    <main className="overflow-x-hidden">
       <section className="bg-white">
         <div className="container py-8 space-y-8">
           <h1 className="title">סיכום מכירות סוכנים</h1>
-          <Search agnts={agnts} />
-          <DateRange />
+          <div className="flex items-end justify-between">
+            <DateRange />
+            <SearchAnchor agnts={agnts} />
+          </div>
           <FilterForm />
         </div>
       </section>
@@ -36,6 +42,6 @@ export default async function PromotionPage({ searchParams }) {
       </section>
 
       <AgntTable agntsTotal={agntsTotal} />
-    </div>
+    </main>
   )
 }

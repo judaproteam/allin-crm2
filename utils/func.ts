@@ -123,21 +123,14 @@ export function checkPayExist(data) {
   return false
 }
 
-// agtnsSum [
-//   { agentId: 16, 'כתב שירות חיצוני': 547, 'נסיעות לחול': 43 },
-//   {
-//     agentId: 21,
-//     'פנסיוני - ניוד': 19211,
-//     'אלמנטרי': 8910,
-//     'פנסיוני - הפקדה חודשית': 1077,
-//     'אכ"ע': 2205
-//   },
-//   { agentId: 29, 'פנסיוני - הפקדה חודשית': 912 },
-//   { agentId: 30, 'פיננסי - הפקדה חודשית': 444, 'פנסיוני - ניוד': 9322 },
-//   { agentId: 39, 'קצבה מיידית': 904, 'נסיעות לחול': 240 },
-//   { agentId: 62, 'סיכונים': 323 },
-//   { agentId: 69, 'פנסיוני - הפקדה חודשית': 2000 },
-//   { agentId: 70, 'אכ"ע': 77777, 'סיכונים': 88888 },
-//   { agentId: 72, 'אכ"ע': 424, 'סיכונים': 151 },
-//   { agentId: 74, 'פנסיוני - ניוד': 676 }
-// ]
+export function sortTable(key, direction, tblData) {
+  const sortedArray = [...tblData].sort((a, b) => {
+    let val1 = a[key] || '0'
+    let val2 = b[key] || '0'
+
+    if (val1 < val2) return direction === 'asc' ? -1 : 1
+    if (val1 > val2) return direction === 'asc' ? 1 : -1
+  })
+
+  return sortedArray
+}

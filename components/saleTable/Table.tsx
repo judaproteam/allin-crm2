@@ -5,6 +5,11 @@ import TableHeader from './TableHeader'
 import TableRow from './TableRow'
 import { headers } from './saleHeaders'
 import Icon from '../../ui/Icon'
+import { sortTable } from '@/utils/func'
+import EditSaleForm from '../form/forms/EditSaleForm'
+import DelPop from '@/ui/DelPop'
+import { deleteSale } from '@/db/sale/deleteSale'
+import { store } from '@/utils/store'
 
 export default function Table({ data }) {
   const [tblData, setTblData] = useState(data)
@@ -24,13 +29,10 @@ export default function Table({ data }) {
   const [columnOrder, setColumnOrder] = useState(headers)
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: null, direction: 'asc' })
 
-  function onSort(key: string) {
+  function onSort(key) {
     const direction = sortConfig.direction === 'asc' ? 'desc' : 'asc'
-
-    const { sortedArray, sortConfigData } = sortData({ direction, key, data: tblData })
-
-    setTblData(sortedArray)
-    setSortConfig(sortConfigData)
+    setTblData(sortTable(key, direction, tblData))
+    setSortConfig({ key, direction })
   }
 
   return (
@@ -69,34 +71,11 @@ export default function Table({ data }) {
           </tbody>
         </table>
       </div>
+
+      <EditSaleForm key={Math.random()} />
+      <DelPop txt="האם אתה בטוח שברצונך למחוק מכירה?" onDel={() => deleteSale(store.deleteId)} />
     </>
   )
-}
-
-function sortData({ direction, key, data }) {
-  function getNestedValue(obj: Record<string, any>, path: string): any {
-    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
-  }
-
-  const sortedArray = [...data].sort((a, b) => {
-    const aValue = getNestedValue(a, key)
-    const bValue = getNestedValue(b, key)
-
-    if (aValue < bValue) {
-      return direction === 'asc' ? -1 : 1
-    }
-    if (aValue > bValue) {
-      return direction === 'asc' ? 1 : -1
-    }
-    return 0
-  })
-
-  return { sortedArray, sortConfigData: { key, direction } }
-}
-
-interface TableProps {
-  tblData: Array<Record<string, any>>
-  setTblData: React.Dispatch<React.SetStateAction<Array<Record<string, any>>>>
 }
 
 interface SortConfig {

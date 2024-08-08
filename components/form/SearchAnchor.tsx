@@ -4,6 +4,7 @@ import { useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useUser } from '@/context/UserProvider'
 import { Role } from '@prisma/client'
+import Icon from '@/ui/Icon'
 
 export default function SearchAnchor({ agnts }) {
   const user = useUser()
@@ -41,15 +42,22 @@ export default function SearchAnchor({ agnts }) {
 
   return (
     <main>
-      <label className="input-s  w-44">
-        <p>סוכנים</p>
-        <input
-          type="text"
-          onClick={onFocus}
-          className="inputAnchor cursor-pointer"
-          value={searchValue}
-          readOnly
-        />
+      <label className="input-s  w-44 ">
+        <p>פלטר לפי סוכן</p>
+        <div className="relative">
+          <input
+            type="text"
+            onClick={onFocus}
+            className="inputAnchor cursor-pointer"
+            value={searchValue}
+            readOnly
+          />
+          <Icon
+            name="chevron-down"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-500 size-4"
+            type="lit"
+          />
+        </div>
       </label>
       <div popover="auto" id="popSearch" className="anchored-pop shadow-4 rounded" ref={popRef}>
         <div className="w-[168px] max-h-80">

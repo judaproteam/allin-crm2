@@ -5,7 +5,7 @@ import SmallDatePicker from '../SmallDatePicker'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Icon from '@/ui/Icon'
 
-export default function DateRange() {
+export default function DateRange({ className = '' }) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -35,7 +35,7 @@ export default function DateRange() {
   const end = searchParams.get('lte') || new Date().toISOString().split('T')[0]
 
   return (
-    <form onSubmit={onSubmit} className="flex">
+    <form onSubmit={onSubmit} className={`flex ${className}`}>
       <section className="inline-flex gap-4 items-center border rounded-md h-10 pe-4 ps-2">
         <select onChange={onPeriodChange} className="ps-2 pe-6 me-2">
           <option value="thisMonth">חודש נוכחי</option>

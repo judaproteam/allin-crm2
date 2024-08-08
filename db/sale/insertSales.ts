@@ -1,20 +1,21 @@
 'use server'
 
 import { revalidatePath } from 'next/cache'
-import { db } from '../db'
+import { db } from '@/db/db'
 import { Client, Sale } from '@prisma/client'
 import { getCrntUser } from '@/auth/authFuncs'
 
-let agnt2Id
+let agnt2Id, isAgnt2
 
 export async function insertSale(sale) {
   const crntUser = await getCrntUser()
 
   let res
+  isAgnt2 = !!Number(sale.details.agnt2Share)
   agnt2Id = sale.details.agnt2Id
 
   let agnt2, agnt2Share, agntShare
-  if (agnt2Id) {
+  if (isAgnt2) {
     agnt2 = { connect: { id: parseInt(agnt2Id) } }
     agnt2Share = parseInt(sale.details.agnt2Share)
     agntShare = parseInt(sale.details.agntShare)
@@ -46,7 +47,7 @@ export async function insertSale(sale) {
       for (const prdct of prdctsArr as Sale[]) {
         prdct.pay = Number(prdct.pay)
 
-        if (agnt2Id) {
+        if (isAgnt2) {
           prdct.agntPay = prdct.pay * (agntShare / 100)
           prdct.agnt2Pay = prdct.pay * (agnt2Share / 100)
         } else {
@@ -60,7 +61,6 @@ export async function insertSale(sale) {
           prdct,
           agntShare,
           agnt2Share,
-          agnt2Id: agnt2Id,
         })
 
         res = await db.sale.create({
@@ -105,11 +105,11 @@ export async function insertSale(sale) {
     return { err: error.message }
   }
 
-  // revalidatePath('/')
+  revalidatePath('/')
   return res
 }
 
-function getSaleCalc({ prdct, agntShare, agnt2Share, agnt2Id }) {
+function getSaleCalc({ prdct, agntShare, agnt2Share }) {
   const saleCalc = { total: 0, agntTotal: 0, agnt2Total: 0 }
 
   let sumTotal = 0
@@ -131,7 +131,7 @@ function getSaleCalc({ prdct, agntShare, agnt2Share, agnt2Id }) {
     sumTotal += prdct.pay
   }
 
-  if (agnt2Id) {
+  if (isAgnt2) {
     saleCalc.agntTotal = sumTotal * (agntShare / 100)
     saleCalc.agnt2Total = sumTotal * (agnt2Share / 100)
   } else {

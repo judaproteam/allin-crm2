@@ -8,11 +8,17 @@ datasource db {
 }
 
 model Promo {
-  id     Int    @id @default(autoincrement())
+  id     Int      @id @default(autoincrement())
   title  String
   desc   String
   target Int
   branch String
+  start  DateTime @default(now())
+  end    DateTime @default(now())
+  img    String   @default("/promo.jpg")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Client {
@@ -21,12 +27,25 @@ model Client {
   lastName  String
   idNum     Int    @unique
 
-  Sale        Sale[]
+  sale        Sale[]
   createdBy   Agnt   @relation(fields: [createdById], references: [id])
   createdById Int
 
   name    String? @default(dbgenerated())
   details String? @default(dbgenerated())
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model AgntsGroup {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  agnts Agnt[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 enum Role {
@@ -55,7 +74,11 @@ model Agnt {
   createdClients Client[]
   createdSales   Sale[]
 
-  name String? @default(dbgenerated())
+  name  String?      @default(dbgenerated())
+  group AgntsGroup[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@unique([firstName, lastName])
   @@index([email])
@@ -98,19 +121,43 @@ model Sale {
   createdById Int
 }
 
-// תאריך שליחת הצעה
-// שם משפחה
-// שם פרטי
-// ת.ז
-// סטטוס
-// פעולה
-// חברה
-// ענף
-// מוצר
-// תאריך הפקה
-// סוכן
-// פרמיה חודשית
-// פרמיה חד פעמית
-// הפקדה חודשית
-// הפקדה חדשה
-// סכום צבירה לניוד
+model DeletedSale {
+  id Int @id @default(autoincrement())
+
+  agntId     Int
+  agnt2Id    Int?
+  agntName   String?
+  agnt2Name  String?
+  agntShare  Int     @default(100)
+  agnt2Share Int?    @default(0)
+
+  offrDt DateTime
+
+  company   String
+  branch    String
+  prdct     String
+  prdctType String
+  pay       Float
+  status    String
+
+  saleDt DateTime?
+  action String?   @default("מכירה")
+
+  clientId      Int
+  clientDetails String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  saleCreatedAt DateTime
+  deletedById   Int
+}
+
+// Add agnt leader
+// AgntsGroup table
+//   agnts  Agnt[] @relation("AgntsGroup")
+//   leader Agnt?  @relation("leader", fields: [leaderId], references: [id])
+//   leaderId Int?
+
+// Agnt table
+// AgntsGroup   AgntsGroup?  @relation("AgntsGroup", fields: [agntsGroupId], references: [id])
+//   agntsGroupId Int?
+//   leader       AgntsGroup[] @relation("leader")
