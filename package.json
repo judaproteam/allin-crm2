@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "postinstall": "prisma generate",
-    "db": "pnpx prisma migrate dev",
-    "gen": "pnpx prisma generate",
-    "showdb": "pnpx prisma studio"
+    "db": "npx prisma migrate dev",
+    "gen": "npx prisma generate",
+    "showdb": "npx prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
