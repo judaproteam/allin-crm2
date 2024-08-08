@@ -5,9 +5,9 @@ import { jwtDecode } from 'jwt-decode'
 import { useEffect } from 'react'
 import { checkUser } from './authFuncs'
 
-// declare global {
-//   const google: any
-// }
+declare global {
+  const google: any
+}
 
 export default function Login() {
   useEffect(() => {
