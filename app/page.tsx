@@ -7,7 +7,6 @@ import Table from '@/components/saleTable/Table'
 import { getAllAgnts } from '@/db/agnt/getTotal'
 
 import { getTotal, getPayBranch, getTableData } from '@/db/sale/getTotal'
-import { Fragment } from 'react'
 
 export default async function SimpleTablePage({ searchParams }) {
   const data = await getTableData({ filter: searchParams })

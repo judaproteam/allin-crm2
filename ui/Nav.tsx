@@ -6,22 +6,22 @@ import { usePathname } from 'next/navigation'
 import { logout } from '@/auth/authFuncs'
 
 import { Role } from '@prisma/client'
+import { getUser } from '@/utils/getUser'
 
-export default function Nav({ user }: any) {
+export default function Nav() {
   const pathname = usePathname()
+  const user = getUser().user
 
   function onLogout() {
     logout()
   }
-
-  const active = 'bg-white'
 
   return (
     <nav className="bg-blue-950 w-[50px] h-screen fixed top-0 right-0 z-10">
       <div className="flex flex-col items-center justify-between h-full gap-6">
         <div>
           {navLinks.map((link, i) => {
-            if (user.role != Role.MNGR && link.href == '/sum_sales') return null
+            if (user?.role != Role.MNGR && link.href == '/sum_sales') return null
             return (
               <Link
                 key={i}

@@ -4,12 +4,16 @@ import Script from 'next/script'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect } from 'react'
 import { checkUser } from './authFuncs'
+import { userStore } from '@/utils/getUser'
+import { useRouter } from 'next/navigation'
 
 declare global {
   const google: any
 }
 
 export default function Login() {
+  const router = useRouter()
+
   useEffect(() => {
     try {
       if (google) initGoogle()
@@ -25,14 +29,15 @@ export default function Login() {
     try {
       user = jwtDecode(gglUser.credential)
 
-      await checkUser({
+      const resUser = await checkUser({
         email: user.email,
         gglName: user.name,
         picture: user.picture,
         gglSub: user.sub,
       })
 
-      console.log('user', user)
+      userStore.user = resUser
+      router.push('/')
     } catch (error) {
       console.log('error', error)
     }

@@ -11,13 +11,13 @@ import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import DatePicker from '../DatePicker'
 import { checkPayExist } from '@/utils/func'
-import { useUser } from '@/context/UserProvider'
 import { showPop } from '@/ui/GlobalPopMsg'
+import { getUser } from '@/utils/getUser'
 
 export default function SaleForm({ agnts }: { agnts: agntType[] }) {
   const [prdcts, setPrdcts] = useState([{}])
   const [share, setShare] = useState(false)
-  const user = useUser()
+  const user = getUser().user
 
   async function onSave(e: React.SyntheticEvent) {
     e.preventDefault()

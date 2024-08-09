@@ -1,5 +1,4 @@
-import { proxy } from 'valtio'
-import { useProxy } from 'valtio/utils'
+import { proxy, useSnapshot } from 'valtio'
 
 export const store = proxy({
   editSale: {
@@ -14,7 +13,7 @@ export const store = proxy({
 })
 
 export function useSnap() {
-  const snap = useProxy(store)
+  const snap = useSnapshot(store)
 
   return snap
 }

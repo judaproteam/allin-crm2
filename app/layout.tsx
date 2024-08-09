@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Assistant } from 'next/font/google'
 import '@/styles/globals.scss'
-import UserProvider from '@/context/UserProvider'
 import { getCrntUser } from '@/auth/authFuncs'
 import Nav from '@/ui/Nav'
 import GlobalPopMsg from '@/ui/GlobalPopMsg'
@@ -22,22 +21,21 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const user = await getCrntUser()
+  console.log('user', user)
 
   return (
     <html lang="he" dir="rtl">
       <body className={font.className}>
-        <UserProvider crntUser={user}>
-          <main className="app-container">
-            <GlobalPopMsg />
-            {user && (
-              <>
-                <Nav user={user} />
-                <div />
-              </>
-            )}
-            {children}
-          </main>
-        </UserProvider>
+        <main className="app-container">
+          <GlobalPopMsg />
+          {user && (
+            <>
+              <Nav />
+              <div />
+            </>
+          )}
+          {children}
+        </main>
       </body>
     </html>
   )

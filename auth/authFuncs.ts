@@ -24,6 +24,8 @@ export async function checkUser(user) {
 
   if (!userExist) return redirect('/auth')
 
+  console.log('checkUser: user: ', user)
+
   // שמור נתונים מחשבון הגוגל
   await db.agnt.update({
     where: { email: user.email },
@@ -47,7 +49,8 @@ export async function checkUser(user) {
   const userToken = await encrypt({ ...saveToCookie, expires })
   cookies().set('user', userToken, { expires, httpOnly: true })
 
-  return redirect('/')
+  return saveToCookie
+  // return redirect('/')
 }
 
 export async function encrypt(payload: any) {

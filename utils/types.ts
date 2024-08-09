@@ -121,3 +121,23 @@ export type DeletedSale = {
     name: string
   }
 }
+
+// id: 85,
+//   email: 'yuda.stl@gmail.com',
+//   name: 'יהודה צבי',
+//   picture: 'https://lh3.googleusercontent.com/a/ACg8ocKdHzMaEojrwOhAkhOm4ZeoApPbFwlw9KPu_gNOjdi67zK5EA=s96-c',
+//   role: 'AGNT',
+//   expires: '2025-08-09T03:58:22.490Z',
+//   iat: 1723175902,
+//   exp: 1754711902
+
+export type User = {
+  id: number
+  email: string
+  role: string
+  name: string
+  picture?: string
+  expires?: string
+  iat?: number
+  exp?: number
+}

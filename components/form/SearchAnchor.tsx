@@ -2,13 +2,13 @@
 
 import { useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useUser } from '@/context/UserProvider'
 import { Role } from '@prisma/client'
 import Icon from '@/ui/Icon'
+import { getUser } from '@/utils/getUser'
 
 export default function SearchAnchor({ agnts }) {
-  const user = useUser()
-  if (user.role != Role.MNGR) return null
+  const user = getUser().user
+  if (user?.role != Role.MNGR) return null
 
   const router = useRouter()
   const searchParams = useSearchParams()
