@@ -122,14 +122,32 @@ export type DeletedSale = {
   }
 }
 
-// id: 85,
-//   email: 'yuda.stl@gmail.com',
-//   name: 'יהודה צבי',
-//   picture: 'https://lh3.googleusercontent.com/a/ACg8ocKdHzMaEojrwOhAkhOm4ZeoApPbFwlw9KPu_gNOjdi67zK5EA=s96-c',
-//   role: 'AGNT',
-//   expires: '2025-08-09T03:58:22.490Z',
-//   iat: 1723175902,
-//   exp: 1754711902
+export type SaleTableData = {
+  id: number
+  action: string
+  offrDt: Date
+  prdct: string
+  prdctType: string
+  pay: number
+  status: string
+  branch: string
+  company: string
+  client: {
+    id: number
+    details: string
+    firstName: string
+    lastName: string
+    idNum: number
+  }
+  agnt: {
+    id: number
+    name: string
+  }
+  agnt2: {
+    id: number
+    name: string
+  }
+}
 
 export type User = {
   id: number

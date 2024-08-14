@@ -4,10 +4,10 @@ import { useRef, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Role } from '@prisma/client'
 import Icon from '@/ui/Icon'
-import { getUser } from '@/utils/getUser'
+import { useUser } from '@/utils/userCtx'
 
 export default function SearchAnchor({ agnts }) {
-  const user = getUser().user
+  const { user } = useUser()
   if (user?.role != Role.MNGR) return null
 
   const router = useRouter()
@@ -41,10 +41,10 @@ export default function SearchAnchor({ agnts }) {
   }
 
   return (
-    <main>
-      <label className="input-s  w-44 ">
+    <main className="mb-4">
+      <label className="input-s w-44 ">
         <p>פלטר לפי סוכן</p>
-        <div className="relative">
+        <div className="relative ">
           <input
             type="text"
             onClick={onFocus}
@@ -54,8 +54,8 @@ export default function SearchAnchor({ agnts }) {
           />
           <Icon
             name="chevron-down"
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-slate-500 size-4"
-            type="lit"
+            className="absolute left-3 top-1/2 -translate-y-1/2 bg-slate-500 size-3"
+            type="reg"
           />
         </div>
       </label>

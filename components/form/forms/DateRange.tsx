@@ -1,9 +1,10 @@
 'use client'
 
-import { getDatePeriods, getFormData, startOfMonth } from '@/utils/func'
+import { getFormData, startOfMonth } from '@/utils/func'
 import SmallDatePicker from '../SmallDatePicker'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Icon from '@/ui/Icon'
+import { getDateRange } from 'jude_ui/dates'
 
 export default function DateRange({ className = '' }) {
   const router = useRouter()
@@ -22,7 +23,13 @@ export default function DateRange({ className = '' }) {
 
   function onPeriodChange(e) {
     const val = e.target.value
-    const period = getDatePeriods(val)
+    if (val === '') return
+
+    const { startDate, endDate } = getDateRange(val)
+    const period = {
+      gte: startDate.toISOString().split('T')[0],
+      lte: endDate.toISOString().split('T')[0],
+    }
 
     let qParams = Object.fromEntries(new URLSearchParams(searchParams))
     qParams = { ...qParams, ...period }
@@ -35,23 +42,33 @@ export default function DateRange({ className = '' }) {
   const end = searchParams.get('lte') || new Date().toISOString().split('T')[0]
 
   return (
-    <form onSubmit={onSubmit} className={`flex ${className}`}>
-      <section className="inline-flex gap-4 items-center border rounded-md h-10 pe-4 ps-2">
-        <select onChange={onPeriodChange} className="ps-2 pe-6 me-2">
-          <option value="thisMonth">חודש נוכחי</option>
-          <option value="lastMonth">חודש קודם</option>
-          <option value="week">שבוע נוכחי</option>
-          <option value="year">שנה</option>
+    <form onSubmit={onSubmit} className={`flex gap-8 items-end ${className}`}>
+      <div className="">
+        <p className="mb-1">פלטר לפי תקופה</p>
+        <select onChange={onPeriodChange} className="ps-2 pe-8 w-40 border rounded-md h-10">
+          <option value="">הכל...</option>
+          <option value="this month">חודש נוכחי</option>
+          <option value="last month">חודש קודם</option>
+          <option value="this week">שבוע נוכחי</option>
+          <option value="last week">שבוע קודם</option>
+          <option value="this year">שנה נוכחית</option>
+          <option value="last year">שנה קודמת</option>
         </select>
-        <SmallDatePicker field={'start'} val={start} key={Math.random()} />
-        <span className="text-xl">−</span>
-        <SmallDatePicker field={'end'} val={end} key={Math.random()} />
-      </section>
+      </div>
 
-      <button className="btn-soft-s">
-        <Icon name="filter" type="sol" />
-        <p>פלטר</p>
-      </button>
+      <div>
+        <p className="mb-1">פלטר לפי תאריכים</p>
+        <section className="inline-flex gap-4 items-center justify-around border rounded-md h-10 ps-6 pe-px w-80">
+          <SmallDatePicker field={'start'} val={start} key={Math.random()} />
+          <span className="text-xl">−</span>
+          <SmallDatePicker field={'end'} val={end} key={Math.random()} />
+
+          <button className="btn-soft-s h-9 ms-3">
+            <Icon name="filter" type="sol" />
+            <p>פלטר</p>
+          </button>
+        </section>
+      </div>
     </form>
   )
 }

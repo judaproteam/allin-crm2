@@ -6,6 +6,7 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './ui/**/*.{js,ts,jsx,tsx,mdx}',
+    './node_modules/jude_ui/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {

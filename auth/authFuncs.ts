@@ -10,7 +10,7 @@ import { NextRequest, NextResponse } from 'next/server'
 const secretKey = 'secret'
 const key = new TextEncoder().encode(secretKey)
 
-export async function getCrntUser() {
+export async function getUser() {
   const session = cookies().get('user')?.value
   if (!session) return null
   return await decrypt(session)
@@ -24,15 +24,13 @@ export async function checkUser(user) {
 
   if (!userExist) return redirect('/auth')
 
-  console.log('checkUser: user: ', user)
-
   // שמור נתונים מחשבון הגוגל
   await db.agnt.update({
     where: { email: user.email },
     data: {
-      gglName: user.name,
+      gglName: user.gglName,
       picture: user.picture,
-      gglSub: user.sub,
+      gglSub: user.gglSub,
     },
   })
 
@@ -49,8 +47,8 @@ export async function checkUser(user) {
   const userToken = await encrypt({ ...saveToCookie, expires })
   cookies().set('user', userToken, { expires, httpOnly: true })
 
-  return saveToCookie
-  // return redirect('/')
+  // return saveToCookie
+  return redirect('/')
 }
 
 export async function encrypt(payload: any) {

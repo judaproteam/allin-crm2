@@ -2,10 +2,10 @@ import { useState } from 'react'
 import Icon from '../../ui/Icon'
 import { rng } from '@/utils/func'
 import { agntType } from '@/utils/types'
-import { getUser } from '@/utils/getUser'
+import { useUser } from '@/utils/userCtx'
 
 export default function Collab({ agnts }: { agnts: agntType[] }) {
-  const user = getUser().user
+  const { user } = useUser()
   const [share1, setShare1] = useState(50)
   const [share2, setShare2] = useState(50)
 

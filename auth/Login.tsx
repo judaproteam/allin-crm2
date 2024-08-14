@@ -4,8 +4,8 @@ import Script from 'next/script'
 import { jwtDecode } from 'jwt-decode'
 import { useEffect } from 'react'
 import { checkUser } from './authFuncs'
-import { userStore } from '@/utils/getUser'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@/utils/userCtx'
 
 declare global {
   const google: any
@@ -24,20 +24,16 @@ export default function Login() {
   const client_id = process.env.NEXT_PUBLIC_GGLID
 
   async function callback(gglUser) {
-    console.log('gglUser', gglUser)
     let user = null
     try {
       user = jwtDecode(gglUser.credential)
 
-      const resUser = await checkUser({
+      await checkUser({
         email: user.email,
         gglName: user.name,
         picture: user.picture,
         gglSub: user.sub,
       })
-
-      userStore.user = resUser
-      router.push('/')
     } catch (error) {
       console.log('error', error)
     }

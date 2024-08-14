@@ -1,4 +1,4 @@
-import { getCrntUser } from '@/auth/authFuncs'
+import { getUser } from '@/auth/authFuncs'
 import GroupForm from '@/components/form/forms/GroupForm'
 import PromoForm from '@/components/form/forms/PromoForm'
 import PromoTable from '@/components/promoTable/Table'
@@ -23,19 +23,6 @@ export default async function PromotionPage({ searchParams }) {
     orderBy: { createdAt: 'desc' },
   })
 
-  // promo {
-  //   id: 1,
-  //   title: 'טיסה לחו"ל',
-  //   desc: 'לראא משנה',
-  //   target: 100000,
-  //   branch: 'סיכונים',
-  //   start: 2024-08-07T17:31:43.618Z,
-  //   end: 2024-08-07T17:31:43.618Z,
-  //   img: '/promo.jpg',
-  //   createdAt: 2024-08-07T15:36:29.151Z,
-  //   updatedAt: 2024-08-07T15:36:29.151Z
-  // }
-
   const promo = promoId ? promos.find((p) => p.id == promoId) : promos[0]
 
   console.log('promo', promo)
@@ -50,13 +37,13 @@ export default async function PromotionPage({ searchParams }) {
 
   const agnts = (await getMapAgnts()) as AgntList
 
-  const user = await getCrntUser()
+  const user = await getUser()
   const crntAgnt = agntsTotal.find((agnt) => agnt.agntId === user.id)
 
   const agntsGroups = await getAgntsGroups()
 
   return (
-    <main className="overflow-x-hidden">
+    <>
       <section className="m-8">
         <div className="flex gap-4 mb-8 items-end">
           <SelectPromo promos={promos} />
@@ -84,6 +71,6 @@ export default async function PromotionPage({ searchParams }) {
       </section>
 
       <PromoTable agntsTotal={agntsTotal} key={Math.random()} />
-    </main>
+    </>
   )
 }

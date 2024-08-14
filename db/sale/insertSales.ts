@@ -3,12 +3,12 @@
 import { revalidatePath } from 'next/cache'
 import { db } from '@/db/db'
 import { Client, Sale } from '@prisma/client'
-import { getCrntUser } from '@/auth/authFuncs'
+import { getUser } from '@/auth/authFuncs'
 
 let agnt2Id, isAgnt2
 
 export async function insertSale(sale) {
-  const crntUser = await getCrntUser()
+  const crntUser = await getUser()
 
   let res
   isAgnt2 = !!Number(sale.details.agnt2Share)

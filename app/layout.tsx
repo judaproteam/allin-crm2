@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
 import { Assistant } from 'next/font/google'
 import '@/styles/globals.scss'
-import { getCrntUser } from '@/auth/authFuncs'
+import 'jude_ui/style'
+import { getUser } from '@/auth/authFuncs'
 import Nav from '@/ui/Nav'
 import GlobalPopMsg from '@/ui/GlobalPopMsg'
+import UserProvider from '@/utils/userCtx'
 
 const font = Assistant({ subsets: ['latin'] })
 
@@ -20,22 +22,23 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const user = await getCrntUser()
-  console.log('user', user)
+  const user = await getUser()
 
   return (
     <html lang="he" dir="rtl">
       <body className={font.className}>
-        <main className="app-container">
-          <GlobalPopMsg />
-          {user && (
-            <>
-              <Nav />
-              <div />
-            </>
-          )}
-          {children}
-        </main>
+        <UserProvider data={user}>
+          <div className="app-container">
+            <GlobalPopMsg />
+            {user && (
+              <>
+                <Nav />
+                <div />
+              </>
+            )}
+            <main className="overflow-x-hidden">{children}</main>
+          </div>
+        </UserProvider>
       </body>
     </html>
   )

@@ -20,9 +20,7 @@ export default function TableHeader({
 
   return (
     <tr className="tblHead">
-      <th>
-        <input type="checkbox" name="" id="" />
-      </th>
+      <th>{/* <input type="checkbox" name="" id="" /> */}</th>
       {headers.map((header, i) => {
         return (
           <th
@@ -49,7 +47,7 @@ export default function TableHeader({
           </th>
         )
       })}
-      <th>עריכה / מחיקה</th>
+      <th style={{ textAlign: 'center' }}>עריכה / מחיקה</th>
     </tr>
   )
 }

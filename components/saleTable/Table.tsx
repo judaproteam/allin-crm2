@@ -8,8 +8,9 @@ import Icon from '../../ui/Icon'
 import { sortTable } from '@/utils/func'
 import EditSaleForm from '../form/forms/EditSaleForm'
 import DelPop from '@/ui/DelPop'
-import { deleteSale } from '@/db/sale/deleteSale'
 import { store } from '@/utils/store'
+import { Select } from 'jude_ui/form'
+import { deleteSales, deleteSale } from '@/db/sale/deleteNbackup'
 
 export default function Table({ data }) {
   const [tblData, setTblData] = useState(data)
@@ -35,18 +36,46 @@ export default function Table({ data }) {
     setSortConfig({ key, direction })
   }
 
+  function onGroupAction(val) {
+    const checkItems = document.querySelectorAll(
+      "[name='checkSale']"
+    ) as NodeListOf<HTMLInputElement>
+
+    const ids = []
+    checkItems.forEach((sale) => {
+      if (sale.checked) ids.push(Number(sale.id))
+    })
+
+    if (!confirm('בטוח למחוק את המכירות?')) return
+    deleteSales(ids)
+    // if (val === 'עדכון סטטוס') {
+    //   updateSalesStatus(ids)
+    // } else if (val === 'מחיקה') {
+    //   deleteSales(ids)
+    // }
+  }
+
   return (
     <>
       <div className="bg-white pt-4">
-        <div className="container flex justify-between">
-          <label className="input-icon max-w-52" aria-label="חיפוש">
-            <Icon name="magnifying-glass" type="sol" className="rtl:scale-x-100" />
-            <input
-              type="text"
-              placeholder="חיפוש חופשי..."
-              onChange={(e) => onTermChange(e.target.value)}
+        <div className="px-8 flex justify-between">
+          <div className="flex">
+            <label className="input-icon max-w-52" aria-label="חיפוש">
+              <Icon name="magnifying-glass" type="sol" className="rtl:scale-x-100" />
+              <input
+                type="text"
+                placeholder="חיפוש חופשי..."
+                onChange={(e) => onTermChange(e.target.value)}
+              />
+            </label>
+            <Select
+              className="w-36"
+              list={['עדכון סטטוס', 'מחיקה']}
+              onChange={onGroupAction}
+              noLable
+              lbl="פעולות"
             />
-          </label>
+          </div>
           <button className="btn-s" popoverTarget="popSaleForm">
             <Icon name="plus" type="sol" />
             <p>הוסף מכירה</p>

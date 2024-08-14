@@ -13,7 +13,6 @@ import { store, useSnap } from '@/utils/store'
 
 export default function EditSaleForm() {
   const snap = useSnap()
-  console.log('snap: ', snap.editSale)
 
   async function onSave(e: React.SyntheticEvent) {
     e.preventDefault()

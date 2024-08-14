@@ -1,6 +1,7 @@
 import Icon from '@/ui/Icon'
 import { toCurrency, toDate } from '@/utils/func'
 import { store } from '@/utils/store'
+import { SaleTableData } from '@/utils/types'
 
 export default function TableRow({ item, headers }: TableRowProps) {
   function getCell(key: string) {
@@ -24,7 +25,7 @@ export default function TableRow({ item, headers }: TableRowProps) {
   return (
     <tr>
       <td>
-        <input type="checkbox" name="" id="" />
+        <input type="checkbox" name="checkSale" id={item.id.toString()} />
       </td>
       {headers.map((header) => (
         <td key={header.key} onClick={() => console.log(item)}>
@@ -57,6 +58,6 @@ export default function TableRow({ item, headers }: TableRowProps) {
 }
 
 type TableRowProps = {
-  item: Record<string, any>
+  item: SaleTableData
   headers: Array<{ key: string; label: string }>
 }

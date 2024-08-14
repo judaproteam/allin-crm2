@@ -3,14 +3,21 @@
 import Link from 'next/link'
 import Icon from './Icon'
 import { usePathname } from 'next/navigation'
-import { logout } from '@/auth/authFuncs'
-
+import { getUser, logout } from '@/auth/authFuncs'
 import { Role } from '@prisma/client'
-import { getUser } from '@/utils/getUser'
+import { useUser } from '@/utils/userCtx'
+import { useEffect } from 'react'
 
 export default function Nav() {
   const pathname = usePathname()
-  const user = getUser().user
+  const { user, setUser } = useUser()
+  useEffect(() => {
+    getUser().then((user) => {
+      console.log('user in nav useEffect', user)
+
+      setUser(user)
+    })
+  }, [])
 
   function onLogout() {
     logout()
@@ -21,7 +28,11 @@ export default function Nav() {
       <div className="flex flex-col items-center justify-between h-full gap-6">
         <div>
           {navLinks.map((link, i) => {
-            if (user?.role != Role.MNGR && link.href == '/sum_sales') return null
+            if (user?.role != Role.MNGR && link.href == '/sum_sales') {
+              console.log('sum_sales', link.href)
+
+              return null
+            }
             return (
               <Link
                 key={i}

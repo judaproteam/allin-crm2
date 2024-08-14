@@ -8,7 +8,6 @@
 
 body {
   @apply bg-slate-50 text-base text-gray-800 overflow-x-hidden;
-  /* background-color: #fdfdfd; */
 }
 
 @layer base {
@@ -16,8 +15,8 @@ body {
     appearance: none;
     background-image: url('https://res.cloudinary.com/dfletli2x/image/upload/icons/reg/chevron-down.svg');
     background-repeat: no-repeat;
-    background-position: 5% 50%;
-    background-size: 12px;
+    background-position: 7% 50%;
+    background-size: 11px;
     cursor: pointer;
     outline: none;
     background-color: #fff;
@@ -95,7 +94,7 @@ body {
 
 @layer components {
   .container {
-    @apply mx-auto px-4;
+    @apply px-8;
   }
 
   .flex {
@@ -110,7 +109,7 @@ body {
   }
 
   .num-box {
-    @apply py-4 px-8 block rounded-md bg-white shadow min-w-40;
+    @apply py-4 px-8 rounded-md bg-white shadow min-w-40;
     span {
       @apply mb-2 inline-block;
     }
@@ -383,13 +382,7 @@ body {
   }
 }
 
-body::-webkit-scrollbar,
-dialog::-webkit-scrollbar,
-select::-webkit-scrollbar,
-[popover='auto']::-webkit-scrollbar,
-textarea::-webkit-scrollbar,
-.tbl::-webkit-scrollbar,
-.promo-tbl::-webkit-scrollbar {
+body::-webkit-scrollbar {
   -webkit-appearance: none;
   appearance: none;
   width: 7px;
@@ -424,7 +417,8 @@ dialog::-webkit-scrollbar,
 select::-webkit-scrollbar,
 [popover='auto']::-webkit-scrollbar,
 textarea::-webkit-scrollbar,
-.tbl::-webkit-scrollbar {
+.tbl::-webkit-scrollbar,
+.promo-tbl::-webkit-scrollbar {
   -webkit-appearance: none;
   appearance: none;
   width: 4px;
@@ -481,4 +475,36 @@ textarea::-webkit-scrollbar,
   display: grid;
   grid-template-columns: 7rem auto 1fr;
   gap: 3rem;
+}
+
+.jude_show_more {
+  summary {
+    list-style: none;
+    display: inline-flex; /* also removes the list marker */
+    align-items: center;
+    transition: margin 0.3s ease-in;
+    cursor: pointer;
+  }
+
+  summary::after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: url('https://res.cloudinary.com/dfletli2x/image/upload/icons/reg/angle-down.svg')
+      no-repeat;
+    background-size: contain;
+    margin-right: 0.75em;
+    transition: 0.3s ease-in;
+  }
+
+  details[open] > summary::after {
+    transform: rotate(180deg);
+  }
+  details[open] > summary {
+    margin-bottom: 10px;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
 }

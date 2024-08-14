@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { getCrntUser } from '@/auth/authFuncs'
+import { getUser } from '@/auth/authFuncs'
 import { formatTotalSales } from './format'
 
 export async function getTotal({ filter }) {
@@ -33,7 +33,7 @@ export async function getPayBranch({ filter }) {
   return formatTotalSales(res)
 }
 
-export async function getTableData({ filter }) {
+export async function getSaleTableData({ filter }) {
   filter = await formatFilter(filter)
 
   const res = await db.sale.findMany({
@@ -73,7 +73,7 @@ async function formatFilter(filter) {
   }
   delete filter.gte
   delete filter.lte
-  const user = await getCrntUser()
+  const user = await getUser()
 
   if (user.role === 'AGNT') filter.agntId = user.id
   if (filter.agntId) {
