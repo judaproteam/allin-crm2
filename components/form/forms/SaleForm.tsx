@@ -10,7 +10,7 @@ import { agntType, saleObj } from '@/utils/types'
 import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import DatePicker from '../DatePicker'
-import { checkPayExist } from '@/utils/func'
+import { checkPayExist, clone } from '@/utils/func'
 import { showPop } from '@/ui/GlobalPopMsg'
 import { useUser } from '@/utils/userCtx'
 
@@ -53,6 +53,12 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
     showPop({ msg: 'המכירה נוצרה בהצלחה', icon: 'success' })
 
     console.log('res: ', res)
+  }
+
+  function removePrdct(i) {
+    const tmpPrdcts = clone(prdcts)
+    tmpPrdcts.splice(i, 1)
+    setPrdcts(tmpPrdcts)
   }
 
   return (
@@ -116,16 +122,23 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
           {prdcts.map((p, i) => {
             return <PrdctComp i={i} key={i} />
           })}
-          <div className="flex justify-between items-start">
+          <div className="flex">
             <button className="btn-soft-s" type="button" onClick={() => setPrdcts([...prdcts, {}])}>
               <Icon name="plus" type="reg" />
               <p>הוספת מוצר</p>
             </button>
-            <button className="btn mt-8" onClick={onSave} type="button">
-              <Icon name="floppy-disk" type="sol" className="bg-white" />
-              <p>שמור מכירה</p>
-            </button>
+            {prdcts.length > 1 && (
+              <button className="softBtn-s-r" type="button" onClick={removePrdct}>
+                <Icon name="trash" type="reg" />
+                <p>הסרת מוצר</p>
+              </button>
+            )}
           </div>
+          <button className="btn float-end" onClick={onSave} type="button">
+            <Icon name="floppy-disk" type="sol" className="bg-white" />
+            <p>שמור מכירה</p>
+          </button>
+          <div className="h-12" />
         </div>
         <PopMsg msg="שגיאה, מכירה לא נשמרה" icon="error" id="dbErr" />
         <PopMsg msg="לא הוכנס סכום לפחות למוצר אחד" icon="error" id="errMsg" />

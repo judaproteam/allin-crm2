@@ -159,3 +159,12 @@ export type User = {
   iat?: number
   exp?: number
 }
+
+export type EditSale = {
+  company: string
+  branch: string
+  prdct: string
+  prdctType: string
+  status: string
+  pay: number
+}

@@ -109,7 +109,7 @@ body {
   }
 
   .num-box {
-    @apply py-4 px-8 rounded-md bg-white shadow min-w-40;
+    @apply py-4 px-8 rounded-md bg-white shadow-1 min-w-40 text-start transition-shadow hover:shadow-3 active:shadow-none;
     span {
       @apply mb-2 inline-block;
     }
@@ -170,19 +170,19 @@ body {
   }
 
   .softBtn-s {
-    @apply baseBtn h-11 bg-blue-100 px-5 text-blue-800;
+    @apply baseBtn h-10 bg-blue-100 px-5 text-blue-800;
     > div {
       @apply size-4 bg-blue-800;
     }
   }
   .softBtn-s-g {
-    @apply baseBtn h-11 bg-green-100 px-5 text-green-800;
+    @apply baseBtn h-10 bg-green-100 px-5 text-green-800;
     > div {
       @apply size-4 bg-green-800;
     }
   }
   .softBtn-s-r {
-    @apply baseBtn h-11 bg-red-100 px-5 text-red-800;
+    @apply baseBtn h-10 bg-red-100 px-5 text-red-800;
     > div {
       @apply size-4 bg-red-800;
     }

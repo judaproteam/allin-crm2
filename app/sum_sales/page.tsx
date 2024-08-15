@@ -9,6 +9,7 @@ import { Numbox, Numboxs } from '@/components/Numbox'
 import { getAgntsTotal, getAllAgnts } from '@/db/agnt/getTotal'
 import { getPayBranch, getTotal } from '@/db/sale/getTotal'
 import { Role } from '@prisma/client'
+import { ShowMore } from 'jude_ui/showMore'
 
 export default async function PromotionPage({ searchParams }) {
   const user = await getUser()
@@ -25,17 +26,21 @@ export default async function PromotionPage({ searchParams }) {
     <>
       <section className="bg-white">
         <div className="container py-8 space-y-8">
-          <h1 className="title">סיכום מכירות סוכנים</h1>
-          <div className="flex items-end justify-between">
-            <DateRange />
-            <SearchAnchor agnts={agnts} />
-          </div>
-          <FilterForm />
+          <h1 className="title">נתוני מכירות</h1>
+
+          <DateRange />
+
+          <ShowMore lbl="פלטרים נוספים" prntCls="inline-block">
+            <>
+              <SearchAnchor agnts={agnts} />
+              <FilterForm />
+            </>
+          </ShowMore>
         </div>
       </section>
 
       <section className="container my-12">
-        <Numbox title="משוקלל" num={salesSum.total} className="w-52 mb-4" />
+        <Numbox title="משוקלל" num={salesSum.total} className="w-52 mb-4" term={'משוקלל'} />
         <div className="flex gap-4 ">
           <Numboxs sales={salesSum.sales} />
         </div>

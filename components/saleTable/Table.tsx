@@ -9,8 +9,10 @@ import { sortTable } from '@/utils/func'
 import EditSaleForm from '../form/forms/EditSaleForm'
 import DelPop from '@/ui/DelPop'
 import { store } from '@/utils/store'
-import { Select } from 'jude_ui/form'
+import { SelectGrp } from 'jude_ui/form'
 import { deleteSales, deleteSale } from '@/db/sale/deleteNbackup'
+import { statusList } from '@/db/lists'
+import { updateSaleStatus } from '@/db/sale/update'
 
 export default function Table({ data }) {
   const [tblData, setTblData] = useState(data)
@@ -36,7 +38,8 @@ export default function Table({ data }) {
     setSortConfig({ key, direction })
   }
 
-  function onGroupAction(val) {
+  function onGroupAction(e) {
+    const val = e.target.value
     const checkItems = document.querySelectorAll(
       "[name='checkSale']"
     ) as NodeListOf<HTMLInputElement>
@@ -46,14 +49,21 @@ export default function Table({ data }) {
       if (sale.checked) ids.push(Number(sale.id))
     })
 
-    if (!confirm('בטוח למחוק את המכירות?')) return
-    deleteSales(ids)
-    // if (val === 'עדכון סטטוס') {
-    //   updateSalesStatus(ids)
-    // } else if (val === 'מחיקה') {
-    //   deleteSales(ids)
-    // }
+    return console.log(val)
+
+    if (val === 'מחיקת המכירות שנבחרו') {
+      if (!confirm('בטוח למחוק את המכירות?')) return
+      return deleteSales(ids)
+    }
+
+    if (!confirm('לשנות את סטטוס המכירות ל' + val + '?')) return
+    return updateSaleStatus(ids, val)
   }
+
+  const selectGrp = [
+    { head: 'עדכון סטטוס', list: statusList },
+    { head: 'מחיקה', list: ['מחיקת המכירות שנבחרו'] },
+  ]
 
   return (
     <>
@@ -68,9 +78,10 @@ export default function Table({ data }) {
                 onChange={(e) => onTermChange(e.target.value)}
               />
             </label>
-            <Select
-              className="w-36"
-              list={['עדכון סטטוס', 'מחיקה']}
+
+            <SelectGrp
+              className="w-56"
+              lists={selectGrp}
               onChange={onGroupAction}
               noLable
               lbl="פעולות"

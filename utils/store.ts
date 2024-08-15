@@ -7,7 +7,7 @@ export const store = proxy({
     prdct: '',
     prdctType: '',
     status: '',
-    pay: '',
+    pay: 0,
   },
   deleteId: null as number | null,
 })

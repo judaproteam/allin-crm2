@@ -4,6 +4,7 @@ import SaleFormPop from '@/components/form/forms/SaleForm'
 import SearchAnchor from '@/components/form/SearchAnchor'
 import { Numbox, Numboxs } from '@/components/Numbox'
 import Table from '@/components/saleTable/Table'
+
 import { getAllAgnts } from '@/db/agnt/getTotal'
 
 import { getTotal, getPayBranch, getSaleTableData } from '@/db/sale/getTotal'
@@ -18,7 +19,7 @@ export default async function SimpleTablePage({ searchParams }) {
 
   const agnts = await getAllAgnts()
   const salesSum = { total: total._sum.total, sales: payBranch }
-  //  className="overflow-x-hidden">
+
   return (
     <Fragment key={Math.random()}>
       <section className="bg-white">
@@ -37,7 +38,7 @@ export default async function SimpleTablePage({ searchParams }) {
       </section>
 
       <section className="container my-12">
-        <Numbox title="משוקלל" num={salesSum.total} className="w-52 mb-4" />
+        <Numbox title="משוקלל" num={salesSum.total} className="w-52 mb-4" term={'משוקלל'} />
 
         <Numboxs sales={salesSum.sales} />
       </section>

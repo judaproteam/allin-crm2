@@ -83,5 +83,11 @@ async function formatFilter(filter) {
     delete filter.agntId
   }
 
+  if (filter.branchBox) {
+    filter.branch = filter.branchBox.split('-')[0]
+    filter.prdctType = filter.branchBox.split('-')[1]
+    delete filter.branchBox
+  }
+
   return filter
 }

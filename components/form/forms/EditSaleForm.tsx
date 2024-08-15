@@ -1,11 +1,10 @@
 'use client'
 
 import Icon from '@/ui/Icon'
-import { useState } from 'react'
 import Input from '@/ui/forms/Input'
 import Select from '@/ui/forms/Select'
 import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
-import { saleObj } from '@/utils/types'
+import { EditSale, saleObj } from '@/utils/types'
 import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import { checkPayExist } from '@/utils/func'
@@ -46,7 +45,7 @@ export default function EditSaleForm() {
   return (
     <div popover="auto" id="popEditSaleForm" className="pop overflow-y-auto p-8 rounded-md">
       <main className="max-w-4xl mx-auto">
-        <h2 className="flex gap-4  border-b pb-3">
+        <h2 className="flex gap-4 border-b pb-3">
           <Icon name="money-check-dollar-pen" type="lit" className="size-7 rtl:scale-x-100" />
           <span className="text-xl font-semibold">עריכת מכירה</span>
         </h2>
@@ -55,7 +54,7 @@ export default function EditSaleForm() {
         <div>
           <PrdctComp editSale={snap.editSale} />
 
-          <button className="btn mt-8" onClick={onSave} type="button">
+          <button className="btn mt-2" onClick={onSave} type="button">
             <Icon name="floppy-disk" type="sol" className="bg-white" />
             <p>שמור מכירה</p>
           </button>
@@ -69,50 +68,24 @@ export default function EditSaleForm() {
   )
 }
 
-function PrdctComp({ editSale }) {
-  const [prdct, setPrdct] = useState({
-    ...getPrdctByBranch(editSale.branch),
-  })
-
+function PrdctComp({ editSale }: { editSale: EditSale }) {
   return (
-    <form name="editPrdctForm" className="my-8">
+    <form name="editPrdctForm" className="my-4">
+      <div className="flex mb-2">
+        <p>{editSale.branch}</p>
+        <p>{editSale.prdct}</p>
+        <p>{editSale.prdctType}</p>
+      </div>
       <section className="grid gap-8 grid-cols-2">
         <Select lbl="חברה" field="company" list={companyList} defaultValue={editSale.company} />
-
-        <label className="slct" key={Math.random()}>
-          <p>ענף</p>
-          <select
-            name="branch"
-            value={editSale.branch}
-            onChange={(e) => {
-              setPrdct(getPrdctByBranch(e.target.value))
-              store.editSale.branch = e.target.value
-            }}>
-            {branchList.map((item, i) => (
-              <option value={item} key={i}>
-                {item}
-              </option>
-            ))}
-          </select>
-        </label>
-
-        <Select lbl="מוצר" field="prdct" list={prdct.prdctList} defaultValue={editSale.prdct} />
-        {prdct.prdctTypeList.length < 2 && (
-          <Select
-            lbl="סוג המוצר"
-            field="prdctType"
-            list={prdct.prdctTypeList}
-            defaultValue={editSale.prdctType}
-          />
-        )}
 
         <Input
           lbl="סכום"
           field={editSale.prdctType}
           type="number"
-          required={false}
+          required
           errMsg="סכום אינו תקין"
-          defaultValue={editSale.pay}
+          defaultValue={editSale.pay.toString()}
         />
 
         <Select lbl="סטטוס" field="status" list={statusList} defaultValue={editSale.status} />
