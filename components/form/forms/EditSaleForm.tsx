@@ -8,7 +8,7 @@ import { EditSale, saleObj } from '@/utils/types'
 import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import { checkPayExist } from '@/utils/func'
-import { store, useSnap } from '@/utils/store'
+import { useSnap } from '@/utils/store'
 
 export default function EditSaleForm() {
   const snap = useSnap()

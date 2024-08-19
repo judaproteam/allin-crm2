@@ -14,7 +14,7 @@ import { deleteSales, deleteSale } from '@/db/sale/deleteNbackup'
 import { statusList } from '@/db/lists'
 import { updateSaleStatus } from '@/db/sale/update'
 
-export default function Table({ data }) {
+export default function TestTable({ data }) {
   const [tblData, setTblData] = useState(data)
 
   function onTermChange(term: string) {
@@ -38,7 +38,7 @@ export default function Table({ data }) {
     setSortConfig({ key, direction })
   }
 
-  async function onGroupAction(e) {
+  function onGroupAction(e) {
     const val = e.target.value
     const checkItems = document.querySelectorAll(
       "[name='checkSale']"
@@ -49,20 +49,20 @@ export default function Table({ data }) {
       if (sale.checked) ids.push(Number(sale.id))
     })
 
-    e.target.value = ''
+    return console.log(val)
 
-    if (val === 'מחיקת המכירות') {
+    if (val === 'מחיקת המכירות שנבחרו') {
       if (!confirm('בטוח למחוק את המכירות?')) return
       return deleteSales(ids)
     }
 
     if (!confirm('לשנות את סטטוס המכירות ל' + val + '?')) return
-    await updateSaleStatus(ids, val)
+    return updateSaleStatus(ids, val)
   }
 
   const selectGrp = [
     { head: 'עדכון סטטוס', list: statusList },
-    { head: 'מחיקה', list: ['מחיקת המכירות'] },
+    { head: 'מחיקה', list: ['מחיקת המכירות שנבחרו'] },
   ]
 
   return (
@@ -77,8 +77,9 @@ export default function Table({ data }) {
               onChange={(e) => onTermChange(e.target.value)}
               className="w-52"
             />
+
             <SelectGrp
-              className="w-56"
+              className="w-52"
               lists={selectGrp}
               onChange={onGroupAction}
               noLable
