@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Assistant } from 'next/font/google'
 import '@/styles/globals.scss'
-import 'jude_ui/style'
+import 'jude_ui/style.css'
 import { getUser } from '@/auth/authFuncs'
 import Nav from '@/ui/Nav'
 import GlobalPopMsg from '@/ui/GlobalPopMsg'
@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 <div />
               </>
             )}
-            <main className="overflow-x-hidden">{children}</main>
+            <main className="overflow-x-hidden wrap">{children}</main>
           </div>
         </UserProvider>
       </body>

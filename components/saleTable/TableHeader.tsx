@@ -21,6 +21,7 @@ export default function TableHeader({
   return (
     <tr className="tblHead">
       <th>{/* <input type="checkbox" name="" id="" /> */}</th>
+      <th></th>
       {headers.map((header, i) => {
         return (
           <th

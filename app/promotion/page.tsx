@@ -44,7 +44,7 @@ export default async function PromotionPage({ searchParams }) {
 
   return (
     <>
-      <section className="m-8">
+      <section className="my-8">
         <div className="flex gap-4 mb-8 items-end">
           <SelectPromo promos={promos} />
 

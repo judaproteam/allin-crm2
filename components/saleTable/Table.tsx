@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import TableHeader from './TableHeader'
 import TableRow from './TableRow'
 import { headers } from './saleHeaders'
-import Icon from '../../ui/Icon'
 import { sortTable } from '@/utils/func'
 import EditSaleForm from '../form/forms/EditSaleForm'
 import DelPop from '@/ui/DelPop'
@@ -13,8 +12,10 @@ import { Input, SelectGrp } from 'jude_ui/form'
 import { deleteSales, deleteSale } from '@/db/sale/deleteNbackup'
 import { statusList } from '@/db/lists'
 import { updateSaleStatus } from '@/db/sale/update'
+import { showPop } from '@/ui/GlobalPopMsg'
+import { Btn } from 'jude_ui/btns'
 
-export default function Table({ data }) {
+export default function Table({ data, stickySales }) {
   const [tblData, setTblData] = useState(data)
 
   function onTermChange(term: string) {
@@ -53,11 +54,16 @@ export default function Table({ data }) {
 
     if (val === 'מחיקת המכירות') {
       if (!confirm('בטוח למחוק את המכירות?')) return
-      return deleteSales(ids)
+      showPop({ msg: 'מוחק מכירות...', icon: 'loading' })
+      deleteSales(ids)
+      return showPop({ msg: 'מכירות נמחקו', icon: 'success' })
     }
 
     if (!confirm('לשנות את סטטוס המכירות ל' + val + '?')) return
+
+    showPop({ msg: 'מעדכן סטטוס...', icon: 'loading' })
     await updateSaleStatus(ids, val)
+    showPop({ msg: 'סטטוטס עודכן', icon: 'success' })
   }
 
   const selectGrp = [
@@ -67,8 +73,8 @@ export default function Table({ data }) {
 
   return (
     <>
-      <div className="bg-white pt-4">
-        <div className="px-8 flex justify-between">
+      <div className="mb-2">
+        <div className="flex justify-between">
           <div className="flex">
             <Input
               lbl="חיפוש"
@@ -85,10 +91,8 @@ export default function Table({ data }) {
               lbl="פעולות"
             />
           </div>
-          <button className="btn-s" popoverTarget="popSaleForm">
-            <Icon name="plus" type="sol" />
-            <p>הוסף מכירה</p>
-          </button>
+
+          <Btn lbl="הוסף מכירה" popoverTarget="popSaleForm" clr="solid" icon="plus" />
         </div>
       </div>
 
@@ -103,8 +107,11 @@ export default function Table({ data }) {
             />
           </thead>
           <tbody>
+            {stickySales.map((item, index) => (
+              <TableRow key={index} item={item.sale} headers={columnOrder} iconType="sol" />
+            ))}
             {tblData.map((item, index) => (
-              <TableRow key={index} item={item} headers={columnOrder} />
+              <TableRow key={index} item={item} headers={columnOrder} iconType="lit" />
             ))}
           </tbody>
         </table>

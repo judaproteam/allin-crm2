@@ -25,7 +25,7 @@ export default async function PromotionPage({ searchParams }) {
   return (
     <>
       <section className="bg-white">
-        <div className="container py-8 space-y-8">
+        <div className="py-8 space-y-8">
           <h1 className="title">נתוני מכירות</h1>
 
           <DateRange />
@@ -39,7 +39,7 @@ export default async function PromotionPage({ searchParams }) {
         </div>
       </section>
 
-      <section className="container my-12">
+      <section className="my-12">
         <Numbox title="משוקלל" num={salesSum.total} className="w-52 mb-4" term={'משוקלל'} />
         <div className="flex gap-4 ">
           <Numboxs sales={salesSum.sales} />

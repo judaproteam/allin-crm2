@@ -4,7 +4,7 @@ import { getFormData, startOfMonth } from '@/utils/func'
 import SmallDatePicker from '../SmallDatePicker'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Icon from '@/ui/Icon'
-import { getDateRange } from 'jude_ui/dates'
+import { getDateRange } from 'jude_ui/dates/funcs'
 
 export default function DateRange({ className = '' }) {
   const router = useRouter()

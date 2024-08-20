@@ -10,7 +10,7 @@
     "db": "npx prisma migrate dev",
     "gen": "npx prisma generate",
     "showdb": "npx prisma studio",
-    "update_jude": "pnpm remove jude_ui && pnpm add jude_ui@latest"
+    "up_jude": "pnpm remove jude_ui && pnpm add jude_ui@latest"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
@@ -18,12 +18,13 @@
     "@radix-ui/react-popover": "^1.1.1",
     "@tanstack/react-table": "^8.19.3",
     "jose": "^5.6.3",
-    "jude_ui": "^0.6.3",
+    "jude_ui": "^0.6.29",
     "jwt-decode": "^4.0.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
     "sass": "^1.77.8",
+    "tailwind-merge": "^2.5.2",
     "valtio": "^1.13.2",
     "zod": "^3.23.8"
   },

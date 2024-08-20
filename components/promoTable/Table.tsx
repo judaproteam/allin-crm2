@@ -25,7 +25,7 @@ export default function PromoTable({ agntsTotal }) {
   }
 
   return (
-    <div className="promo-tbl">
+    <div className="tbl">
       <table>
         <thead>
           <Header

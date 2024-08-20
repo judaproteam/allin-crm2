@@ -77,8 +77,9 @@ model Agnt {
   name  String?      @default(dbgenerated())
   group AgntsGroup[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+  StickySales StickySales[]
 
   @@unique([firstName, lastName])
   @@index([email])
@@ -107,18 +108,33 @@ model Sale {
   saleDt DateTime?
   action String?   @default("מכירה")
 
-  client    Client   @relation(fields: [clientId], references: [id])
-  agnt2     Agnt?    @relation(fields: [agnt2Id], references: [id], name: "agnt2")
-  agnt      Agnt     @relation(fields: [agntId], references: [id], name: "agnt")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  client Client @relation(fields: [clientId], references: [id])
+  agnt2  Agnt?  @relation(fields: [agnt2Id], references: [id], name: "agnt2")
+  agnt   Agnt   @relation(fields: [agntId], references: [id], name: "agnt")
 
   total      Float? @default(0)
   agntTotal  Float? @default(0)
   agnt2Total Float? @default(0)
 
-  createdBy   Agnt @relation(fields: [createdById], references: [id])
+  createdBy   Agnt          @relation(fields: [createdById], references: [id])
   createdById Int
+  StickySales StickySales[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model StickySales {
+  id     Int  @id @default(autoincrement())
+  sale   Sale @relation(fields: [saleId], references: [id])
+  saleId Int
+  agnt   Agnt @relation(fields: [agntId], references: [id])
+  agntId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([saleId, agntId])
 }
 
 model DeletedSale {

@@ -23,7 +23,7 @@ export default async function TestTablePage({ searchParams }) {
   return (
     <Fragment key={Math.random()}>
       <section className="bg-white">
-        <div className="container py-8 space-y-8">
+        <div className="py-8 space-y-8">
           <h1 className="title">נתוני מכירות</h1>
 
           <DateRange />
@@ -37,7 +37,7 @@ export default async function TestTablePage({ searchParams }) {
         </div>
       </section>
 
-      <section className="container my-12">
+      <section className="my-12">
         <Numbox title="משוקלל" num={salesSum.total} className="w-52 mb-4" term={'משוקלל'} />
 
         <Numboxs sales={salesSum.sales} />

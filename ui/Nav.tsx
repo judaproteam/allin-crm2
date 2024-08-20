@@ -24,7 +24,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className="bg-blue-950 w-[50px] h-screen fixed top-0 right-0 z-10">
+    <nav className="bg-dark w-[50px] h-screen fixed top-0 right-0 z-10">
       <div className="flex flex-col items-center justify-between h-full gap-6">
         <div>
           {navLinks.map((link, i) => {

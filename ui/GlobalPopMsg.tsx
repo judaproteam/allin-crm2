@@ -3,13 +3,13 @@
 import { useEffect, useState } from 'react'
 import Icon from './Icon'
 
-export let showPop
-let popEl: HTMLElement | null = null
-
 type PopMsg = {
   msg: string
   icon: 'success' | 'error' | 'loading' | 'ban'
 }
+
+export let showPop: (PopMsg: PopMsg) => void
+let popEl: HTMLElement | null = null
 
 export default function GlobalPopMsg() {
   const [pop, setPop] = useState({ msg: '', icon: 'error' })
