@@ -2,6 +2,7 @@ import { proxy, useSnapshot } from 'valtio'
 
 export const store = proxy({
   editSale: {
+    id: 0,
     company: '',
     branch: '',
     prdct: '',

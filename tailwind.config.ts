@@ -13,6 +13,7 @@ const config: Config = {
       colors: {
         solid: '#3F20F5',
         soft: '#D6D1F6',
+        softy: '#F5F5F5',
         dark: '#232032',
       },
       boxShadow: {

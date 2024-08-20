@@ -11,7 +11,7 @@ import { store } from '@/utils/store'
 import { Input, SelectGrp } from 'jude_ui/form'
 import { deleteSales, deleteSale } from '@/db/sale/deleteNbackup'
 import { statusList } from '@/db/lists'
-import { updateSaleStatus } from '@/db/sale/update'
+import { updateManySaleStatus } from '@/db/sale/update'
 import { showPop } from '@/ui/GlobalPopMsg'
 import { Btn } from 'jude_ui/btns'
 
@@ -62,7 +62,7 @@ export default function Table({ data, stickySales }) {
     if (!confirm('לשנות את סטטוס המכירות ל' + val + '?')) return
 
     showPop({ msg: 'מעדכן סטטוס...', icon: 'loading' })
-    await updateSaleStatus(ids, val)
+    await updateManySaleStatus(ids, val)
     showPop({ msg: 'סטטוטס עודכן', icon: 'success' })
   }
 
@@ -108,10 +108,10 @@ export default function Table({ data, stickySales }) {
           </thead>
           <tbody>
             {stickySales.map((item, index) => (
-              <TableRow key={index} item={item.sale} headers={columnOrder} iconType="sol" />
+              <TableRow key={index} item={item.sale} headers={columnOrder} tackType="sol" />
             ))}
             {tblData.map((item, index) => (
-              <TableRow key={index} item={item} headers={columnOrder} iconType="lit" />
+              <TableRow key={index} item={item} headers={columnOrder} tackType="lit" />
             ))}
           </tbody>
         </table>

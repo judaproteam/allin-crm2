@@ -34,10 +34,15 @@ export async function getPayBranch({ filter }) {
 }
 
 export async function getSaleTableData({ filter }) {
-  filter = await formatFilter(filter)
+  let tblFilter = {} as any
+  if (filter.branchBox) {
+    tblFilter.branch = filter.branchBox.split('-')[0]
+    tblFilter.prdctType = filter.branchBox.split('-')[1]
+  }
+  tblFilter = { ...tblFilter, ...(await formatFilter(filter)) }
 
   const res = await db.sale.findMany({
-    where: filter,
+    where: tblFilter,
     select: {
       id: true,
       action: true,
@@ -83,11 +88,7 @@ async function formatFilter(filter) {
     delete filter.agntId
   }
 
-  if (filter.branchBox) {
-    filter.branch = filter.branchBox.split('-')[0]
-    filter.prdctType = filter.branchBox.split('-')[1]
-    delete filter.branchBox
-  }
+  delete filter.branchBox
 
   return filter
 }

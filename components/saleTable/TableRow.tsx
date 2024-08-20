@@ -4,13 +4,32 @@ import { toCurrency, toDate } from '@/utils/func'
 import { store } from '@/utils/store'
 import { SaleTableData } from '@/utils/types'
 import { useUser } from '@/utils/userCtx'
+import { statusList } from '@/db/lists'
+import { updateSaleStatus } from '@/db/sale/update'
 
-export default function TableRow({ item, headers, iconType }: TableRowProps) {
+export default function TableRow({ item, headers, tackType }: TableRowProps) {
   const { user } = useUser()
+
+  function onStatusChange(val: string) {
+    updateSaleStatus(item.id, val)
+  }
 
   function getCell(key: string) {
     if (key === 'pay') return toCurrency(item.pay)
     if (key === 'offrDt') return toDate(item.offrDt)
+    if (key === 'status')
+      return (
+        <select
+          value={item.status}
+          onChange={(e) => onStatusChange(e.target.value)}
+          style={{ backgroundImage: 'none', width: '120px', appearance: 'auto' }}>
+          {statusList.map((item, index) => (
+            <option key={index} value={item}>
+              {item}
+            </option>
+          ))}
+        </select>
+      )
 
     return item[key]
   }
@@ -21,6 +40,7 @@ export default function TableRow({ item, headers, iconType }: TableRowProps) {
 
   function onItem(item) {
     store.editSale = {
+      id: item.id,
       company: item.company,
       branch: item.branch,
       prdct: item.prdct,
@@ -38,7 +58,7 @@ export default function TableRow({ item, headers, iconType }: TableRowProps) {
 
       <td>
         <button onClick={() => onSticky(item)}>
-          <Icon name="thumbtack" className="size-4" type={iconType} />
+          <Icon name="thumbtack" className="size-4" type={tackType} />
         </button>
       </td>
       {headers.map((header) => (
@@ -72,7 +92,7 @@ export default function TableRow({ item, headers, iconType }: TableRowProps) {
 }
 
 type TableRowProps = {
-  iconType: 'lit' | 'sol'
+  tackType: 'lit' | 'sol'
   item: SaleTableData
   headers: Array<{ key: string; label: string }>
 }

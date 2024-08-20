@@ -1,45 +1,24 @@
 'use client'
 
-import Icon from '@/ui/Icon'
-import Input from '@/ui/forms/Input'
-import Select from '@/ui/forms/Select'
-import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
-import { EditSale, saleObj } from '@/utils/types'
-import { insertSale } from '@/db/sale/insertSales'
-import PopMsg from '@/components/PopMsg'
-import { checkPayExist } from '@/utils/func'
-import { useSnap } from '@/utils/store'
+import Icon from 'jude_ui/icon'
+import { Input, Select } from 'jude_ui/form'
+
+import { getFormData } from 'jude_ui/form/funcs'
+import { companyList, statusList } from '@/db/lists'
+import { store, useSnap } from '@/utils/store'
+import { Btn } from 'jude_ui/btns'
+import { updateSale } from '@/db/sale/update'
+// import Select from '@/ui/forms/Select'
 
 export default function EditSaleForm() {
-  const snap = useSnap()
+  const snap = useSnap().editSale
 
-  async function onSave(e: React.SyntheticEvent) {
-    e.preventDefault()
+  async function onSubmit(e) {
+    const data = getFormData(e)
 
-    const prdctForms = document.querySelectorAll(
-      "[name='prdctForm']"
-    ) as NodeListOf<HTMLFormElement>
+    console.log('data: ', data)
 
-    const sale = { details: {}, prdcts: [] } as unknown as saleObj
-
-    for (let i = 0; i < prdctForms.length; i++) {
-      const form = prdctForms[i]
-      if (!form.checkValidity()) return form.reportValidity()
-      const data = Object.fromEntries(new FormData(form))
-
-      if (checkPayExist(data)) return document.getElementById('errMsg').showPopover()
-      sale.prdcts.push(data as saleObj['prdcts'][0])
-    }
-
-    document.getElementById('loadingMsg').showPopover()
-    const res = await insertSale(sale)
-    if (res.err) {
-      console.log('res.err: ', res.err)
-      return document.getElementById('dbErr').showPopover()
-    }
-    document.getElementById('checkMsg').showPopover()
-
-    console.log('res: ', res)
+    // await updateSale(snap.id, data)
   }
 
   return (
@@ -51,45 +30,69 @@ export default function EditSaleForm() {
         </h2>
 
         {/* PRODUCT */}
-        <div>
-          <PrdctComp editSale={snap.editSale} />
 
-          <button className="btn mt-2" onClick={onSave} type="button">
-            <Icon name="floppy-disk" type="sol" className="bg-white" />
-            <p>שמור מכירה</p>
-          </button>
-        </div>
-        <PopMsg msg="שגיאה, מכירה לא נשמרה" icon="error" id="dbErr" />
-        <PopMsg msg="לא הוכנס סכום לפחות למוצר אחד" icon="error" id="errMsg" />
-        <PopMsg msg="שומר מכירה..." icon="loading" id="loadingMsg" />
-        <PopMsg msg="מכירה נשמרה בהצלחה" icon="success" id="checkMsg" />
+        <form name="editPrdctForm" className="my-4" onSubmit={onSubmit}>
+          <div className="flex gap-2 mb-8">
+            <p className="bg-gray-100 py-2 px-4 rounded-md">{snap.branch}</p>
+            <p className="bg-gray-100 py-2 px-4 rounded-md">{snap.prdct}</p>
+            <p className="bg-gray-100 py-2 px-4  rounded-md">{snap.prdctType}</p>
+          </div>
+          <section className="grid gap-4 grid-cols-2 items-end">
+            <Select
+              lbl="חברה"
+              name="company"
+              list={companyList}
+              value={snap.company}
+              onChange={(e) => (store.editSale.company = e.target.value)}
+            />
+
+            <Input
+              lbl="סכום"
+              name={snap.prdctType}
+              type="number"
+              defaultValue={snap.pay.toString()}
+            />
+
+            <Select
+              lbl="סטטוס"
+              name="status"
+              list={statusList}
+              value={snap.status}
+              onChange={(e) => (store.editSale.status = e.target.value)}
+            />
+          </section>
+          <Btn className="w-full mt-8" lbl="שמור עריכה" clr="solid" icon="floppy-disk" />
+        </form>
       </main>
     </div>
   )
 }
 
-function PrdctComp({ editSale }: { editSale: EditSale }) {
-  return (
-    <form name="editPrdctForm" className="my-4">
-      <div className="flex mb-2">
-        <p>{editSale.branch}</p>
-        <p>{editSale.prdct}</p>
-        <p>{editSale.prdctType}</p>
-      </div>
-      <section className="grid gap-8 grid-cols-2">
-        <Select lbl="חברה" field="company" list={companyList} defaultValue={editSale.company} />
+// async function onSubmit(e: React.SyntheticEvent) {
+//   e.preventDefault()
 
-        <Input
-          lbl="סכום"
-          field={editSale.prdctType}
-          type="number"
-          required
-          errMsg="סכום אינו תקין"
-          defaultValue={editSale.pay.toString()}
-        />
+//   const prdctForms = document.querySelectorAll(
+//     "[name='prdctForm']"
+//   ) as NodeListOf<HTMLFormElement>
 
-        <Select lbl="סטטוס" field="status" list={statusList} defaultValue={editSale.status} />
-      </section>
-    </form>
-  )
-}
+//   const saveSale = { details: {}, prdcts: [] } as unknown as saleObj
+
+//   for (let i = 0; i < prdctForms.length; i++) {
+//     const form = prdctForms[i]
+//     if (!form.checkValidity()) return form.reportValidity()
+//     const data = Object.fromEntries(new FormData(form))
+
+//     if (checkPayExist(data)) return document.getElementById('errMsg').showPopover()
+//     saveSale.prdcts.push(data as saleObj['prdcts'][0])
+//   }
+
+//   document.getElementById('loadingMsg').showPopover()
+//   const res = await insertSale(saveSale)
+//   if (res.err) {
+//     console.log('res.err: ', res.err)
+//     return document.getElementById('dbErr').showPopover()
+//   }
+//   document.getElementById('checkMsg').showPopover()
+
+//   console.log('res: ', res)
+// }

@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 
 export function Numbox({ title, num, info = false, className = '', term }) {
   const router = useRouter()
-  const param = useSearchParams().get('branchBox')
+  const param = useSearchParams().get('branchBox') || 'משוקלל'
 
   function filter() {
     if (term === 'משוקלל') {
@@ -21,7 +21,7 @@ export function Numbox({ title, num, info = false, className = '', term }) {
 
   return (
     <button
-      className={`num-box ${className} ${param === term ? 'bg-blue-100' : ''}`}
+      className={`num-box ${className} ${param === term ? 'bg-softy border border-solid' : ''}`}
       onClick={filter}>
       <span>{title}</span>
       {info && (

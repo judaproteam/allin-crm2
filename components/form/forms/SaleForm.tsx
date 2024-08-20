@@ -1,7 +1,7 @@
 'use client'
 
 import Icon from '@/ui/Icon'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Input from '@/ui/forms/Input'
 import Select from '@/ui/forms/Select'
 import { branchList, companyList, getPrdctByBranch, pensionyList, statusList } from '@/db/lists'
@@ -60,6 +60,15 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
     tmpPrdcts.splice(i, 1)
     setPrdcts(tmpPrdcts)
   }
+
+  useEffect(() => {
+    const el = document.getElementById('popSaleForm')
+    el.scroll({
+      top: 1000,
+      left: 0,
+      behavior: 'smooth',
+    })
+  }, [prdcts])
 
   return (
     <div popover="auto" id="popSaleForm" className="pop overflow-y-auto h-5/6 p-8 rounded-md">
