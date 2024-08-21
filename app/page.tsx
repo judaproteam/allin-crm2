@@ -13,8 +13,6 @@ import { getAgntsGroups } from '@/db/agntsGroup'
 import { getTotal, getPayBranch, getSaleTableData } from '@/db/sale/getTotal'
 import { getStickySales } from '@/db/sale/stickySales'
 import { Btn } from 'jude_ui/btns'
-import Icon from 'jude_ui/icon'
-import { ShowMore } from 'jude_ui/showMore'
 import { Fragment } from 'react'
 
 export default async function SimpleTablePage({ searchParams }) {
@@ -47,16 +45,7 @@ export default async function SimpleTablePage({ searchParams }) {
 
       <SaleFormPop agnts={agnts} />
 
-      <div
-        popover="auto"
-        className="pop max-h-[75vh] w-[560px] scroll-bar overflow-y-auto"
-        id="filterPop">
-        <div className="inline-flex items-center gap-4 border-b pb-2 mb-6 border-slate-400">
-          <Icon name="filter" type="reg" />
-          <p className="text-xl font-medium">סינונים</p>
-        </div>
-        <Filter agnts={agnts} agntsGroups={agntsGroups} />
-      </div>
+      <Filter agnts={agnts} agntsGroups={agntsGroups} />
     </Fragment>
   )
 }

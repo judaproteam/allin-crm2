@@ -10,6 +10,9 @@ import { getAgntsTotal, getAllAgnts } from '@/db/agnt/getTotal'
 import { getPayBranch, getTotal } from '@/db/sale/getTotal'
 import { Role } from '@prisma/client'
 import { ShowMore } from 'jude_ui/showMore'
+import Filter from '@/components/filter'
+import { getAgntsGroups } from '@/db/agntsGroup'
+import { Btn } from 'jude_ui/btns'
 
 export default async function PromotionPage({ searchParams }) {
   const user = await getUser()
@@ -19,24 +22,15 @@ export default async function PromotionPage({ searchParams }) {
   const payBranch = await getPayBranch({ filter: searchParams })
   const salesSum = { total: total._sum.total, sales: payBranch }
   const agnts = await getAllAgnts()
+  const agntsGroups = await getAgntsGroups()
 
   const agntsTotal = await getAgntsTotal()
 
   return (
     <>
-      <section className="bg-white">
-        <div className="py-8 space-y-8">
-          <h1 className="title">נתוני מכירות</h1>
-
-          <DateRange />
-
-          <ShowMore lbl="פלטרים נוספים" prntCls="inline-block">
-            <>
-              <SearchAnchor agnts={agnts} />
-              <FilterForm />
-            </>
-          </ShowMore>
-        </div>
+      <section className="flex justify-between  mt-8">
+        <h1 className="title">סיכום מכירות</h1>
+        <Btn clr="text" lbl="סינון" popoverTarget="filterPop" icon="filter" className="bg-white" />
       </section>
 
       <section className="my-12">
@@ -47,6 +41,8 @@ export default async function PromotionPage({ searchParams }) {
       </section>
 
       <AgntTable agntsTotal={agntsTotal} />
+
+      <Filter agnts={agnts} agntsGroups={agntsGroups} />
     </>
   )
 }

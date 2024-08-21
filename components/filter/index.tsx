@@ -8,6 +8,7 @@ import { getFormData } from 'jude_ui/form/funcs'
 import SelectDateRange from './SelectDateRange'
 import { getDateRange } from 'jude_ui/dates/funcs'
 import { useRouter } from 'next/navigation'
+import Icon from 'jude_ui/icon'
 
 export default function Filter({ agnts, agntsGroups }) {
   const router = useRouter()
@@ -36,54 +37,68 @@ export default function Filter({ agnts, agntsGroups }) {
 
     const url = new URLSearchParams(query).toString()
     router.replace('?' + url, { scroll: false })
+
+    document.getElementById('filterPop').hidePopover()
   }
 
   function resetFilter() {
     const form = document.getElementById('filterForm') as HTMLFormElement
     form.reset()
     router.replace('?')
+
+    document.getElementById('filterPop').hidePopover()
   }
 
   return (
-    <form id="filterForm" onSubmit={onSubmit}>
-      <p className="border-b pb-2 mb-4">סינון תאריך</p>
-      <SelectDateRange />
+    <div
+      popover="auto"
+      className="pop max-h-[75vh] w-[560px] scroll-bar overflow-y-auto"
+      id="filterPop">
+      <div className="inline-flex items-center gap-4 border-b pb-2 mb-6 border-slate-400">
+        <Icon name="filter" type="reg" />
+        <p className="text-xl font-medium">סינונים</p>
+      </div>
 
-      <p className="border-b pb-2 mb-4 mt-8">סינון מוצר</p>
-      <section className="grid grid-cols-2 gap-4">
-        <Select lbl="חברה" name="company" list={companyList} required={false} />
-        <Select
-          lbl="ענף"
-          name="branch"
-          list={branchList}
-          onChange={(e) => {
-            setPrdct(getPrdctByBranch(e.target.value))
-          }}
-          required={false}
-        />
-        <Select lbl="מוצר" name="prdct" list={prdct.prdctList} required={false} />
-        <Select lbl="סוג המוצר" name="prdctType" list={prdct.prdctTypeList} required={false} />
-        <Select lbl="סטטוס" name="status" list={statusList} required={false} />
-        <Select lbl="פעולה" name="action" list={['מכירה', 'מינוי סוכן']} required={false} />
-      </section>
+      <form id="filterForm" onSubmit={onSubmit}>
+        <p className="border-b pb-2 mb-4">סינון תאריך</p>
+        <SelectDateRange />
 
-      <p className="border-b pb-2 mb-4 mt-8">סינון סוכנים</p>
-      <section className="grid grid-cols-2 gap-4">
-        <SelectObj list={agnts} lbl="סוכן" show="name" val="id" required={false} name="agntId" />
-        <SelectObj
-          list={agntsGroups}
-          lbl="קבוצת סוכנים"
-          show="name"
-          val="id"
-          required={false}
-          name="agntGroupId"
-        />
-      </section>
+        <p className="border-b pb-2 mb-4 mt-8">סינון מוצר</p>
+        <section className="grid grid-cols-2 gap-4">
+          <Select lbl="חברה" name="company" list={companyList} required={false} />
+          <Select
+            lbl="ענף"
+            name="branch"
+            list={branchList}
+            onChange={(e) => {
+              setPrdct(getPrdctByBranch(e.target.value))
+            }}
+            required={false}
+          />
+          <Select lbl="מוצר" name="prdct" list={prdct.prdctList} required={false} />
+          <Select lbl="סוג המוצר" name="prdctType" list={prdct.prdctTypeList} required={false} />
+          <Select lbl="סטטוס" name="status" list={statusList} required={false} />
+          <Select lbl="פעולה" name="action" list={['מכירה', 'מינוי סוכן']} required={false} />
+        </section>
 
-      <section className="grid grid-cols-2 gap-4 mt-8">
-        <Btn clr="text" lbl="אפס סינונים" type="button" onClick={resetFilter} icon="eraser" />
-        <Btn clr="solid" lbl="שמור סינונים" icon="floppy-disk" />
-      </section>
-    </form>
+        <p className="border-b pb-2 mb-4 mt-8">סינון סוכנים</p>
+        <section className="grid grid-cols-2 gap-4">
+          <SelectObj list={agnts} lbl="סוכן" show="name" val="id" required={false} name="agntId" />
+          <SelectObj
+            list={agntsGroups}
+            lbl="קבוצת סוכנים"
+            show="name"
+            val="id"
+            required={false}
+            name="agntGroupId"
+          />
+        </section>
+
+        <section className="grid grid-cols-2 gap-4 mt-8">
+          <Btn clr="text" lbl="אפס סינונים" type="button" onClick={resetFilter} icon="eraser" />
+          <Btn clr="solid" lbl="שמור סינונים" icon="floppy-disk" />
+        </section>
+      </form>
+    </div>
   )
 }

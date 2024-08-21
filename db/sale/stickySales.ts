@@ -69,8 +69,6 @@ export async function getStickySales(agntId: number) {
     return item
   })
 
-  console.log(formated)
-
   return formated
 }
 
