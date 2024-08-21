@@ -3,16 +3,12 @@ import GroupForm from '@/components/form/forms/GroupForm'
 import PromoForm from '@/components/form/forms/PromoForm'
 import PromoTable from '@/components/promoTable/Table'
 import SelectPromo from '@/components/selects/SelectPromo'
-import { getAgntsTotal, getMapAgnts } from '@/db/agnt/getTotal'
+import { getAgntsTotal, getAllAgnts } from '@/db/agnt/getTotal'
 import { getAgntsGroups } from '@/db/agntsGroup'
 import { db } from '@/db/db'
 import PromoCard from '@/ui/cards/PromoCard'
+import { AgntList } from '@/utils/types'
 import { Role } from '@prisma/client'
-
-type AgntList = {
-  id: number
-  name: string
-}[]
 
 export default async function PromotionPage({ searchParams }) {
   const promoId = searchParams.promoId
@@ -25,8 +21,6 @@ export default async function PromotionPage({ searchParams }) {
 
   const promo = promoId ? promos.find((p) => p.id == promoId) : promos[0]
 
-  console.log('promo', promo)
-
   agntsTotal.forEach((agnt) => {
     const promoBranch = promo.branch
     agnt.agntBranchSum = promoBranch === 'משוקלל' ? agnt.agntTotal : agnt[promoBranch]
@@ -35,7 +29,7 @@ export default async function PromotionPage({ searchParams }) {
     agnt['goal'] = Math.round((agnt.agntBranchSum / promo.target) * 100)
   })
 
-  const agnts = (await getMapAgnts()) as AgntList
+  const agnts = (await getAllAgnts()) as AgntList
 
   const user = await getUser()
   const crntAgnt = agntsTotal.find((agnt) => agnt.agntId === user.id)

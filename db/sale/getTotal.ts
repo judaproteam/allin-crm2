@@ -40,9 +40,10 @@ export async function getSaleTableData({ filter }) {
     tblFilter.prdctType = filter.branchBox.split('-')[1]
   }
   tblFilter = { ...tblFilter, ...(await formatFilter(filter)) }
-
+  const ids = [2, 3, 4]
   const res = await db.sale.findMany({
     where: tblFilter,
+
     select: {
       id: true,
       action: true,
@@ -75,17 +76,28 @@ async function formatFilter(filter) {
       gte: new Date(filter.gte).toISOString(),
       lte: new Date(filter.lte).toISOString(),
     }
-  }
-  delete filter.gte
-  delete filter.lte
-  const user = await getUser()
 
+    delete filter.gte
+    delete filter.lte
+  }
+
+  const user = await getUser()
   if (user.role === 'AGNT') filter.agntId = user.id
+
   if (filter.agntId) {
     const agntId = Number(filter.agntId)
     filter.OR = [{ agntId }, { agnt2Id: agntId }]
 
     delete filter.agntId
+  }
+  if (filter.agntGroupId) {
+    const groupIds = await db.agntsGroup.findUnique({
+      where: { id: Number(filter.agntGroupId) },
+      include: { agnts: true },
+    })
+
+    const ids = groupIds.agnts.map((agnt) => agnt.id)
+    filter.agntId = { in: ids }
   }
 
   delete filter.branchBox

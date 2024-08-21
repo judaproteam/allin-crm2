@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from 'react'
 import Icon from './Icon'
-import { createAgntsGroup } from '@/db/agntsGroup'
+import { AgntList } from '@/utils/types'
 
-type AgntList = {
-  id: number
-  name: string
-}[]
+type Props = {
+  agntsList: AgntList
+  chips: AgntList
+  setChips: React.Dispatch<React.SetStateAction<AgntList>>
+}
 
-export default function SelectChip({ agntsList = [], chips, setChips }) {
+export default function SelectChip({ agntsList = [], chips, setChips }: Props) {
   const [agnts, setAgnts] = useState<AgntList>(agntsList)
 
   useEffect(() => {
@@ -47,15 +48,6 @@ export default function SelectChip({ agntsList = [], chips, setChips }) {
     setChips(tmpChips)
   }
 
-  async function onSubmit() {
-    // connect: agnts.map((agnt) => ({ id: agnt.id })),
-    const agntIds = chips.map((chip) => {
-      return { id: Number(chip.id) }
-    })
-
-    await createAgntsGroup({ agntIds, name: 'cool group' })
-  }
-
   return (
     <>
       <label className="slct mb-4">
@@ -76,10 +68,6 @@ export default function SelectChip({ agntsList = [], chips, setChips }) {
           )
         })}
       </div>
-
-      {/* <button onClick={onSubmit} className="btn">
-        שמור לקבוצה
-      </button> */}
     </>
   )
 }

@@ -6,7 +6,7 @@ import { Role } from '@prisma/client'
 import Icon from '@/ui/Icon'
 import { useUser } from '@/utils/userCtx'
 
-export default function SearchAnchor({ agnts }) {
+export default function SearchInput({ agnts }) {
   const { user } = useUser()
   if (user?.role != Role.MNGR) return null
 

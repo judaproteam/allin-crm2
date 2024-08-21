@@ -308,13 +308,13 @@ body {
   }
 
   .smallDateBtn {
-    @apply block max-w-60 relative;
+    @apply block w-full relative h-10 bg-white rounded-md border border-slate-200 px-4 focus:outline-blue-200;
 
     button {
       @apply h-10 w-full;
     }
     input[type='date'] {
-      @apply opacity-0 pointer-events-none absolute inset-0 -z-50 w-36;
+      @apply opacity-0 pointer-events-none absolute top-0 right-0 -z-50 w-full;
     }
   }
 
@@ -403,6 +403,7 @@ input[type='number'] {
   -moz-appearance: textfield;
 }
 
+.scroll-bar::-webkit-scrollbar,
 dialog::-webkit-scrollbar,
 select::-webkit-scrollbar,
 [popover='auto']::-webkit-scrollbar,

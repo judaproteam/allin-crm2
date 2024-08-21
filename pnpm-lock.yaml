@@ -24,8 +24,8 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
       jude_ui:
-        specifier: ^0.6.32
-        version: 0.6.32
+        specifier: ^0.6.40
+        version: 0.6.40
       jwt-decode:
         specifier: ^4.0.0
         version: 4.0.0
@@ -714,8 +714,8 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  jude_ui@0.6.32:
-    resolution: {integrity: sha512-JuWDV7PrDClA/HEF1GSZQH60xvl1sXyzXL0OPHqYA3EkvwnpnY5BcakXsk+Utg+9lr2L3hyINhs03jxzgFHKcA==}
+  jude_ui@0.6.40:
+    resolution: {integrity: sha512-TQcPer8dMsp+mwSc42o4Hum9XhZUV4KmITBX+3aGMfqRrzENjBjC84p43ApRykT846gz6KX8rSKl9tCzp+RKrg==}
 
   jwt-decode@4.0.0:
     resolution: {integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==}
@@ -1675,7 +1675,7 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  jude_ui@0.6.32: {}
+  jude_ui@0.6.40: {}
 
   jwt-decode@4.0.0: {}
 

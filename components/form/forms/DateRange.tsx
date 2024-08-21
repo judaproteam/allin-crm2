@@ -25,7 +25,7 @@ export default function DateRange({ className = '' }) {
     const val = e.target.value
     if (val === '') return
 
-    const { startDate, endDate } = getDateRange(val)
+    const { startDate, endDate } = getDateRange(val) as any
     const period = {
       gte: startDate.toISOString().split('T')[0],
       lte: endDate.toISOString().split('T')[0],

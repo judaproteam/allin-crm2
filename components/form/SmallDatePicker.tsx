@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react'
 
-export default function SmallDatePicker({ field = '', val }) {
+export default function SmallDatePicker({ val, ...props }) {
   const [date, setDate] = useState(val)
   const ref = useRef<HTMLInputElement>(null)
   const tmpDt = new Date(date).toLocaleDateString('he-IL')
+
+  // date input format = yyyy-MM-dd
 
   return (
     <label className="smallDateBtn">
@@ -14,9 +16,9 @@ export default function SmallDatePicker({ field = '', val }) {
       <input
         type="date"
         ref={ref}
-        name={field}
         onChange={(e) => setDate(e.target.value)}
-        value={val}
+        value={date}
+        {...props}
       />
     </label>
   )

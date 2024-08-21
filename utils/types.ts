@@ -168,3 +168,8 @@ export type EditSale = {
   status: string
   pay: number
 }
+
+export type AgntList = {
+  id: number
+  name: string
+}[]

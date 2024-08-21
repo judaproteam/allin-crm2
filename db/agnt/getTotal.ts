@@ -41,6 +41,8 @@ export async function getAgntsTotalByDate() {
 }
 
 export async function getMapAgnts() {
+  console.log('getMapAgnts')
+
   const agnts = await getAllAgnts()
   const agntMap = {}
   agnts.forEach((agnt) => (agntMap[agnt.id] = agnt))

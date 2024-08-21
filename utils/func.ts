@@ -6,8 +6,8 @@ export const genId = () => {
   return Math.floor(Math.random() * 9999999)
 }
 
-export const clone = (obj) => {
-  return JSON.parse(JSON.stringify(obj))
+export const clone = (el: any) => {
+  return JSON.parse(JSON.stringify(el))
 }
 
 export const toCurrency = (num: number) => {
