@@ -12,8 +12,6 @@ export async function updateSale({ updatedData, sale }) {
     data,
   })
 
-  console.log(res)
-
   revalidatePath('/')
   return res
 }

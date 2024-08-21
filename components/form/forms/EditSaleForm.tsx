@@ -8,6 +8,7 @@ import { companyList, statusList } from '@/db/lists'
 import { store, useSnap } from '@/utils/store'
 import { Btn } from 'jude_ui/btns'
 import { updateSale } from '@/db/sale/updateSale'
+import { showPop } from 'jude_ui/pop'
 
 export default function EditSaleForm() {
   const snap = useSnap().editSale
@@ -15,9 +16,9 @@ export default function EditSaleForm() {
   async function onSubmit(e) {
     const data = getFormData(e)
 
-    console.log('sale: ', { ...snap, ...data })
-
+    showPop({ msg: 'מעדכן מכירה...', icon: 'loading' })
     await updateSale({ updatedData: data, sale: snap })
+    showPop({ msg: 'מכירה עודכנה', icon: 'success' })
   }
 
   return (
