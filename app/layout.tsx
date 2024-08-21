@@ -4,7 +4,7 @@ import '@/styles/globals.scss'
 import 'jude_ui/style.css'
 import { getUser } from '@/auth/authFuncs'
 import Nav from '@/ui/Nav'
-import GlobalPopMsg from '@/ui/GlobalPopMsg'
+import PopMsg from 'jude_ui/pop'
 import UserProvider from '@/utils/userCtx'
 
 const font = Assistant({ subsets: ['latin'] })
@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <body className={font.className}>
         <UserProvider data={user}>
           <div className="app-container">
-            <GlobalPopMsg />
+            <PopMsg />
             {user && (
               <>
                 <Nav />

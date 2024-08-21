@@ -12,7 +12,7 @@ import { Input, SelectGrp } from 'jude_ui/form'
 import { deleteSales, deleteSale } from '@/db/sale/deleteNbackup'
 import { statusList } from '@/db/lists'
 import { updateManySaleStatus } from '@/db/sale/update'
-import { showPop } from '@/ui/GlobalPopMsg'
+import { showPop } from 'jude_ui/pop'
 import { Btn } from 'jude_ui/btns'
 
 export default function Table({ data, stickySales }) {

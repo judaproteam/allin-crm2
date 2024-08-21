@@ -2,7 +2,7 @@
 
 import { createAgntsGroup } from '@/db/agntsGroup'
 import Input from '@/ui/forms/Input'
-import { showPop } from '@/ui/GlobalPopMsg'
+import { showPop } from 'jude_ui/pop'
 import Icon from '@/ui/Icon'
 import SelectChip from '@/ui/SelectChip'
 import { useState } from 'react'

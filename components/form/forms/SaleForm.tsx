@@ -11,7 +11,7 @@ import { insertSale } from '@/db/sale/insertSales'
 import PopMsg from '@/components/PopMsg'
 import DatePicker from '../DatePicker'
 import { checkPayExist, clone } from '@/utils/func'
-import { showPop } from '@/ui/GlobalPopMsg'
+import { showPop } from 'jude_ui/pop'
 import { useUser } from '@/utils/userCtx'
 
 export default function SaleForm({ agnts }: { agnts: agntType[] }) {
@@ -42,14 +42,12 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
       sale.prdcts.push(data as saleObj['prdcts'][0])
     }
 
-    // document.getElementById('loadingMsg').showPopover()
     showPop({ msg: 'שומר מכירה...', icon: 'loading' })
     const res = await insertSale(sale)
     if (res.err) {
       return showPop({ msg: 'שגיאה, מכירה לא נשמרה', icon: 'error' })
-      // document.getElementById('dbErr').showPopover()
     }
-    //document.getElementById('checkMsg').showPopover()
+
     showPop({ msg: 'המכירה נוצרה בהצלחה', icon: 'success' })
 
     console.log('res: ', res)
@@ -63,11 +61,7 @@ export default function SaleForm({ agnts }: { agnts: agntType[] }) {
 
   useEffect(() => {
     const el = document.getElementById('popSaleForm')
-    el.scroll({
-      top: 1000,
-      left: 0,
-      behavior: 'smooth',
-    })
+    el.scroll({ top: 1000, left: 0, behavior: 'smooth' })
   }, [prdcts])
 
   return (

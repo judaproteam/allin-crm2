@@ -7,8 +7,7 @@ import { getFormData } from 'jude_ui/form/funcs'
 import { companyList, statusList } from '@/db/lists'
 import { store, useSnap } from '@/utils/store'
 import { Btn } from 'jude_ui/btns'
-import { updateSale } from '@/db/sale/update'
-// import Select from '@/ui/forms/Select'
+import { updateSale } from '@/db/sale/updateSale'
 
 export default function EditSaleForm() {
   const snap = useSnap().editSale
@@ -16,9 +15,9 @@ export default function EditSaleForm() {
   async function onSubmit(e) {
     const data = getFormData(e)
 
-    console.log('data: ', data)
+    console.log('sale: ', { ...snap, ...data })
 
-    // await updateSale(snap.id, data)
+    await updateSale({ updatedData: data, sale: snap })
   }
 
   return (
@@ -48,9 +47,10 @@ export default function EditSaleForm() {
 
             <Input
               lbl="סכום"
-              name={snap.prdctType}
+              name="pay"
               type="number"
-              defaultValue={snap.pay.toString()}
+              value={snap.pay.toString()}
+              onChange={(e) => (store.editSale.pay = Number(e.target.value))}
             />
 
             <Select
@@ -67,32 +67,3 @@ export default function EditSaleForm() {
     </div>
   )
 }
-
-// async function onSubmit(e: React.SyntheticEvent) {
-//   e.preventDefault()
-
-//   const prdctForms = document.querySelectorAll(
-//     "[name='prdctForm']"
-//   ) as NodeListOf<HTMLFormElement>
-
-//   const saveSale = { details: {}, prdcts: [] } as unknown as saleObj
-
-//   for (let i = 0; i < prdctForms.length; i++) {
-//     const form = prdctForms[i]
-//     if (!form.checkValidity()) return form.reportValidity()
-//     const data = Object.fromEntries(new FormData(form))
-
-//     if (checkPayExist(data)) return document.getElementById('errMsg').showPopover()
-//     saveSale.prdcts.push(data as saleObj['prdcts'][0])
-//   }
-
-//   document.getElementById('loadingMsg').showPopover()
-//   const res = await insertSale(saveSale)
-//   if (res.err) {
-//     console.log('res.err: ', res.err)
-//     return document.getElementById('dbErr').showPopover()
-//   }
-//   document.getElementById('checkMsg').showPopover()
-
-//   console.log('res: ', res)
-// }

@@ -24,15 +24,3 @@ export async function updateSaleStatus(saleId: number, status: string) {
   revalidatePath('/')
   return res
 }
-
-export async function updateSale(saleId: number, data: any) {
-  const res = await db.sale.update({
-    where: { id: saleId },
-    data,
-  })
-
-  console.log(res)
-
-  revalidatePath('/')
-  return res
-}

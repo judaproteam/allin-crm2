@@ -39,16 +39,18 @@ export default function TableRow({ item, headers, tackType }: TableRowProps) {
   }
 
   function onItem(item) {
-    store.editSale = {
-      id: item.id,
-      company: item.company,
-      branch: item.branch,
-      prdct: item.prdct,
-      prdctType: item.prdctType,
-      status: item.status,
-      pay: item.pay,
-    }
+    store.editSale = item
   }
+
+  // {
+  //   id: item.id,
+  //   company: item.company,
+  //   branch: item.branch,
+  //   prdct: item.prdct,
+  //   prdctType: item.prdctType,
+  //   status: item.status,
+  //   pay: item.pay,
+  // }
 
   return (
     <tr>
