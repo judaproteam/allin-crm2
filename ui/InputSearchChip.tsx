@@ -46,6 +46,7 @@ export default function InputSearchChip({ agntsList = [], chips, setChips }: Pro
           placeholder="חיפוש סוכנים..."
           className="w-72"
           noLable
+          required={false}
           onChange={onFilter}
         />
       </div>

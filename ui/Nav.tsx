@@ -13,8 +13,6 @@ export default function Nav() {
   const { user, setUser } = useUser()
   useEffect(() => {
     getUser().then((user) => {
-      console.log('user in nav useEffect', user)
-
       setUser(user)
     })
   }, [])

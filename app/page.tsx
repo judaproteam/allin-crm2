@@ -16,13 +16,15 @@ import { Btn } from 'jude_ui/btns'
 import { Fragment } from 'react'
 
 export default async function SimpleTablePage({ searchParams }) {
-  const data = await getSaleTableData({ filter: searchParams })
+  const filter = searchParams.query ? JSON.parse(searchParams.query) : {}
+
+  const data = await getSaleTableData({ filter })
 
   const user = await getUser()
   const stickySales = await getStickySales(user.id)
 
-  const total = await getTotal({ filter: searchParams })
-  const payBranch = await getPayBranch({ filter: searchParams })
+  const total = await getTotal({ filter })
+  const payBranch = await getPayBranch({ filter })
 
   const agnts = await getAllAgnts()
   const agntsGroups = await getAgntsGroups()

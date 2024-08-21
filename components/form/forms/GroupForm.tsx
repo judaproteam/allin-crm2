@@ -24,20 +24,20 @@ export default function GroupForm({ agnts }) {
   }
 
   return (
-    <div className="w-[600px] max-h-[75vh]">
+    <form className="w-[600px] max-h-[75vh]" onSubmit={onSubmit}>
       <div className="flex justify-between border-b pb-3 mb-6 items-end">
         <h2 className="flex gap-4 ">
           <Icon name="users" type="reg" className="size-7" />
           <span className="text-xl font-semibold">יצירת קבוצה חדשה</span>
         </h2>
 
-        <Btn onClick={onSubmit} icon="floppy-disk" clr="solid" lbl="שמור קבוצה" />
+        <Btn icon="floppy-disk" clr="solid" lbl="שמור קבוצה" />
       </div>
 
       <div className="">
         <Input id="groupName" lbl="שם הקבוצה" className="mb-4" />
         <InputSearchChip agntsList={agnts} chips={chips} setChips={setChips} />
       </div>
-    </div>
+    </form>
   )
 }

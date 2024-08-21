@@ -71,15 +71,15 @@ export async function getSaleTableData({ filter }) {
 }
 
 async function formatFilter(filter) {
-  if (filter.gte && filter.lte) {
-    filter.offrDt = {
-      gte: new Date(filter.gte).toISOString(),
-      lte: new Date(filter.lte).toISOString(),
-    }
+  // if (filter.gte && filter.lte) {
+  //   filter.offrDt = {
+  //     gte: new Date(filter.gte).toISOString(),
+  //     lte: new Date(filter.lte).toISOString(),
+  //   }
 
-    delete filter.gte
-    delete filter.lte
-  }
+  //   delete filter.gte
+  //   delete filter.lte
+  // }
 
   const user = await getUser()
   if (user.role === 'AGNT') filter.agntId = user.id
@@ -97,7 +97,9 @@ async function formatFilter(filter) {
     })
 
     const ids = groupIds.agnts.map((agnt) => agnt.id)
-    filter.agntId = { in: ids }
+    filter.OR = [{ agntId: { in: ids } }, { agnt2Id: { in: ids } }]
+
+    delete filter.agntGroupId
   }
 
   delete filter.branchBox

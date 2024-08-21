@@ -27,18 +27,23 @@ export default function Filter({ agnts, agntsGroups }) {
       if (data.dateRange !== 'מותאם אישית') dateRange = getDateRange(data.dateRange) as any
       else dateRange = { start: data.start, end: data.end }
 
-      query.gte = dateRange.start.toISOString().split('T')[0]
-      query.lte = dateRange.end.toISOString().split('T')[0]
+      // query.gte = dateRange.start.toISOString().split('T')[0]
+      // query.lte = dateRange.end.toISOString().split('T')[0]
+
+      query.offrDt = {
+        gte: dateRange.start.toISOString(),
+        lte: dateRange.end.toISOString(),
+      }
 
       delete query.dateRange
     }
 
-    console.log('offrDt', query.offrDt)
-
-    const url = new URLSearchParams(query).toString()
+    // const url = new URLSearchParams(JSON.stringify(query)).toString()
+    const url = new URLSearchParams({ query: JSON.stringify(query) })
+    // url.append('query', JSON.stringify(query))
     router.replace('?' + url, { scroll: false })
 
-    document.getElementById('filterPop').hidePopover()
+    // document.getElementById('filterPop').hidePopover()
   }
 
   function resetFilter() {
