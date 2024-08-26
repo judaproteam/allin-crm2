@@ -6,9 +6,8 @@ import SaleFormPop from '@/components/form/forms/SaleForm'
 import SearchAnchor from '@/components/old/SearchAnchor'
 import { Numbox, Numboxs } from '@/components/Numbox'
 import Table from '@/components/saleTable/Table'
-
 import { getAllAgnts } from '@/db/agnt/getTotal'
-import { getAgntsGroups } from '@/db/agntsGroup'
+import { getAgntsGroups } from '@/db/agntsGroup' 
 
 import { getTotal, getPayBranch, getSaleTableData } from '@/db/sale/getTotal'
 import { getStickySales } from '@/db/sale/stickySales'
